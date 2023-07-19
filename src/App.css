@@ -361,14 +361,14 @@
     margin: 0 0 18px 12px;
 }
 
-.order-panel-table {
+.common-table {
     background: #fff;
     padding: 15px 10px 48px 10px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 30%);
     border-radius: 6px;
 }
 
-.order-panel-table th {
+.common-table th {
     font-size: 12px;
     font-weight: 600;
     color: rgba(0, 0, 0, 1);
@@ -376,13 +376,13 @@
     border: 1px solid rgba(210, 210, 210, 1);
 }
 
-.order-panel-table td {
+.common-table td {
     font-size: 12px;
     font-weight: 400;
     color: rgba(79, 79, 79, 1);
 }
 
-.order-panel-table .react-bootstrap-table table>tbody>tr>td:nth-child(1),
+.common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1),
 .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
     position: sticky;
     position: -webkit-sticky;
@@ -390,29 +390,46 @@
     z-index: 1;
 }
 
-.order-panel-table .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+.common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2),
+.react-bootstrap-table table>thead>tr:nth-child(2)>th:nth-child(2) {
+    position: sticky;
+    position: -webkit-sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.common-table .react-bootstrap-table table>thead>tr:first-child>th:first-child {
+    background: rgba(0, 0, 0, 1) !important;
+    color: #fff;
+}
+.common-table .react-bootstrap-table table>thead>tr:nth-child(2)>th:nth-child(2) {
     background: rgba(0, 0, 0, 1) !important;
     color: #fff;
 }
 
-.order-panel-table .react-bootstrap-table table>tbody>tr>td:nth-child(1) {
+.common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1) {
+    background: rgba(236, 241, 255, 1);
+    color: rgba(92, 136, 218, 1);
+}
+.common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
     background: rgba(236, 241, 255, 1);
     color: rgba(92, 136, 218, 1);
 }
 
-.order-panel-table .table-select img {
+.common-table .table-select img {
     top: 7px;
     right: 14px;
 }
 
-.order-panel-table .table-select .select {
+.common-table .table-select .select {
     padding: 6px 50px 3px 8px;
-    margin: 0 7px 12px;
+    margin: 0 7px 0;
 }
 
-.order-panel-table .table-header {
+.common-table .table-header {
     display: flex;
     justify-content: right;
+    margin: 0 0 12px;
 }
 
 .table-search .form-inline input {
@@ -499,9 +516,9 @@ span.rs-picker-toggle-value {
     margin: 0 16px 0;
 }
 
-.order-details-content .order-details-profile .profile-image {
-    height: 66px;
-    width: 74px;
+.order-details-content .order-details-profile .profile-image img{
+    height: 70px;
+    width: 70px;
     background-color: rgba(182, 182, 182, 1);
     border-radius: 50%;
     display: inline-block;
@@ -675,6 +692,12 @@ td {
 
 /**************** DELIVERY BOY ****************************/
 
+.db-details-panel h1{
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 18px 12px;
+}
+
 .delivery-boy-panel .react-bootstrap-table table {
     width: 100%;
 }
@@ -732,7 +755,7 @@ td {
     display: flex;
 }
 
-.db-details-contents .db-details-profile .profile-image {
+.db-details-contents .db-details-profile .profile-image img{
     height: 70px;
     width: 70px;
     background-color: rgba(182, 182, 182, 1);
@@ -917,6 +940,8 @@ td {
     padding: 6px 26px 6px 26px;
 }
 
+/**************** MODAL SECTION ****************************/
+
 .modal-dialog {
     top: 84px;
 }
@@ -962,6 +987,8 @@ td {
 
 .modal-content {
     width: 87% !important;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .modal-footer {
@@ -980,14 +1007,69 @@ td {
     padding: 6px 40px 6px 40px;
 }
 
+.payment-modal .table{
+    margin-bottom: 0;
+}
+.payment-modal thead{
+    background: #d2d2d2;
+}
+
+.payment-modal th,td{
+    /* padding-left: 22px !important; */
+}
+.payment-modal td:nth-child(1){
+    font-size: 14px;
+    font-weight: 600;
+}
+.payment-modal td:nth-child(2){
+    font-size: 12px;
+    font-weight: 400;
+}
+.payment-modal .pending-amount-total{
+    display: flex;
+    background: #ADC3ED;
+    padding: 16px 22px 10px 22px;
+}
+.payment-modal .pending-amount-total h2{
+    font-size: 16px;
+    font-weight: 600;
+}
+.payment-modal .pending-amount-total{
+    position: relative;
+}
+.payment-modal .pending-amount-total label{
+    position: absolute;
+    right: 44px;
+    top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.payment-modal .pending-amount-total label span{
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+}
+.btn.payment-btn{
+    background: #1C2941 !important;
+    padding: 8px 45px 8px 45px;
+    color: #fff;
+}
+.payment-panel{
+    text-align: right;
+    padding: 0 36px 15px 0px;
+}
+
+/**************** END MODAL SECTION ****************************/
+
 .tooltip {
     background: #1C2941;
     color: #1AA301;
-    padding: 15px 50px 15px 50px !important;
+    padding: 15px 20px 15px 13px !important;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     top: 74px !important;
     right: -60px !important; 
+    width: 14%;
 }
 .tooltip span{
     font-size: 12px;
@@ -999,7 +1081,103 @@ td {
     content: "";
     display: block;
     background: url('/public/assets/images/Ok.png') no-repeat;
-    width: 25px;
-    height: 25px;
+    width: 27px;
+    height: 27px;
     float: left;
+    margin: 2px 4px 0 0;
+}
+
+/**************** HELPER ****************************/
+
+.helper-panel h1{
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 18px 12px;
+}
+
+.helper-panel .react-bootstrap-table table {
+    width: 100%;
+}
+
+.helper-panel .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+    background: rgba(239, 239, 239, 1) !important;
+    color: #000;
+}
+
+.helper-panel .react-bootstrap-table table>tbody>tr>td:nth-child(1) {
+    background: #fff !important;
+    color: rgba(92, 136, 218, 1);
+}
+
+.order-details-section td {
+    text-align: center !important;
+}
+
+/**************** LAUNDARY ****************************/
+
+.laundry-details .order-limit-panel{
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.laundry-details .enrollment-row{
+    padding: 0 0px 30px 0px;
+    border-bottom: 2px solid #efefef;
+    margin: 0 28px 0 82px;
+}
+.laundry-details .enroll-name{
+    font-size: 12px;
+    font-weight: 600;
+}
+.laundry-details .enroll-name span{
+    font-size: 12px;
+    font-weight: 400;
+}
+.laundry-details .helper-details {
+    padding: 25px 30px 100px 30px;
+}
+
+.laundry-details .db-input input {
+    margin: 0;;
+}
+.laundry-details .payment-button{
+    text-align: center;
+    margin: 40px 0 0;
+}
+.laundry-details .payment-button button{
+    background: #BE3A3A;
+    color: #fff;
+    padding: 12px 30px 12px 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+}
+.laundry-details .payment-button button span{
+    font-size: 20px;
+    font-weight: 600;
+}
+.laundry-details .content-right-border {
+    border-right: 1px solid #c5c5c5;
+    min-height: 255px;
+    display: block;
+    margin: 16px 0 16px;
+}
+
+/**************** CUSTOMER ****************************/
+
+.customer-panel .react-bootstrap-table table {
+    width: 100%;
+}
+
+.customer-panel .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(2) {
+    background: rgba(239, 239, 239, 1) !important;
+    color: #000;
+}
+
+.customer-panel .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background: #fff !important;
+    color: rgba(92, 136, 218, 1);
+}
+
+.customer-panel .react-bootstrap-table table>tbody>tr>td{
+    padding-left: 8px !important;
 }

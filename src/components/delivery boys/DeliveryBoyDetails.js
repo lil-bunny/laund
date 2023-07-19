@@ -8,6 +8,7 @@ const DeliveryBoyDetails = () => {
     return (
         <>
             <section className="db-details-panel">
+                <h1>Delivery Boy Details</h1>
                 <div className="db-details-content">
                     <div className="db-details-content-heading">
                         <div className="row">
@@ -54,7 +55,9 @@ const DeliveryBoyDetails = () => {
                         <div className="row">
                             <div className="col-md-8">
                                 <div className="db-details-profile">
-                                    <span className="profile-image"></span>
+                                    <span className="profile-image">
+                                        <img src="./assets/images/dummy.png" alt="prof-img" />
+                                    </span>
                                     <div className="right-prof-panel">
                                         <h2>Arun Chatterjee</h2>
                                         <p>Delivery Boy</p>

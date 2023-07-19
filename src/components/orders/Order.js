@@ -2,7 +2,7 @@ import React from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import { DateRangePicker } from 'rsuite';
 
-const products = [
+const orders = [
     {
         order_id: 'OD54781',
         cs_name: "Rahul Sethi",
@@ -226,7 +226,16 @@ const products = [
 ];
 
 const Order = () => {
+    const indexNum = (cell, row, index) => {
+        return (<div>{index+1}</div>) 
+    }
+    
     const columns = [
+        {
+            dataField: 'SL No',
+            text: '',
+            formatter: indexNum
+        },
         {
             dataField: 'order_id',
             text: 'Order ID'
@@ -314,7 +323,7 @@ const Order = () => {
         <>
             <section className="order-panel">
                 <h1>Order</h1>
-                <div className="order-panel-table">
+                <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">
                             <form className="form-inline">
@@ -375,7 +384,7 @@ const Order = () => {
                     </div>
                     <BootstrapTable
                         keyField='order_id'
-                        data={products}
+                        data={orders}
                         columns={columns}
                         wrapperClasses="table-responsive"
                     />

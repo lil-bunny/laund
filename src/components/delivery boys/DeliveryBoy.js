@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import AddModal from "../modal/AddModal";
 
-const products = [
+const deliveryBoys = [
     {
         db_id: 'OD54781',
         db_name: "Rahul Sethi",
@@ -152,7 +152,7 @@ const DeliveryBoy = () =>{
     return(
         <>
             <section className="delivery-boy-panel">
-                <div className="order-panel-table">
+                <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">
                             <form className="form-inline">
@@ -172,7 +172,7 @@ const DeliveryBoy = () =>{
                     </div>
                     <BootstrapTable
                         keyField='db_id'
-                        data={products}
+                        data={deliveryBoys}
                         columns={columns}
                         wrapperClasses="table-responsive"
                     />

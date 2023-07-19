@@ -31,7 +31,9 @@ const OrderDetails = () => {
                                 <div className="row">
                                     <div className="col-md-8">
                                         <div className="order-details-profile">
-                                            <span className="profile-image"></span>
+                                            <span className="profile-image">
+                                                <img src="./assets/images/dummy.png" alt="prof-img" />
+                                            </span>
                                             <div className="right-prof-panel">
                                                 <h2>Rahul Sethi</h2>
                                                 <p>Contact No: 8796231143, 9822631107</p>

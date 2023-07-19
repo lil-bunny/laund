@@ -11,7 +11,9 @@ import OrderDetails from './components/orders/OrderDetails';
 import DeliveryBoy from './components/delivery boys/DeliveryBoy';
 import DeliveryBoyDetails from './components/delivery boys/DeliveryBoyDetails';
 import Helper from './components/helpers/Helper';
+import HelperDetails from './components/helpers/HelperDetails';
 import Laundry from './components/laundries/Laundry';
+import LaundryDetails from './components/laundries/LaundryDetails';
 import Customer from './components/customers/Customer';
 import Payment from './components/payments/Payment';
 import Location from './components/location/Location';
@@ -32,7 +34,9 @@ const App = () => {
           <Route path='/delivery-boy' element={<DeliveryBoy />} />
           <Route path='/delivery-boy-details' element={<DeliveryBoyDetails />} />
           <Route path='/helper' element={<Helper />} />
+          <Route path='/helper-details' element={<HelperDetails />} />
           <Route path='/laundry' element={<Laundry />} />
+          <Route path='/laundry-details' element={<LaundryDetails />} />
           <Route path='/customer' element={<Customer />} />
           <Route path='/payment' element={<Payment />} />
           <Route path='/location' element={<Location />} />
