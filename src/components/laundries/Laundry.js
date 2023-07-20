@@ -105,7 +105,16 @@ const laundries = [
 ];
 
 const Laundry = () => {
+    const indexNum = (cell, row, index) => {
+        return (<div>{index+1}</div>) 
+    }
+    
     const columns = [
+        {
+            dataField: 'SL No',
+            text: '',
+            formatter: indexNum
+        },
         {
             dataField: 'ls_id',
             text: 'LS ID'
@@ -142,7 +151,7 @@ const Laundry = () => {
     
     return (
         <>
-            <section className="helper-panel">
+            <section className="laundry-panel">
                 <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">

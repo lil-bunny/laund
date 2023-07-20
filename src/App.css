@@ -383,7 +383,7 @@
 }
 
 .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1),
-.react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+.react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1){
     position: sticky;
     position: -webkit-sticky;
     left: 0;
@@ -391,26 +391,23 @@
 }
 
 .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2),
-.react-bootstrap-table table>thead>tr:nth-child(2)>th:nth-child(2) {
+.react-bootstrap-table table>thead>tr>th:nth-child(2) {
     position: sticky;
     position: -webkit-sticky;
-    left: 0;
+    left: 31px;
     z-index: 1;
 }
 
-.common-table .react-bootstrap-table table>thead>tr:first-child>th:first-child {
+.common-table .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1){
     background: rgba(0, 0, 0, 1) !important;
     color: #fff;
 }
-.common-table .react-bootstrap-table table>thead>tr:nth-child(2)>th:nth-child(2) {
+.common-table .react-bootstrap-table table>thead>tr>th:nth-child(2) {
     background: rgba(0, 0, 0, 1) !important;
     color: #fff;
 }
 
-.common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1) {
-    background: rgba(236, 241, 255, 1);
-    color: rgba(92, 136, 218, 1);
-}
+.common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1),
 .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
     background: rgba(236, 241, 255, 1);
     color: rgba(92, 136, 218, 1);
@@ -710,6 +707,25 @@ td {
 .delivery-boy-panel .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
     background: rgba(239, 239, 239, 1) !important;
     color: #000;
+    width: 10px;
+}
+
+.delivery-boy-panel .react-bootstrap-table table>thead>tr:nth-child(2)>th:nth-child(2) {
+    background: rgba(239, 239, 239, 1) !important;
+}
+
+.delivery-boy-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1){
+    background: #fff;
+    color: rgba(79, 79, 79, 1);
+}
+
+.delivery-boy-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background: #fff;
+}
+
+.delivery-boy-panel .common-table .react-bootstrap-table table>thead>tr>th:nth-child(2) {
+    background: rgba(239, 239, 239, 1) !important;
+    color: #000;
 }
 
 .delivery-boy-panel .react-bootstrap-table table>tbody>tr>td:nth-child(1) {
@@ -929,7 +945,7 @@ td {
     color: #1C2941;
     border: 1px solid #1C2941;
     border-radius: 6px;
-    padding: 6px 16px 6px 16px;
+    padding: 6px 20px 6px 20px;
     margin: 0 14px 0 0;
 }
 
@@ -937,7 +953,7 @@ td {
     color: #fff;
     background: #1C2941;
     border-radius: 6px;
-    padding: 6px 26px 6px 26px;
+    padding: 6px 30px 6px 30px;
 }
 
 /**************** MODAL SECTION ****************************/
@@ -965,6 +981,17 @@ td {
     font-weight: 400;
     margin: 0 22px 0 22px;
     padding-top: 0 !important;
+}
+.modal-body p{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.modal-body h5{
+    color: #5B5B5B;
+    font-size: 12px;
+    font-weight: 400;
 }
 
 .modal-body label span {
@@ -994,6 +1021,35 @@ td {
 .modal-footer {
     justify-content: center !important;
     padding-top: 34px;
+}
+
+.onboarding-modal-footer{
+    margin: 0 22px 22px 6px;
+}
+
+.onboarding-modal-footer .cs-request-button{
+    background: #1C2941 !important;
+    padding: 8px 50px 8px 50px !important;
+    margin: 0 0 0 30px !important;
+    border-radius: 6px;
+}
+.modal-body .border-bottom{
+    border-bottom: 1px solid #efefef;
+    width: 100%;
+    display: block;
+    margin: 0 0 12px 0;
+}
+.onboarding-modal-footer button:nth-child(1){
+    color: #fff;
+    background: #CB1414;
+    border: none;
+    padding: 8px 24px 8px 24px;
+    margin: 0 16px 0 0;
+}
+.onboarding-modal-footer button:nth-child(2){
+    background: #1C2941;
+    border: none;
+    padding: 8px 40px 8px 40px;
 }
 
 .modal-footer .btn:nth-child(1) {
@@ -1056,7 +1112,7 @@ td {
 }
 .payment-panel{
     text-align: right;
-    padding: 0 36px 15px 0px;
+    /* padding: 0 36px 15px 0px; */
 }
 
 /**************** END MODAL SECTION ****************************/
@@ -1104,9 +1160,27 @@ td {
     color: #000;
 }
 
+.helper-panel .common-table .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+    width: 10px;
+}
+
 .helper-panel .react-bootstrap-table table>tbody>tr>td:nth-child(1) {
     background: #fff !important;
     color: rgba(92, 136, 218, 1);
+}
+
+.helper-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1){
+    background: #fff;
+    color: rgba(79, 79, 79, 1);
+}
+
+.helper-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background: #fff;
+}
+
+.helper-panel .common-table .react-bootstrap-table table>thead>tr>th:nth-child(2) {
+    background: rgba(239, 239, 239, 1) !important;
+    color: #000;
 }
 
 .order-details-section td {
@@ -1162,6 +1236,30 @@ td {
     margin: 16px 0 16px;
 }
 
+.laundry-panel .common-table .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+    background: rgba(239, 239, 239, 1) !important;
+    width: 10px;
+}
+
+.laundry-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1){
+    background: #fff;
+    color: rgba(79, 79, 79, 1);
+}
+
+.laundry-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background: #fff;
+}
+
+.laundry-panel .common-table .react-bootstrap-table table>thead>tr>th:nth-child(2) {
+    background: rgba(239, 239, 239, 1) !important;
+    color: #000;
+}
+
+.laundry-panel .react-bootstrap-table table{
+    width: 100%;
+}
+
+
 /**************** CUSTOMER ****************************/
 
 .customer-panel .react-bootstrap-table table {
@@ -1173,6 +1271,20 @@ td {
     color: #000;
 }
 
+.customer-panel .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+    background: rgba(239, 239, 239, 1) !important;
+    width: 10px;
+}
+
+.customer-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1){
+    background: #fff;
+    color: rgba(79, 79, 79, 1);
+}
+
+.customer-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background: #fff;
+}
+
 .customer-panel .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
     background: #fff !important;
     color: rgba(92, 136, 218, 1);
@@ -1180,4 +1292,116 @@ td {
 
 .customer-panel .react-bootstrap-table table>tbody>tr>td{
     padding-left: 8px !important;
+}
+
+.customer-details .right-prof-panel button{
+    font-size: 14px;
+    font-weight: 400;
+    padding: 11px 24px 11px 24px;
+    margin: 14px 0 0;
+}
+
+.customer-details .right-prof-panel button span{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.customer-details .react-bootstrap-table table{
+    width: 100%;
+}
+
+.customer-details .react-bootstrap-table table thead > tr > th {
+    background: #efefef;
+    font-size: 12px;
+}
+
+.customer-details .react-bootstrap-table table tbody > tr > td {
+    font-size: 12px;
+    color: #4f4f4f;
+}
+
+.customer-details .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    color: rgba(92, 136, 218, 1);;
+}
+
+.customer-details .db-details-content h2{
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 0 14px;
+}
+
+.cust-details-dropdown a.dropdown-item.active {
+    background-color: #fff;
+    color: #4f4f4f;
+}
+.cust-details-dropdown .dropdown .btn{
+    padding: 0;
+}
+.cust-details-dropdown .dropdown .btn.show{
+    border: none !important;
+}
+.cust-details-dropdown .dropdown .btn.show:focus{
+    border:none !important;
+}
+
+/**************** PAYMENT ****************************/
+
+.payment-panel .react-bootstrap-table table {
+    width: 100%;
+}
+.payment-panel .common-table .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+    background: rgba(239, 239, 239, 1) !important;
+    width: 10px;
+}
+
+.payment-panel .common-table .react-bootstrap-table table>thead>tr>th {
+    text-align: left;
+}
+
+.payment-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1){
+    background: #fff;
+    color: rgba(79, 79, 79, 1);
+}
+
+.payment-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background-color: #fff;
+}
+
+.payment-panel .common-table .react-bootstrap-table table>thead>tr>th:nth-child(2) {
+    background: rgba(239, 239, 239, 1) !important;
+    color: #000;
+}
+
+.payment-panel .table-search{
+    margin: 0 12px 0 0;
+}
+
+/**************** ONBOARDING ****************************/
+.onboarding-panel h1{
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 18px 12px;
+}
+
+.onboarding-panel .react-bootstrap-table table{
+    width: 100%;
+}
+
+.onboarding-panel .common-table .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
+    background: rgba(239, 239, 239, 1) !important;
+    width: 10px;
+}
+
+.onboarding-panel .common-table .react-bootstrap-table table>thead>tr>th:nth-child(2) {
+    background: rgba(239, 239, 239, 1) !important;
+    color: #000;
+}
+
+.onboarding-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1){
+    color: #4f4f4f;
+    background: #fff;
+}
+
+.onboarding-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background: #fff;
 }

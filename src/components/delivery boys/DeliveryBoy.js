@@ -109,7 +109,16 @@ const DeliveryBoy = () =>{
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
 
+    const indexNum = (cell, row, index) => {
+        return (<div>{index+1}</div>) 
+    }
+
     const columns = [
+        {
+            dataField: 'SL No',
+            text: '',
+            formatter: indexNum
+        },
         {
             dataField: 'db_id',
             text: 'DB ID.',

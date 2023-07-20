@@ -105,7 +105,16 @@ const deliveryBoys = [
 ];
 
 const Helper = () => {
+    const indexNum = (cell, row, index) => {
+        return (<div>{index+1}</div>) 
+    }
+    
     const columns = [
+        {
+            dataField: 'SL No',
+            text: '',
+            formatter: indexNum
+        },
         {
             dataField: 'helper_id',
             text: 'Helper ID'

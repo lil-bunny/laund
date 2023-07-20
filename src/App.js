@@ -15,7 +15,9 @@ import HelperDetails from './components/helpers/HelperDetails';
 import Laundry from './components/laundries/Laundry';
 import LaundryDetails from './components/laundries/LaundryDetails';
 import Customer from './components/customers/Customer';
+import CustomerDetails from './components/customers/CustomerDetails';
 import Payment from './components/payments/Payment';
+import Onboarding from './components/onboarding request/Onboarding';
 import Location from './components/location/Location';
 import './App.css';
 
@@ -38,7 +40,9 @@ const App = () => {
           <Route path='/laundry' element={<Laundry />} />
           <Route path='/laundry-details' element={<LaundryDetails />} />
           <Route path='/customer' element={<Customer />} />
+          <Route path='/customer-details' element={<CustomerDetails />} />
           <Route path='/payment' element={<Payment />} />
+          <Route path='/onboarding' element={<Onboarding />} />
           <Route path='/location' element={<Location />} />
         </Routes>
       </Layout>
