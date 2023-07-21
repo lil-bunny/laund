@@ -283,6 +283,83 @@
     margin: 28px 5px 0;
 }
 
+.mid-content-box .chart-container{
+    padding: 16px;
+}
+
+.mid-content-box .chart-container h3{
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 66px;
+}
+
+.mid-content-box .chart-container .chart-heading{
+    display: flex;
+}
+
+.mid-content-box .chart-container .chart-heading .blue-box{
+    width:16px;
+    height: 16px;
+    background: #5C88DA;
+    margin: 2px 4px 0 0;
+}
+.mid-content-box .chart-container .chart-heading .green-box{
+    width:16px;
+    height: 16px;
+    background: #1AA301;
+    margin: 2px 4px 0 0;
+}
+.mid-content-box .chart-container .chart-heading .red-box{
+    width:16px;
+    height: 16px;
+    background: #CB1414;
+    margin: 2px 4px 0 0;
+}
+.mid-content-box .select-dropdown{
+    left: 34px;
+}
+
+.mid-content-box .select-dropdown .select{
+    padding: 4px 50px 4px 8px;
+}
+.mid-content-box .select-dropdown img{
+    top: 6px;
+}
+
+.mid-content-box .chart-container .chart-heading label{
+    font-size: 12px;
+    margin: 0 10px 0 0;
+}
+.mid-content-box .pie-chart-container{
+    padding: 16px 16px 6px 16px;
+}
+.mid-content-box canvas{
+    max-height: 200px !important;
+}
+
+.mid-content-box .pie-chart-container h3{
+    font-size: 16px;
+    font-weight: 600;
+    float: left;
+}
+.mid-content-box .pie-footer{
+    text-align: center;
+}
+.mid-content-box .pie-footer .square-box{
+    width:16px;
+    height: 16px;
+    background-color: #000;
+    display: inline-block;
+    margin: 0 4px 0 16px;
+}
+.mid-content-box label{
+    font-size: 12px;
+}
+.mid-content-box .pie-chart-container .select-dropdown{
+    float: right;
+    margin: 0 32px 0 0;
+}
+
 .top-content-box h3 {
     font-size: 12px;
     font-weight: 400;
