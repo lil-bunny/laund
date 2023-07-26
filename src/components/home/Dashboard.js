@@ -83,25 +83,25 @@ const Dashboard = () => {
             <section className="content">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-lg-3 col-md-6">
                             <div className="top-content-box">
                                 <h3>Today's New Orders</h3>
                                 <p>360</p>
                             </div>
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-lg-3 col-md-6">
                             <div className="top-content-box">
                                 <h3>Today's Delivered/Pending Orders</h3>
                                 <p>125/32</p>
                             </div>
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-lg-3 col-md-6">
                             <div className="top-content-box">
                                 <h3>Today's Earnings (in Rs.)</h3>
                                 <p>76,503</p>
                             </div>
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-lg-3 col-md-6">
                             <div className="top-content-box">
                                 <h3>Pending Bill's (in Rs.)</h3>
                                 <p>17,700</p>
@@ -110,7 +110,7 @@ const Dashboard = () => {
                     </div>
                     <span className="break-line"></span>
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-lg-6 col-md-12">
                             <div className="mid-content-box">
                                 <div className="chart-container">
                                     <div className="chart-heading">
@@ -134,7 +134,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-lg-6 col-md-12">
                             <div className="mid-content-box">
                                 <div className="pie-chart-container">
                                     <h3>Service Type Report</h3>
@@ -163,7 +163,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                         <div className="footer-content-box">
                             <h3>Delivery Boy's</h3>
                             <div className="footer-content">
@@ -172,7 +172,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                         <div className="footer-content-box">
                             <h3>Helper's</h3>
                             <div className="footer-content">
@@ -181,7 +181,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                         <div className="footer-content-box">
                             <h3>laundrie's</h3>
                             <div className="footer-content">
@@ -190,7 +190,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                         <div className="footer-content-box">
                             <h3>Customer's</h3>
                             <div className="footer-content">

@@ -302,6 +302,7 @@
     height: 16px;
     background: #5C88DA;
     margin: 2px 4px 0 0;
+    display: inline-block;
 }
 .mid-content-box .chart-container .chart-heading .green-box{
     width:16px;
@@ -1454,6 +1455,7 @@ td {
 }
 
 /**************** ONBOARDING ****************************/
+
 .onboarding-panel h1{
     font-size: 18px;
     font-weight: 500;
@@ -1481,4 +1483,38 @@ td {
 
 .onboarding-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
     background: #fff;
+}
+
+/**************** RESPONSIVE ****************************/
+
+@media (max-width: 992px) {
+    .content-wrapper, .main-footer, .main-header {
+        margin-left: 0px;
+        z-index: 3000;
+    }
+    .main-sidebar{
+        display: none;
+    }
+    
+    .mid-content-box .chart-container .chart-heading .blue-box, .green-box, .red-box {
+        display:inline-block
+    }
+}
+@media only screen and (max-width: 768px) and (min-width: 480px){
+
+}
+@media (max-width: 480px) {
+    .mid-content-box .chart-container .chart-heading {
+        display: block;
+    }
+    .mid-content-box .select-dropdown .select {
+        padding: 4px 16px 4px 5px;
+    }
+    .mid-content-box .select-dropdown img {
+        top: 4px;
+        right: 2px;
+    }
+    .mid-content-box .select-dropdown {
+        left: 4px;
+    }
 }
