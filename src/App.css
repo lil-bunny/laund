@@ -178,10 +178,7 @@
     display: inline-block;
 }
 
-.profile-dropdown img {
-    margin: -16px 0 0 6px;
-    ;
-}
+
 
 .navbar-badge {
     padding: 0 8px 0 0 !important;
@@ -489,6 +486,16 @@
 .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
     background: rgba(236, 241, 255, 1);
     color: rgba(92, 136, 218, 1);
+}
+.delivery-boy-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
+    background: rgba(236, 241, 255, 1);
+    color: rgba(79, 79, 79, 1);
+}
+
+.delivery-boy-panel .react-bootstrap-table span.d-boy {
+   
+    color: rgba(92, 136, 218, 1);
+    cursor: pointer;
 }
 
 .common-table .table-select img {
@@ -1484,7 +1491,17 @@ td {
 .onboarding-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
     background: #fff;
 }
+.form-error{font-size: 12px; color: #ff0000;padding: 6px;}
 
+.hide-resize-observer {
+    display: none !important;
+  }
+  #webpack-dev-server-client-overlay{display:none;}
+   .menu-after-login{list-style: none;color: #3a67bb;text-align: center;padding: 0 10px;}
+  .menu-after-login li{cursor: pointer;}
+  .menu-logged-in{top: 53px;}
+                            
+.p-image{width: 28px;height: 28px;cursor: pointer;}
 /**************** RESPONSIVE ****************************/
 
 @media (max-width: 992px) {

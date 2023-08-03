@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from "react";
 import { Route, Routes, Navigate } from 'react-router-dom';
-
+import AuthContext from "./store/auth-context";
 import Layout from './components/layout/Layout';
 import AuthLayout from './components/auth/AuthLayout';
 import Dashboard from './components/home/Dashboard';
@@ -19,11 +19,13 @@ import CustomerDetails from './components/customers/CustomerDetails';
 import Payment from './components/payments/Payment';
 import Onboarding from './components/onboarding request/Onboarding';
 import Location from './components/location/Location';
+import Customernew from "./components/customers/Customernew";
 import './App.css';
 
 const App = () => {
-  const isLoggedIn = localStorage.getItem('login');
-
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
+   //console.log(authCtx.token);
   if (isLoggedIn) {
     return (
       <Layout>
@@ -34,12 +36,14 @@ const App = () => {
           <Route path='/order' element={<Order />} />
           <Route path='/order-details' element={<OrderDetails />} />
           <Route path='/delivery-boy' element={<DeliveryBoy />} />
+          <Route path='/delivery-boy/:id' element={<DeliveryBoyDetails />} />
           <Route path='/delivery-boy-details' element={<DeliveryBoyDetails />} />
           <Route path='/helper' element={<Helper />} />
           <Route path='/helper-details' element={<HelperDetails />} />
           <Route path='/laundry' element={<Laundry />} />
           <Route path='/laundry-details' element={<LaundryDetails />} />
           <Route path='/customer' element={<Customer />} />
+          <Route path='/customernew' element={<Customernew />} />
           <Route path='/customer-details' element={<CustomerDetails />} />
           <Route path='/payment' element={<Payment />} />
           <Route path='/onboarding' element={<Onboarding />} />

@@ -7,12 +7,15 @@ import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-
+import { AuthContextProvider } from './store/auth-context';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <AuthContextProvider>
   <BrowserRouter>
+  
     <App />
   </BrowserRouter>
+  </AuthContextProvider>
 );
 
 reportWebVitals();

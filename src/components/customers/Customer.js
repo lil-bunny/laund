@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
-
+import paginationFactory from "react-bootstrap-table2-paginator";
 const customers = [
     {
         cs_id: 'OD54719',
@@ -76,7 +76,7 @@ const customers = [
     },
     {
         cs_id: 'OD54731',
-        cs_name: "L Menchu",
+        cs_name: "L test",
         contact: '9046216598',
         last_order: '01 Feb 2022',
         unpaid_amount: 256.0,
@@ -85,7 +85,7 @@ const customers = [
     },
     {
         cs_id: 'OD54751',
-        cs_name: "L Menchu",
+        cs_name: "L test",
         contact: '9046216598',
         last_order: '01 Feb 2022',
         unpaid_amount: 256.0,
@@ -134,7 +134,27 @@ const Customer = () => {
             text: 'Address'
         },
     ];
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState("");
+    // Define pagination options
+    const paginationOptions = {
+        sizePerPage: 5,
+        hideSizePerPage: true,
+        hidePageListOnlyOnePage: true,
+        onPageChange: (page, sizePerPage) => setCurrentPage(page),
+      };
+      // Function to handle search input change
+    const handleSearch = (event) => {
+        console.log(event.target.value);
+        setSearchText(event.target.value);
+      };
     
+      // Filter the data based on the search text
+      const filteredData = customers.filter((item) =>
+        Object.values(item).some((field) =>
+          String(field).toLowerCase().includes(searchText.toLowerCase())
+        )
+      );
     return (
         <>
             <section className="customer-panel">
@@ -142,15 +162,18 @@ const Customer = () => {
                     <div className="table-header">
                         <div className="table-search">
                             <form className="form-inline">
-                                <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
+                                
+                                <input className="form-control" type="text" placeholder="Search" aria-label="Search" value={searchText}
+          onChange={handleSearch} />
                                 <img src="./assets/images/search.png" alt="sort-img" />
                             </form>
                         </div>
                     </div>
                     <BootstrapTable
                         keyField='cs_id'
-                        data={customers}
+                        data={filteredData}
                         columns={columns}
+                        pagination={paginationFactory(paginationOptions)}
                         wrapperClasses="table-responsive"
                     />
                 </div>

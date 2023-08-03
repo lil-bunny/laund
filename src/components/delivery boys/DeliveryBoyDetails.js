@@ -1,10 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useContext,useRef,useState,useEffect} from "react";
 import Overlay from 'react-bootstrap/Overlay';
-
+import { Route, Routes, Navigate, useParams } from 'react-router-dom';
+import AuthContext from "../../store/auth-context";
+import axios from "axios";
+import axiosInstance from "../../api/axiosinstance";
+import apiurl from "../../api/apiconfig";
 const DeliveryBoyDetails = () => {
     const [show, setShow] = useState(false);
-    const target = useRef(null);
+      const target = useRef(null);
+       const {id}=useParams();
+       const [data, setData] = useState([]);
 
+       useEffect(() => {
+        // Function to perform the GET request
+        const fetchData = async () => {
+          try {
+            const response = await axiosInstance.post(apiurl+'laundry-associate-details',{id});
+            if(response.status===1){
+            setData(response.data); // Assuming the response contains the data you need
+            }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData(); // Call the function to fetch the data
+      }, []);
+     //console.log(data);
     return (
         <>
             <section className="db-details-panel">
@@ -19,7 +41,7 @@ const DeliveryBoyDetails = () => {
                             </div>
                             <div className="col-md-6">
                                 <div className="db-helper">
-                                    <img ref={target} onClick={() => setShow(!show)} src="./assets/images/Menu-Vertical.png" alt="menu-img" />
+                                    <img ref={target} onClick={() => setShow(!show)} src="/assets/images/Menu-Vertical.png" alt="menu-img" />
                                     <Overlay target={target.current} show={show} placement="left">
                                         {({
                                             placement: _placement,
@@ -56,16 +78,16 @@ const DeliveryBoyDetails = () => {
                                     <div className="col-md-8">
                                         <div className="db-details-profile">
                                             <span className="profile-image">
-                                                <img src="./assets/images/dummy.png" alt="prof-img" />
+                                                <img src={data.new_profile_image_name} alt="prof-img" />
                                             </span>
                                             <div className="right-prof-panel">
-                                                <h2>Arun Chatterjee</h2>
+                                                <h2>{data.firstName} {data.lastName}</h2>
                                                 <p>Delivery Boy</p>
                                                 <span className="db-contact">
-                                                    Contact No: <span>8796231143, 9822631107</span>
+                                                    Contact No: <span>{data.primary_phone_no}, {data.alternate_phone_no}</span>
                                                 </span>
                                                 <span className="db-prof-address">
-                                                    Flat No 303, A Wing, Blosom Society, Ujwal Colony, Gajraj Chowk, Swargate, Pune 411041
+                                                {data.address}, {data.cityName} {data.pincode}
                                                 </span>
                                             </div>
                                         </div>
@@ -82,7 +104,7 @@ const DeliveryBoyDetails = () => {
                                     <div className="col-md-6">
                                         <h5>Self Enrollment Fee</h5>
                                         <div className="select-dropdown db-select">
-                                            <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                                            <img src="/assets/images/sort-down-small.png" alt="sort-img" />
                                             <select className="select">
                                                 <option value="">Month</option>
                                                 <option value="1">1 Month</option>
@@ -101,7 +123,7 @@ const DeliveryBoyDetails = () => {
                                     <div className="col-md-6">
                                         <h5>Self Enrollment Fee</h5>
                                         <div className="select-dropdown db-select">
-                                            <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                                            <img src="/assets/images/sort-down-small.png" alt="sort-img" />
                                             <select className="select">
                                                 <option value="">Month</option>
                                                 <option value="1">1 Month</option>
@@ -120,7 +142,7 @@ const DeliveryBoyDetails = () => {
                                     <div className="col-md-6">
                                         <h5>Self Enrollment Fee</h5>
                                         <div className="select-dropdown db-select">
-                                            <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                                            <img src="/assets/images/sort-down-small.png" alt="sort-img" />
                                             <select className="select">
                                                 <option value="">Month</option>
                                                 <option value="1">1 Month</option>
@@ -155,13 +177,13 @@ const DeliveryBoyDetails = () => {
                                     <div className="row">
                                         <div className="col-md-5">
                                             <div className="aadhar-front">
-                                                <img src="./assets/images/aadhar-front.png" alt="menu-img" />
+                                                <img src="/assets/images/aadhar-front.png" alt="menu-img" />
                                                 <p>Front</p>
                                             </div>
                                         </div>
                                         <div className="col-md-7">
                                             <div className="aadhar-back">
-                                                <img src="./assets/images/aadhar-back.png" alt="menu-img" />
+                                                <img src="/assets/images/aadhar-back.png" alt="menu-img" />
                                                 <p>Back</p>
                                             </div>
                                         </div>
@@ -174,7 +196,7 @@ const DeliveryBoyDetails = () => {
                                                 <h4>Account Details</h4>
                                                 <p>Bank Account Number</p>
                                                 <h5>1234-4567-7891-0987</h5>
-                                                <img src="./assets/images/passbook.png" alt="menu-img" />
+                                                <img src="/assets/images/passbook.png" alt="menu-img" />
                                                 <p>Front</p>
                                             </div>
                                         </div>
@@ -183,7 +205,7 @@ const DeliveryBoyDetails = () => {
                                                 <h4>Account Details</h4>
                                                 <p>Bank IFSC Code</p>
                                                 <h5>SBINO000056</h5>
-                                                <img src="./assets/images/cheque.png" alt="menu-img" />
+                                                <img src="/assets/images/cheque.png" alt="menu-img" />
                                                 <p>Back</p>
                                             </div>
                                         </div>

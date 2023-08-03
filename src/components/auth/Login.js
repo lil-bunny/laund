@@ -1,10 +1,37 @@
-import React from "react";
-import { NavLink } from 'react-router-dom';
-
+import React,{ useContext } from "react";
+import { NavLink, useNavigate } from 'react-router-dom';
+import AuthContext from "../../store/auth-context";
+import { Form, Formik, Field } from 'formik';
+import swal from "sweetalert";
+import * as yup from "yup";
+import axios from "axios";
+import apiurl from "../../api/apiconfig";
 const Login = () => {
-    const loginSubmitHandler = () =>{
-        localStorage.setItem('login', true);
-    }
+    const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
+   // console.log(authCtx.initialToken);
+    const loginHandler = (values) => {
+       // console.log(values);
+        axios.post(apiurl+'admin-login', values)
+            .then((response) => {
+               // console.log(response);
+                if (response.data.status === 1 && response.data.token != '') {
+                     
+                     
+                      authCtx.loginData(response.data);
+                      authCtx.login(response.data.token);
+                      //swal("success", response.data.token, "success");
+                      navigate('/');
+                }
+                else if(response.data.status === 2){
+                    swal("Error", 'Invalid user name or password', "error");
+                }
+            })
+            .catch((error) => {
+                //console.log('Error', error);
+                swal("Error", 'Invalid user name or password', "error");
+        });
+    };
     
     return (
         <>
@@ -15,12 +42,52 @@ const Login = () => {
                         <div className="col-md-4 offset-md-4">
                             <div className="login-box">
                                 <h1>LOGIN</h1>
-                                <form action="/action_page.php">
+                                <Formik
+                        initialValues={{
+                            username: '',
+                            password: '',
+                        }}
+
+                        validationSchema={
+                            yup.object().shape({
+                                username: yup.string().required("User name is required"),
+                                password: yup
+                                .string()
+                                .required("Password is required")
+                                // .min(8, 'Password must be 8 characters long')
+                                // .matches(/[0-9]/, 'Password requires a number')
+                                // .matches(/[a-z]/, 'Password requires a lowercase letter')
+                                // .matches(/[A-Z]/, 'Password requires an uppercase letter')
+                                // .matches(/[^\w]/, 'Password requires a symbol'),
+                            })
+                        }
+                        onSubmit={(values, { resetForm }) => {
+                            loginHandler(values);
+                           // resetForm({ values: '' });
+                        }}
+                    >
+                        {({ errors, touched }) => (
+
+                                <Form>
                                     <div className="form-group">
-                                        <input type="email" className="form-control mb-4" id="email" placeholder="Enter email or mobile number" name="email" />
+                                    <Field
+                                            type="text"
+                                            name="username"
+                                            className="form-control mb-2"
+                                            id="username"
+                                            placeholder="Enter user name or mobile number"
+                                        />
+                                        {touched.username && errors.username && <div className="form-error">{errors.username}</div>}
                                     </div>
                                     <div className="form-group">
-                                        <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pwd" />
+                                    <Field
+                                            type="password"
+                                            name="password"
+                                            className="form-control mb-2"
+                                            id="password"
+                                            placeholder="Enter password"
+                                        />
+                                        {touched.password && errors.password && <div className="form-error">{errors.password}</div>}
                                     </div>
                                     <div className="login-footer">
                                         <div className="checkbox">
@@ -28,8 +95,10 @@ const Login = () => {
                                         </div>
                                         <NavLink to="#">Forgot Password</NavLink>
                                     </div>
-                                    <button type="submit" onClick={loginSubmitHandler} className="btn btn-default">LOGIN</button>
-                                </form>
+                                    <button type="submit" className="btn btn-default">LOGIN</button>
+                                </Form>
+                                 )}
+                                 </Formik>
                             </div>
                         </div>
                     </div>
