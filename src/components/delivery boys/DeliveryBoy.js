@@ -16,6 +16,7 @@ const DeliveryBoy = () =>{
     const logoutHandler = () =>{
         authCtx.logout();
          }
+         
    
     const [deliveryBoys, setData] = useState([]);
   
@@ -41,7 +42,7 @@ const DeliveryBoy = () =>{
     }
 
     const actionFormator = (cell, row) => {
-      return (<a href={"delivery-boy/"+ row.id}>View Details</a>) ; 
+      return (<div className="d-boy-action"><a href={"delivery-boy/"+ row.id}><i class="fa fa-eye" aria-hidden="true"></i></a> <a href="add-new-dboy"><i class="fa fa-plus" aria-hidden="true"></i></a></div>) ; 
     }
 
     const idFormator = (cell, row) => {
@@ -80,6 +81,11 @@ const DeliveryBoy = () =>{
             formatter: nameFormatter
 
         },
+
+        {
+            dataField: 'email',
+            text: 'Email Addess',
+        },
         
         {
             dataField: 'dob',
@@ -95,18 +101,7 @@ const DeliveryBoy = () =>{
             text: 'Enrollment Status',
             formatter: enroll_status_formate
         },
-        {
-            dataField: 'enrollment_end_date',
-            text: 'Enrollment End Date'
-        },
-        {
-            dataField: 'enrollment_fee',
-            text: 'Enrollment Fee'
-        },
-        {
-            dataField: 'transaction_fee',
-            text: 'Transaction Fee'
-        },
+    
         {
             dataField: 'action',
             text: 'Action',

@@ -1,120 +1,52 @@
-import React, { useState } from "react";
+import React, { useContext,useState,useEffect} from "react";
+import dateFormat from 'dateformat';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
-const customers = [
-    {
-        cs_id: 'OD54719',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54710',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54709',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54708',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54707',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54706',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54705',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54704',
-        cs_name: "L Menchu",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54731',
-        cs_name: "L test",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-    {
-        cs_id: 'OD54751',
-        cs_name: "L test",
-        contact: '9046216598',
-        last_order: '01 Feb 2022',
-        unpaid_amount: 256.0,
-        active_orders: '00',
-        address: 'Flat No 301, A Wing, Blosom Society, Ujwal Co...',
-    },
-];
+import AddModal from "../modal/AddModal";
+import AuthContext from "../../store/auth-context";
+import axiosInstance from "../../api/axiosinstance";
+import apiurl from "../../api/apiconfig";
+
 
 const Customer = () => {
-    const indexNum = (cell, row, index) => {
-        return (<div>{index+1}</div>) 
-    }
+
+    const [customers, setData] = useState([]);
+  
+         useEffect(() => {
+            // Function to perform the GET request
+            const fetchData = async () => {
+              try {
+                const response = await axiosInstance.get(apiurl+'customer-list');
+                if(response.status==1){
+                setData(response.data); // Assuming the response contains the data you need
+                }
+              } catch (error) {
+                console.error('Error fetching data:', error);
+              }
+            };
+        
+            fetchData(); // Call the function to fetch the data
+          }, []);
+
+          console.log(customers);
+          const nameFormatter = (cell, row) => {
+            return `${row.firstName} ${row.lastName}`
+           }
+           
     
     const columns = [
+        
         {
-            dataField: 'SL No',
-            text: '',
-            formatter: indexNum
-        },
-        {
-            dataField: 'cs_id',
+            dataField: 'id',
             text: 'CS ID'
         },
         {
             dataField: 'cs_name',
-            text: 'CS Name'
+            text: 'CS Name',
+            formatter: nameFormatter
         },
         {
-            dataField: 'contact',
+            dataField: 'primary_phone_no',
             text: 'Contact'
         },
         {
@@ -138,7 +70,7 @@ const Customer = () => {
     const [searchText, setSearchText] = useState("");
     // Define pagination options
     const paginationOptions = {
-        sizePerPage: 5,
+        sizePerPage: 10,
         hideSizePerPage: true,
         hidePageListOnlyOnePage: true,
         onPageChange: (page, sizePerPage) => setCurrentPage(page),

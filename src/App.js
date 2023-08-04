@@ -10,6 +10,7 @@ import Order from './components/orders/Order';
 import OrderDetails from './components/orders/OrderDetails';
 import DeliveryBoy from './components/delivery boys/DeliveryBoy';
 import DeliveryBoyDetails from './components/delivery boys/DeliveryBoyDetails';
+import AddNewDboy from './components/delivery boys/AddNewDboy';
 import Helper from './components/helpers/Helper';
 import HelperDetails from './components/helpers/HelperDetails';
 import Laundry from './components/laundries/Laundry';
@@ -38,6 +39,7 @@ const App = () => {
           <Route path='/delivery-boy' element={<DeliveryBoy />} />
           <Route path='/delivery-boy/:id' element={<DeliveryBoyDetails />} />
           <Route path='/delivery-boy-details' element={<DeliveryBoyDetails />} />
+          <Route path='/add-new-dboy' element={<AddNewDboy />} />
           <Route path='/helper' element={<Helper />} />
           <Route path='/helper-details' element={<HelperDetails />} />
           <Route path='/laundry' element={<Laundry />} />

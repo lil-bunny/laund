@@ -792,7 +792,6 @@ td {
 .delivery-boy-panel .react-bootstrap-table table>thead>tr:nth-child(1)>th:nth-child(1) {
     background: rgba(239, 239, 239, 1) !important;
     color: #000;
-    width: 10px;
 }
 
 .delivery-boy-panel .react-bootstrap-table table>thead>tr:nth-child(2)>th:nth-child(2) {
@@ -803,7 +802,7 @@ td {
     background: #fff;
     color: rgba(79, 79, 79, 1);
 }
-
+.d-boy-action a{padding: 5px;;}
 .delivery-boy-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
     background: #fff;
 }
