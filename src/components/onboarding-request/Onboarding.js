@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 const Onboarding = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const [onboardingdata, setOnboarrd] = useState([]);
+  const [onboardingdata, setOnboard] = useState([]);
   const [onboarding_requests, setData] = useState([]);
   let imageLocation=imagepath();
 
@@ -66,7 +66,7 @@ const Onboarding = () => {
    }
 
 
-   console.log(onboarding_requests);
+   //console.log(onboarding_requests);
   const columns = [
       {
           dataField: 'SL No',
@@ -79,7 +79,7 @@ const Onboarding = () => {
           events: {
               onClick: (e, column, columnIndex, row, rowIndex) => {
                 setShow(true);
-                setOnboarrd(row.id);
+                setOnboard({'id':row.id,'address':row.address,'fullname':row.firstName+' '+row.lastName});
               }
           }
       },

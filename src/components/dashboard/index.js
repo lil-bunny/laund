@@ -1,5 +1,5 @@
 import React from "react";
-
+import { imagepath } from "@component/functions/commonfunction";
 import {
     Chart as ChartJS,
     BarElement,
@@ -23,6 +23,7 @@ ChartJS.register(
 
 
 const Dashboard = () => {
+    let imageLocation=imagepath();
     const data = {
         barThickness: 6,
         barPercentage: 0.5,
@@ -70,7 +71,7 @@ const Dashboard = () => {
                 <div className="container-fluid">
                     <div className="content-header-dropdown pull-right">
                         <div className="select-dropdown dashboard-header-dropdown">
-                            <img src="./assets/images/Sort-Down.png" alt="sort-img" />
+                            <img src={imageLocation+'sort-down.png'} alt="sort-img" />
                             <select className="select">
                                 <option value="1">Todays</option>
                                 <option value="2">Yesterday</option>
@@ -120,7 +121,7 @@ const Dashboard = () => {
                                         <span className="green-box"></span><label>Delivered</label>
                                         <span className="red-box"></span><label>Pending</label>
                                         <div className="select-dropdown table-select">
-                                            <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                                            <img src={imageLocation+'sort-down-small.png'} alt="sort-img" />
                                             <select className="select">
                                                 <option value="">This week</option>
                                                 <option value="1">2nd Week</option>
@@ -140,7 +141,7 @@ const Dashboard = () => {
                                 <div className="pie-chart-container">
                                     <h3>Service Type Report</h3>
                                     <div className="select-dropdown table-select">
-                                        <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                                        <img src={imageLocation+'sort-down-small.png'} alt="sort-img" />
                                         <select className="select">
                                             <option value="">This week</option>
                                             <option value="1">2nd Week</option>

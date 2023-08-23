@@ -38,7 +38,7 @@ const OnboardingModal = (props) => {
                     swal("Error", 'Something went wrong. Please try again later', "error");
             });
         }
-    
+     
     return (
         <Modal show={props.show} onHide={props.onHide} onboardingdata={props.onboardingdata}>
             <Modal.Header>
@@ -50,15 +50,15 @@ const OnboardingModal = (props) => {
                 <form>
                     <div className="form-group">
                         <h5>Laundry Name</h5>
-                        <p>Swatch Laundry Services</p>
+                        <p>{props.onboardingdata.fullname} Laundry Services</p>
                     </div>
                     <div className="form-group">
                         <h5>Laundry Address</h5>
-                        <p>Shop No 301, A Wing, Blosom Society, Ujwal Colony, Gajraj Chouk, Swargate, Pune 411068</p>
+                        <p>{props.onboardingdata.address}</p>
                     </div>
                     <div className="form-group">
                         <h5>Helper/DB Name</h5>
-                        <p>Arun Chaterjee</p>
+                        <p>{props.onboardingdata.fullname}</p>
                     </div>
                     <div className="form-group">
                         <h5>LS Enrollment Fees (per month)</h5>
@@ -69,13 +69,13 @@ const OnboardingModal = (props) => {
 
             <div style={{textAlign:"Right"}} className="onboarding-modal-footer">
                 <Button onClick={() => 
-                    OnboardingVarify(props.onboardingdata,'0')
+                    OnboardingVarify(props.onboardingdata.id,'0')
                     
                     }>
                     Reject
                 </Button>
                 <Button onClick={() => 
-                    OnboardingVarify(props.onboardingdata,'1')
+                    OnboardingVarify(props.onboardingdata.id,'1')
                     
                     } >
                     Accept
