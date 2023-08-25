@@ -30,7 +30,6 @@ const DeliveryBoyDetails = () => {
     
         fetchData(); // Call the function to fetch the data
       }, []);
-    // console.log(id);
     return (
         <>
             <section className="db-details-panel">

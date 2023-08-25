@@ -160,9 +160,9 @@ const NewDeliveryBoy = () => {
                                     <div className="form-group">
                                     <Field as="select" name="city" id="city" className="form-control">
                                     <option value="">Select City</option>
-                                    {cityList.map((value, key) => {
+                                    {cityList.map((value, kayvalue) => {
                                         return (
-                                        <option value={value.id}>
+                                        <option key={kayvalue} value={value.id}>
                                             {value.name}
                                         </option>
                                         );

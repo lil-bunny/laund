@@ -159,6 +159,8 @@
   margin: 0 0 0 23px;
 }
 
+.sidebar-menu ul li.active{background-color:#3a67bb;}
+
 .content-wrapper,
 .main-footer,
 .main-header {

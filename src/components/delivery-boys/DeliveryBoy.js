@@ -17,23 +17,8 @@ const DeliveryBoy = () => {
   const handleClose = () => setShow(false);
   let imageLocation=imagepath();
   const [deliveryBoys, setData] = useState([]);
-  const DeleteDboy = (id) =>{
-    let data = { 'id':''+id+''};
-    axiosInstance.delete(apiurl+'delete-laundry-associate', {data})
-            .then((response) => {
-                if (response.status === 1) {
-                  swal("success", "Delivery Boy deleted successfully", "success");
 
-                }
-                else if(response.status === 2){
-                    swal("Error", 'Error in data deletion', "error");
-                }
-            })
-            .catch((error) => {
-                //console.log('Error', error);
-                swal("Error", 'Error in data deletion', "error");
-        });
-    }
+
   useEffect(() => {
     // Function to perform the GET request
     const fetchData = async () => {
@@ -47,6 +32,25 @@ const DeliveryBoy = () => {
 
     fetchData(); // Call the function to fetch the data
   }, []);
+  const DeleteDboy = (id) =>{
+    let data = { 'id':''+id+''};
+    axiosInstance.delete(apiurl+'delete-laundry-associate', {data})
+            .then((response) => {
+                if (response.status === 1) {
+                  swal("success", "Delivery Boy deleted successfully", "success");
+                  fetchData();
+
+                }
+                else if(response.status === 2){
+                    swal("Error", 'Error in data deletion', "error");
+                }
+            })
+            .catch((error) => {
+                //console.log('Error', error);
+                swal("Error", 'Error in data deletion', "error");
+        });
+    }
+  
 
   
 
