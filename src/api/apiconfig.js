@@ -1,6 +1,6 @@
 import React from "react";
-const sandbox= 'http://143.110.242.57:8093/api/admin/';
-const live= 'http://143.110.242.57:8093/api/adminss/';
+const sandbox= 'https://emerge2.indusnettechnologies.com/api/v1/admin/';
+const live= 'https://emerge2.indusnettechnologies.com/api/v1/admin/';
 const apimode='sandbox';
 let apilink='';
 if (apimode=='sandbox'){

@@ -16,7 +16,7 @@ const OnboardingModal = (props) => {
                     'status':''+bording_status+''
                 };
         //console.log(data);
-        axiosInstance.post(apiurl+'onboarding-verify', data)
+        axiosInstance.post(apiurl+'onboarding/onboarding-verify', data)
                 .then((response) => {
                     if (response.status === 1) {
                         if(bording_status==1){

@@ -17,7 +17,7 @@ const HelperDetails = () => {
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.post(apiurl+'helper-details',{id});
+            const response = await axiosInstance.post(apiurl+'helper/helper-details',{id});
             if(response.status===1){
             setData(response.data); // Assuming the response contains the data you need
             }

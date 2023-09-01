@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
-import apiurl from "@component/pages/api/apiconfig";
+import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 import { imagepath } from "@component/functions/commonfunction";
 import swal from "sweetalert";
@@ -14,7 +14,7 @@ const Helper = () => {
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.get(apiurl+'helper-list');
+            const response = await axiosInstance.get(apiurl+'helper/helper-list');
             setData(response.data); // Assuming the response contains the data you need
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -97,6 +97,7 @@ const Helper = () => {
        String(field).toLowerCase().includes(searchText.toLowerCase())
      )
    );
+   console.log(apiurl);
     return (
         <>
             <section className="helper-panel">

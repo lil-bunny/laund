@@ -19,7 +19,7 @@ const Login = () => {
     },[])
     
     const loginHandler = (values) => {
-        axios.post(apiurl+'admin-login', values)
+        axios.post(apiurl+'auth/login', values)
             .then((response) => {
                 if (response.data.status === 1) {
                     localStorage.setItem('token', response.data.token);

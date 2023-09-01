@@ -24,7 +24,7 @@ const DeliveryBoyUpdate = () => {
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.post('http://143.110.242.57:8093/api/user/city-list',{id});
+            const response = await axiosInstance.post('https://emerge2.indusnettechnologies.com/api/v1/delivery-boy/auth/city-list',{id});
             
             if(response.status===1){
                 setDataCity(response.data);
@@ -40,7 +40,7 @@ const DeliveryBoyUpdate = () => {
 
       useEffect(() => {
        
-      axiosInstance.post(apiurl+'laundry-associate-details', dbid)
+      axiosInstance.post(apiurl+'delivery-boy/laundry-associate-details', dbid)
       .then((response) => {
         
         if(response.status===1){
@@ -179,7 +179,7 @@ const DeliveryBoyUpdate = () => {
                                     </div>
                                     <div className="form-group">
                                     <Field
-                                            type="text"
+                                            type="number"
                                             name="primary_phone_no"
                                             className="form-control mb-2"
                                             id="primary_phone_no"
@@ -215,7 +215,7 @@ const DeliveryBoyUpdate = () => {
                                     </div>
                                     <div className="form-group">
                                     <Field
-                                            type="text"
+                                            type="number"
                                             name="pincode"
                                             className="form-control mb-2"
                                             id="pincode"

@@ -15,7 +15,7 @@ const Notification = () => {
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.get(apiurl+'notification-list');
+            const response = await axiosInstance.get(apiurl+'notification/notification-list');
             if(response.status===1){
                 DbNotificationData(response.db_notification);
                 CsNotificationData(response.cs_notification);

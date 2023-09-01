@@ -69,7 +69,7 @@ const CustomerDetails = () => {
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.post(apiurl+'customer-details',{id});
+            const response = await axiosInstance.post(apiurl+'customer/customer-details',{id});
             if(response.status===1){
             setData(response.data); // Assuming the response contains the data you need
             }

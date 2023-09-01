@@ -16,7 +16,7 @@ const Customer = () => {
         let data = { 'id':''+id+'',
                       'type':'0'
                     };
-        axiosInstance.delete(apiurl+'delete-customer', {data})
+        axiosInstance.delete(apiurl+'customer/delete-customer', {data})
                 .then((response) => {
                    // console.log(response);
                     if (response.status === 1) {
@@ -36,7 +36,7 @@ const Customer = () => {
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.get(apiurl+'customer-list');
+            const response = await axiosInstance.get(apiurl+'customer/customer-list');
             setData(response.data); // Assuming the response contains the data you need
           } catch (error) {
             console.error('Error fetching data:', error);

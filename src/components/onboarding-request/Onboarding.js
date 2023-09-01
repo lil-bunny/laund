@@ -25,7 +25,7 @@ const Onboarding = () => {
     // Function to perform the GET request
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(apiurl+'onboarding-list');
+        const response = await axiosInstance.get(apiurl+'onboarding/onboarding-list');
         setData(response.data); // Assuming the response contains the data you need
       } catch (error) {
         console.error('Error fetching data:', error);

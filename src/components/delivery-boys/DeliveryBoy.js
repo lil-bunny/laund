@@ -23,7 +23,7 @@ const DeliveryBoy = () => {
     // Function to perform the GET request
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(apiurl+'laundry-associate-list');
+        const response = await axiosInstance.get(apiurl+'delivery-boy/laundry-associate-list');
         setData(response.data); // Assuming the response contains the data you need
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -34,7 +34,7 @@ const DeliveryBoy = () => {
   }, []);
   const DeleteDboy = (id) =>{
     let data = { 'id':''+id+''};
-    axiosInstance.delete(apiurl+'delete-laundry-associate', {data})
+    axiosInstance.delete(apiurl+'delivery-boy/delete-laundry-associate', {data})
             .then((response) => {
                 if (response.status === 1) {
                   swal("success", "Delivery Boy deleted successfully", "success");
