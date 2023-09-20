@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import apiurl from "@component/api/apiconfig";
@@ -7,10 +7,8 @@ import axiosInstance from "@component/api/axiosinstance";
 
 
 const OnboardingModal = (props) => {
-   
+    const [modalShow, setModalShow] = useState(false);
     const OnboardingVarify = (id,bording_status) =>{
-        
-
         let data = { 
                    'id':''+id+'',
                     'status':''+bording_status+''
@@ -20,6 +18,7 @@ const OnboardingModal = (props) => {
                 .then((response) => {
                     if (response.status === 1) {
                         if(bording_status==1){
+                           
                       swal("success", "Varified Successfully", "success");
                         }
                         else{
@@ -30,21 +29,27 @@ const OnboardingModal = (props) => {
     
                     }
                     else if(response.status === 2){
+                       
                         swal("Error", 'Something went wrong. Please try again later', "error");
                     }
                 })
                 .catch((error) => {
-                    //console.log('Error', error);
+                    setModalShow(false);
+                    //console.log(modalShow);
                     swal("Error", 'Something went wrong. Please try again later', "error");
+                    
             });
         }
      
     return (
-        <Modal show={props.show} onHide={props.onHide} onboardingdata={props.onboardingdata}>
+        <Modal show={props.show}  onHide={() => setModalShow(false)}>
             <Modal.Header>
                 <Modal.Title>
                     Laundry Onboarding Request
                 </Modal.Title>
+                <button type="button" className="close" onClick={props.onHide}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </Modal.Header>
             <Modal.Body>
                 <form>
@@ -77,7 +82,8 @@ const OnboardingModal = (props) => {
                 <Button onClick={() => 
                     OnboardingVarify(props.onboardingdata.id,'1')
                     
-                    } >
+                    } 
+                    >
                     Accept
                 </Button>
             </div>

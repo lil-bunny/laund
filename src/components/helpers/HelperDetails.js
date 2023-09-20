@@ -43,7 +43,7 @@ const HelperDetails = () => {
                             </div>
                             <div className="col-md-6">
                                 <div className="db-helper">
-                                    <img ref={target} onClick={() => setShow(!show)} src={imageLocation+'Menu-Vertical.png'} alt="menu-img" />
+                                    <img ref={target} onClick={() => setShow(!show)} src={imageLocation+'menu-vertical.png'} alt="menu-img" />
                                     <Overlay target={target.current} show={show} placement="left">
                                         {({
                                             placement: _placement,

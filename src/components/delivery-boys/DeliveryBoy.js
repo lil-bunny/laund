@@ -53,7 +53,7 @@ const DeliveryBoy = () => {
   
 
   
-
+console.log(deliveryBoys);
   const indexNum = (cell, row, index) => {
     return (<div>{index+1}</div>) 
 }
@@ -73,21 +73,22 @@ const nameFormatter = (cell, row) => {
 const dob_formate = (cell, row) => {
     return dateFormat(`${row.dob}`, "mmmm dS, yyyy");
    }
-const enroll_status_formate = (cell, row) => {
-return 'Active';
-}
-
-const end_date_formator = (cell, row) => {
-  return '1 Feb 2023';
-  }
-
-  const enrollment_fee_formator = (cell, row) => {
-    return 'Rs. 500.00';
+   const status_formator = (cell, row) => {
+    if(row.status===0){
+        return 'Deleted';
     }
+    else if(row.status===1){
+        return 'In Active';
+    }
+    else if(row.status===2){
+      return 'Active';
+  }
+    else{
+        return 'Active';
+    }
+   }
 
-    const Transaction_fee_formator = (cell, row) => {
-      return 'Rs. 20.00';
-      }
+
 
 
 
@@ -118,27 +119,24 @@ const end_date_formator = (cell, row) => {
       text: 'Contact'
     },
     {
-      dataField: 'enrollment_status',
-      text: 'Enrollment Status',
-      formatter: enroll_status_formate,
+      dataField: 'address',
+      text: 'Address'
     },
     {
-      dataField: 'enrollment_enddate',
-      text: 'Enrollment End Date',
-      formatter: end_date_formator,
+      dataField: 'cityName',
+      text: 'City',
     },
 
 
     {
-      dataField: 'enrollment_fee',
-      text: 'Enrollment Fee',
-      formatter: enrollment_fee_formator,
+      dataField: 'pincode',
+      text: 'Pincode'
     },
 
     {
-      dataField: 'transaction_fee',
-      text: 'Transation Fee',
-      formatter: Transaction_fee_formator,
+      dataField: 'status',
+      text: 'Status',
+      formatter: status_formator,
     },
     {
       dataField: 'action',

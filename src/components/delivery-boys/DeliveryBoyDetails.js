@@ -30,6 +30,8 @@ const DeliveryBoyDetails = () => {
     
         fetchData(); // Call the function to fetch the data
       }, []);
+
+      //console.log(data);
     return (
         <>
             <section className="db-details-panel">
@@ -45,7 +47,7 @@ const DeliveryBoyDetails = () => {
                             <div className="col-md-6">
                                 <div className="db-helper">
 
-                                    <img ref={target} onClick={() => setShow(!show)} src={imagepath()+'Menu-Vertical.png'} alt="menu-img" />
+                                    <img ref={target} onClick={() => setShow(!show)} src={imagepath()+'menu-vertical.png'} alt="menu-img" />
                                     <Overlay target={target.current} show={show} placement="left">
                                         {({
                                             placement: _placement,
@@ -101,114 +103,47 @@ const DeliveryBoyDetails = () => {
                             </div>
                         </div>
                         <div className="row content-row">
-                            <div className="col-md-6">
-                                <h4>Enrollment Details</h4>
-                                <p>If you made any changes, it will be affect from next Enrollment / Order.</p>
+                            <div className="col-md-12">
+                                <h4>Other Details</h4>
+                                
                                 <div className="row enrollment-row">
-                                    <div className="col-md-6">
-                                        <h5>Self Enrollment Fee</h5>
-                                        <div className="select-dropdown db-select">
-                                            <img src="/assets/images/sort-down-small.png" alt="sort-img" />
-                                            <select className="select">
-                                                <option value="">Month</option>
-                                                <option value="1">1 Month</option>
-                                                <option value="2">2 Month</option>
-                                                <option value="3">3 Month</option>
-                                            </select>
-                                        </div>
+                                    <div className="col-md-3 mt-2">
+                                        <h5>Email Addess</h5>
                                     </div>
-                                    <div className="col-md-6">
-                                        <div className="db-input">
-                                            <input type="text" defaultValue={250} />
-                                        </div>
+                                    <div className="col-md-9 mt-2">
+                                        <input readOnly className="form-control" type="text" defaultValue={data.email} />
                                     </div>
-                                </div>
-                                <div className="row enrollment-row">
-                                    <div className="col-md-6">
-                                        <h5>Self Enrollment Fee</h5>
-                                        <div className="select-dropdown db-select">
-                                            <img src="/assets/images/sort-down-small.png" alt="sort-img" />
-                                            <select className="select">
-                                                <option value="">Month</option>
-                                                <option value="1">1 Month</option>
-                                                <option value="2">2 Month</option>
-                                                <option value="3">3 Month</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="db-input">
-                                            <input type="text" defaultValue={250} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row enrollment-row pb-0">
-                                    <div className="col-md-6">
-                                        <h5>Self Enrollment Fee</h5>
-                                        <div className="select-dropdown db-select">
-                                            <img src="/assets/images/sort-down-small.png" alt="sort-img" />
-                                            <select className="select">
-                                                <option value="">Month</option>
-                                                <option value="1">1 Month</option>
-                                                <option value="2">2 Month</option>
-                                                <option value="3">3 Month</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="db-input">
-                                            <input type="text" defaultValue={20} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row transaction-row">
-                                    <div className="col-md-6">
-                                        <label>Transaction Fee (per order)</label>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="db-input">
-                                            <input type="text" defaultValue={250} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-right-border"></div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="document-contents">
-                                    <h4>Documents</h4>
-                                    <p>Aadhar Number</p>
-                                    <h5>1234-4567-7891-0987</h5>
 
-                                </div>
-                                <div className="document-contents">
-                                    <div className="row">
-                                        <div className="col-md-5">
-                                            <div className="aadhar-front">
-                                                <h4>Account Details</h4>
-                                                <p>Bank Account Number</p>
-                                                <h5>1234-4567-7891-0987</h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-7">
-                                            <div className="aadhar-back">
-                                                <h4>Account Details</h4>
-                                                <p>Bank IFSC Code</p>
-                                                <h5>SBINO000056</h5>
-                                            </div>
-                                        </div>
+                                    <div className="col-md-3 mt-2">
+                                        <h5>Date Of Birth</h5>
                                     </div>
-                                </div>
-                                <div className="document-contents">
-                                    <div className="aadhar-back">
-                                        <p>Mobile Number for UPI Payment</p>
-                                        <h5>8796231343</h5>
+                                    <div className="col-md-9 mt-2">
+                                        <input readOnly className="form-control" type="text" defaultValue={data.dob} />
+                                    </div>
+                                    <div className="col-md-3 mt-2">
+                                        <h5>Phone Number</h5>
+                                    </div>
+                                    <div className="col-md-9 mt-2">
+                                        <input readOnly className="form-control" type="text" defaultValue={data.primary_phone_no} />
+                                    </div>
+                                    <div className="col-md-3 mt-2">
+                                        <h5>City</h5>
+                                    </div>
+                                    <div className="col-md-9 mt-2">
+                                        <input readOnly className="form-control" type="text" defaultValue={data.cityName} />
+                                    </div>
+                                    <div className="col-md-3 mt-2">
+                                        <h5>Pin Code</h5>
+                                    </div>
+                                    <div className="col-md-9 mt-2">
+                                        <input readOnly className="form-control" type="text" defaultValue={data.pincode} />
                                     </div>
                                 </div>
                             </div>
+                            
                             <span className="profile-footer-border"></span>
                             <div className="footer-button">
-                                <button className="btn btn-sm" type="submit">CANCEL</button>
-                                <button className="btn btn-sm" type="submit">Save</button>
+                                <a className="btn btn-primary btn-back" href={'/delivery-boy/'}>BACK</a>
                             </div>
                         </div>
                     </div>

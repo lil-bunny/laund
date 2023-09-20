@@ -63,10 +63,10 @@ const Sidebar = (props) => {
                                 <span className="menu-name">Payments</span>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/manage-services" ? "nav-item active" : "nav-item"}>
-                            <Link href='/manage-services' className="menu-link">
+                        <li className={router.pathname == "/manage-categories" ? "nav-item active" : "nav-item"}>
+                            <Link href='/manage-categories' className="menu-link">
                                 <img src="/assets/images/purchase-order.png" alt="menu-img" />
-                                <span className="menu-name">Manage Services</span>
+                                <span className="menu-name">Manage Categories</span>
                             </Link>
                         </li>
                         
