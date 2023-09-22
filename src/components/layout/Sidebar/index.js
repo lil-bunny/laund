@@ -69,6 +69,18 @@ const Sidebar = (props) => {
                                 <span className="menu-name">Manage Categories</span>
                             </Link>
                         </li>
+                        <li className={router.pathname == "/manage-sub-categories" ? "nav-item active" : "nav-item"}>
+                            <Link href='/manage-sub-categories' className="menu-link">
+                                <img src="/assets/images/purchase-order.png" alt="menu-img" />
+                                <span className="menu-name">Manage Sub Categories</span>
+                            </Link>
+                        </li>
+                        <li className={router.pathname == "/manage-products" ? "nav-item active" : "nav-item"}>
+                            <Link href='/manage-products' className="menu-link">
+                                <img src="/assets/images/purchase-order.png" alt="menu-img" />
+                                <span className="menu-name">Manage Products</span>
+                            </Link>
+                        </li>
                         
                         <li className={router.pathname == "/location" ? "nav-item active" : "nav-item"}>
                             <Link href='/location' className="menu-link">

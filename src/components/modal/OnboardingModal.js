@@ -18,10 +18,11 @@ const OnboardingModal = (props) => {
                 .then((response) => {
                     if (response.status === 1) {
                         if(bording_status==1){
-                           
+                            props.onHide(true);
                       swal("success", "Varified Successfully", "success");
                         }
                         else{
+                            props.onHide(true);
                             swal("success", "Rejected Successfully", "success"); 
                         }
                      //props.onHide
@@ -29,12 +30,12 @@ const OnboardingModal = (props) => {
     
                     }
                     else if(response.status === 2){
-                       
+                        props.onHide(true);
                         swal("Error", 'Something went wrong. Please try again later', "error");
                     }
                 })
                 .catch((error) => {
-                    setModalShow(false);
+                    props.onHide(true);
                     //console.log(modalShow);
                     swal("Error", 'Something went wrong. Please try again later', "error");
                     

@@ -2,32 +2,30 @@ import React, { useState,useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import UpdateServideModal from "../modal/UpdateServiceModal";
-
-import AddServiceModal from "../modal/AddServiceModal";
-
+import UpdateProductModal from "../modal/UpdateProductModal";
+import AddProductModal from "../modal/AddProductModal";
 import { imagepath ,per_page_item} from "@component/functions/commonfunction";
 import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 import Icon from "../icon";
 
-const ManageCategories = () =>{
+const ManageProducts = () =>{
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
 
     const [showadd, setAddShow] = useState(false);
     const handleCloseAdd = () => setAddShow(false);
-    const [CategoryDetails, setCategoryDetails] = useState([]);
+    const [ProductDetail, setProductDetails] = useState([]);
 
   
     const imageLocation=imagepath();
     const [image_path, setImagepath] = useState([]);
     const item_per_page=per_page_item();
     const page_number=1;
-    const [categoriesList, setData] = useState([]);
+    const [productList, setData] = useState([]);
 
-    const GetCategoryDetails = (id,cat_name,cat_image) =>{
-        setCategoryDetails({'id':id,'category_name':cat_name,'category_image':cat_image});
+    const ProductDetails = (id,product_name,product_image,product_category,product_sub_category,rate) =>{
+        setProductDetails({'id':id,'product_name':product_name,'product_image':product_image,'product_category':product_category,'product_sub_category':product_sub_category,'rate':rate});
          setShow(true);
     }
     const OpenAddModel = () =>{
@@ -39,7 +37,7 @@ const ManageCategories = () =>{
     useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(apiurl+'category/list?page='+page_number+'&limit='+item_per_page);
+        const response = await axiosInstance.get(apiurl+'product/list?page='+page_number+'&limit='+item_per_page);
         setData(response.data); 
         setImagepath(response.image_path);
       } catch (error) {
@@ -50,8 +48,8 @@ const ManageCategories = () =>{
     fetchData(); // Call the function to fetch the data
   }, []);
 
-  const DeleteCategory = (id) =>{
-    axiosInstance.delete(apiurl+'category/delete/'+id)
+  const DeleteProduct = (id) =>{
+    axiosInstance.delete(apiurl+'product/delete/'+id)
             .then((response) => {
                 console.log(response);
                 if (response.status ===1) {
@@ -68,47 +66,53 @@ const ManageCategories = () =>{
                 swal("Error", 'Error in data deletion', "error");
         });
     }
-    console.log(image_path);
-
+        
         const actionFormator = (cell, row) => {
-            return   (<div><span className="update-item" onClick={() => GetCategoryDetails(row.id,row.category_name,image_path+row.new_category_image_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteCategory(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>); 
+            return   (<div><span className="update-item" onClick={() => ProductDetails(row.id,row.product_name,image_path+row.new_product_image_name,row.product_category.id,row.product_sub_category.id,10)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteProduct(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>); 
         }
         const ImageFormator=(cell, row) => {
-            return   (<div className="category-image"><img src={image_path+row.new_category_image_name} alt="sort-img" /></div>); 
+            return   (<div className="category-image"><img src={image_path+row.new_product_image_name} alt="sort-img" /></div>); 
         }
-        const status_formator = (cell, row) => {
-            if(row.status===0){
-                return 'Deleted';
-            }
-            else if(row.status===1){
-                return 'Active';
-            }
-            else{
-                return 'Active';
-            }
-           }
+
+        const catFormator=(cell,row)=>{
+            return (<div><span>{row.product_category.category_name}</span></div>);
+        }
+        const SubcatFormator=(cell,row)=>{
+            return (<div><span>{row.product_sub_category.sub_category_name}</span></div>);
+        }
+       
         const columns = [
         {
             dataField: 'id',
-            text: 'Service Id'
+            text: 'Product ID'
         },
         {
-            dataField: 'category_image',
+            dataField: 'new_product_image_name',
             text: 'Image',
             formatter: ImageFormator
             
         },
         {
-            dataField: 'category_name',
+            dataField: 'product_name',
             text: 'Name',
             
         },
 
         {
-            dataField: 'status',
-            text: 'status',
-            formatter: status_formator
+            dataField: 'product_category',
+            text: 'Category',
+            formatter: catFormator
+            
         },
+
+        {
+            dataField: 'sub_category_name',
+            text: 'Sub Category',
+            formatter: SubcatFormator
+            
+        },
+
+       
 
         {
             dataField: 'action',
@@ -122,7 +126,7 @@ const ManageCategories = () =>{
     return(
         <>
             <section className="delivery-boy-panel body-panel">
-            <h3>Manage Categories</h3>
+            <h3>Manage Products</h3>
                 <div className="common-table">
                 
                     <div className="table-header">
@@ -137,17 +141,17 @@ const ManageCategories = () =>{
                     </div>
                     <BootstrapTable
                         keyField='id'
-                        data={categoriesList}
+                        data={productList}
                         columns={columns}
                         wrapperClasses="table-responsive"
                     />
                 </div>
             </section>
-            <UpdateServideModal show={show} onHide={handleClose} CategoryDetails={CategoryDetails} /> 
+            <UpdateProductModal show={show} onHide={handleClose} ProductDetail={ProductDetail}/> 
 
-            <AddServiceModal show={showadd} onHide={handleCloseAdd}/> 
+            <AddProductModal show={showadd} onHide={handleCloseAdd}/> 
         </>
     )
 }
 
-export default ManageCategories;
+export default ManageProducts;

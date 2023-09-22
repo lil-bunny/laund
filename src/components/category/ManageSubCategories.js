@@ -2,32 +2,32 @@ import React, { useState,useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import UpdateServideModal from "../modal/UpdateServiceModal";
+import UpdateSubServideModal from "../modal/UpdateSubServiceModal";
 
-import AddServiceModal from "../modal/AddServiceModal";
+import AddSubServiceModal from "../modal/AddSubServiceModal";
 
 import { imagepath ,per_page_item} from "@component/functions/commonfunction";
 import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 import Icon from "../icon";
 
-const ManageCategories = () =>{
+const ManageSubCategories = () =>{
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
 
     const [showadd, setAddShow] = useState(false);
     const handleCloseAdd = () => setAddShow(false);
-    const [CategoryDetails, setCategoryDetails] = useState([]);
+    const [SubCategoryDetails, setSubCategoryDetails] = useState([]);
 
   
     const imageLocation=imagepath();
     const [image_path, setImagepath] = useState([]);
     const item_per_page=per_page_item();
     const page_number=1;
-    const [categoriesList, setData] = useState([]);
+    const [SubcategoriesList, setData] = useState([]);
 
-    const GetCategoryDetails = (id,cat_name,cat_image) =>{
-        setCategoryDetails({'id':id,'category_name':cat_name,'category_image':cat_image});
+    const GetSubCategoryDetails = (id,cat_name) =>{
+        setSubCategoryDetails({'id':id,'sub_category_name':cat_name});
          setShow(true);
     }
     const OpenAddModel = () =>{
@@ -39,7 +39,7 @@ const ManageCategories = () =>{
     useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(apiurl+'category/list?page='+page_number+'&limit='+item_per_page);
+        const response = await axiosInstance.get(apiurl+'sub-category/list?page='+page_number+'&limit='+item_per_page);
         setData(response.data); 
         setImagepath(response.image_path);
       } catch (error) {
@@ -50,8 +50,8 @@ const ManageCategories = () =>{
     fetchData(); // Call the function to fetch the data
   }, []);
 
-  const DeleteCategory = (id) =>{
-    axiosInstance.delete(apiurl+'category/delete/'+id)
+  const DeleteSubCategory = (id) =>{
+    axiosInstance.delete(apiurl+'sub-category/delete/'+id)
             .then((response) => {
                 console.log(response);
                 if (response.status ===1) {
@@ -71,43 +71,18 @@ const ManageCategories = () =>{
     console.log(image_path);
 
         const actionFormator = (cell, row) => {
-            return   (<div><span className="update-item" onClick={() => GetCategoryDetails(row.id,row.category_name,image_path+row.new_category_image_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteCategory(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>); 
+            return   (<div><span className="update-item" onClick={() => GetSubCategoryDetails(row.id,row.sub_category_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteSubCategory(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>); 
         }
-        const ImageFormator=(cell, row) => {
-            return   (<div className="category-image"><img src={image_path+row.new_category_image_name} alt="sort-img" /></div>); 
-        }
-        const status_formator = (cell, row) => {
-            if(row.status===0){
-                return 'Deleted';
-            }
-            else if(row.status===1){
-                return 'Active';
-            }
-            else{
-                return 'Active';
-            }
-           }
         const columns = [
         {
             dataField: 'id',
             text: 'Service Id'
         },
+        
         {
-            dataField: 'category_image',
-            text: 'Image',
-            formatter: ImageFormator
-            
-        },
-        {
-            dataField: 'category_name',
+            dataField: 'sub_category_name',
             text: 'Name',
             
-        },
-
-        {
-            dataField: 'status',
-            text: 'status',
-            formatter: status_formator
         },
 
         {
@@ -121,8 +96,8 @@ const ManageCategories = () =>{
 
     return(
         <>
-            <section className="delivery-boy-panel body-panel">
-            <h3>Manage Categories</h3>
+            <section className="delivery-boy-panel">
+            <h3>Manage Sub Categories</h3>
                 <div className="common-table">
                 
                     <div className="table-header">
@@ -137,17 +112,17 @@ const ManageCategories = () =>{
                     </div>
                     <BootstrapTable
                         keyField='id'
-                        data={categoriesList}
+                        data={SubcategoriesList}
                         columns={columns}
                         wrapperClasses="table-responsive"
                     />
                 </div>
             </section>
-            <UpdateServideModal show={show} onHide={handleClose} CategoryDetails={CategoryDetails} /> 
+            <UpdateSubServideModal show={show} onHide={handleClose} SubCategoryDetails={SubCategoryDetails} /> 
 
-            <AddServiceModal show={showadd} onHide={handleCloseAdd}/> 
+            <AddSubServiceModal show={showadd} onHide={handleCloseAdd}/> 
         </>
     )
 }
 
-export default ManageCategories;
+export default ManageSubCategories;

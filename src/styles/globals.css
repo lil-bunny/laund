@@ -135,7 +135,7 @@
   font-size: 16px;
   font-weight: 700;
   color: #fff;
-  padding: 18px 28px 18px 28px;
+  padding: 14px 14px 14px 14px;
   min-width: 100%;
 }
 
@@ -1133,6 +1133,16 @@ td {
   font-size: 16px;
   font-weight: 400;
 }
+.modal-body select.form-control {
+  border: none;
+  border-bottom: 1px solid #4f4f4f;
+  border-radius: 0;
+  padding: 16px 0 0 0;
+  color: #4f4f4f;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 
 .modal-body .form-group {
   padding: 0 0 24px !important;
@@ -1674,6 +1684,17 @@ input[type="file"]::before {
   left: 40px;
   color: #0964b0;
   content: "Upload File";
+}
+.product-file input[type="file"]{
+width: 100%;
+}
+.product-file input[type="file"]::before {
+  position: absolute;
+  pointer-events: none;
+  /*   top: 11px; */
+  left: 40px;
+  color: #0964b0;
+  content: "Product Image";
 }
 
 input[type="file"]::after {

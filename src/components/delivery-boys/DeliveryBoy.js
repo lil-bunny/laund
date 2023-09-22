@@ -88,11 +88,6 @@ const dob_formate = (cell, row) => {
     }
    }
 
-
-
-
-
-
   const columns = [
     {
       dataField: 'id',
