@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -14,30 +14,30 @@ const AddProductModal = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const response = await axiosInstance.get(apiurl+'category/list');
-            setcategoryList(response.data); 
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
+            try {
+                const response = await axiosInstance.get(apiurl + 'category/list');
+                setcategoryList(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
-    
+
         fetchData(); // fetching cat
-      }, []);
+    }, []);
 
 
-      useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
-          try {
-            const response = await axiosInstance.get(apiurl+'sub-category/list');
-            setSubcategoryList(response.data); 
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
+            try {
+                const response = await axiosInstance.get(apiurl + 'sub-category/list');
+                setSubcategoryList(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
-    
+
         fetchData(); // fetching sub cat
-      }, []);
+    }, []);
 
     const submitHandler = (values) => {
 
@@ -57,7 +57,7 @@ const AddProductModal = (props) => {
                 props.onHide(true);
                 //console.log('Error', error);
                 swal("Error", 'Error in product addition', "error");
-                
+
             });
     };
 
@@ -78,15 +78,12 @@ const AddProductModal = (props) => {
                         product_name: '',
                         category_id: '',
                         sub_category_id: '',
-                        rate: '',
                         file: null,
                     }}
                     validationSchema={yup.object().shape({
                         category_id: yup.string().required("Select a category"),
                         sub_category_id: yup.string().required("Select a sub category"),
                         product_name: yup.string().required("Product name is required"),
-                        rate: yup.string().required("Rate is required"),
-                        
                     })}
                     onSubmit={(values, { resetForm }) => {
                         submitHandler(values);
@@ -148,20 +145,6 @@ const AddProductModal = (props) => {
                                     <div className="form-error">{errors.product_name}</div>
                                 )}
                             </div>
-                            <div className="form-group">
-                                <Field
-                                    type="number"
-                                    name="rate"
-                                    className="form-control mb-2"
-                                    id="rate"
-                                    placeholder="Rate"
-                                />
-                                {touched.rate && errors.rate && (
-                                    <div className="form-error">{errors.rate}</div>
-                                )}
-                            </div>
-
-
                             <Modal.Footer>
                                 <Button variant="primary" type="submit">Submit</Button>
                             </Modal.Footer>

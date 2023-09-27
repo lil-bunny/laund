@@ -65,7 +65,6 @@ const UpdateProductModal = (props) => {
         product_name: '',
         category_id: '',
         sub_category_id: '',
-        rate: '',
         file: null
     };
 
@@ -88,14 +87,12 @@ const UpdateProductModal = (props) => {
                         product_name: props.ProductDetail.product_name ? props.ProductDetail.product_name : "",
                         category_id: props.ProductDetail.product_category ? props.ProductDetail.product_category : "",
                         sub_category_id: props.ProductDetail.product_sub_category ? props.ProductDetail.product_sub_category : "",
-                        rate: props.ProductDetail.rate ? props.ProductDetail.rate : ""
 
                     })}
                     validationSchema={yup.object().shape({
                         category_id: yup.string().required("Select a category"),
                         sub_category_id: yup.string().required("Select a sub category"),
                         product_name: yup.string().required("Product name is required"),
-                        rate: yup.string().required("Rate is required"),
 
                     })}
 
@@ -166,19 +163,6 @@ const UpdateProductModal = (props) => {
                                     <div className="form-error">{errors.product_name}</div>
                                 )}
                             </div>
-                            <div className="form-group">
-                                <Field
-                                    type="number"
-                                    name="rate"
-                                    className="form-control mb-2"
-                                    id="rate"
-                                    placeholder="Rate"
-                                />
-                                {touched.rate && errors.rate && (
-                                    <div className="form-error">{errors.rate}</div>
-                                )}
-                            </div>
-
 
                             <Modal.Footer>
                                 <Button variant="primary" type="submit">Submit</Button>

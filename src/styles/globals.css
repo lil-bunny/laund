@@ -1732,6 +1732,32 @@ input[type="file"]::file-selector-button:hover {
 input[type="file"]::file-selector-button:active {
   background-color: #e5e7eb;
 }
+.custom-pagination {text-align: right;}
+.custom-pagination button{ 
+  height: 32px;
+  width: 32px;
+  border: 1px solid #3a67bb;
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+  line-height: 32px;
+  margin: 5px;
+}
+.custom-pagination button.active{ 
+ 
+  color: #fff;
+  background-color:#3a67bb ;
+}
+.custom-pagination button:disabled {
+opacity: .7;
+}
+
+.custom-pagination button svg{
+  font-size: 14px;
+ color:#1c2941;
+}
+
+
 
 button.close {
   position: absolute;

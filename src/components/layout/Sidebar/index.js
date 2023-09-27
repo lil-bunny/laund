@@ -27,13 +27,13 @@ const Sidebar = (props) => {
                                 <span className="menu-name">Orders</span>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/delivery-boy" ? "nav-item active" : "nav-item"}>
+                        <li className={router.pathname == "/delivery-boy" || router.pathname == "/update-delivery-boy/[id]" || router.pathname == "/new-delivery-boy" || router.pathname == "/delivery-boy-details/[id]" ? "nav-item active" : "nav-item"}>
                             <Link href='/delivery-boy' className="menu-link">
                                 <img src="/assets/images/businessman.png" alt="menu-img" />
                                 <span className="menu-name">Delivery Boys</span>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/helper" ? "nav-item active" : "nav-item"}>
+                        <li className={router.pathname == "/helper" || router.pathname == "/helper-details/[id]"? "nav-item active" : "nav-item"}>
                             <Link href='/helper' className="menu-link">
                                 <img src="/assets/images/supplier.png" alt="menu-img" />
                                 <span className="menu-name">Helpers</span>
@@ -45,7 +45,7 @@ const Sidebar = (props) => {
                                 <span className="menu-name">Laundries</span>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/customer" ? "nav-item active" : "nav-item"}>
+                        <li className={router.pathname == "/customer" || router.pathname == "/customer-details/[id]" ? "nav-item active" : "nav-item"}>
                             <Link href='/customer' className="menu-link">
                                 <img src={imageLocation+'management.png'} alt="menu-img" />
                                 <span className="menu-name">Customers</span>

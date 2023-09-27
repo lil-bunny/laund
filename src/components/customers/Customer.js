@@ -1,66 +1,73 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import apiurl from "@component/api/apiconfig";
-import { imagepath } from "@component/functions/commonfunction";
+import { imagepath, per_page_item } from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import { getStaticProps, getStaticPaths } from 'next';
 import Icon from "../icon";
 import swal from "sweetalert";
 
 const Customer = () => {
-    let imageLocation=imagepath();
+    let imageLocation = imagepath();
 
     const [customers, setData] = useState([]);
-    const DeleteCust = (id) =>{
-        let data = { 'id':''+id+'',
-                      'type':'0'
-                    };
-        axiosInstance.delete(apiurl+'customer/delete-customer', {data})
-                .then((response) => {
-                   // console.log(response);
-                    if (response.status === 1) {
-                      swal("success", "Customer deleted successfully", "success");
-    
-                    }
-                    else if(response.status === 2){
-                        swal("Error", 'Error in data deletion', "error");
-                    }
-                })
-                .catch((error) => {
-                    //console.log('Error', error);
-                    swal("Error", 'Error in data deletion', "error");
-            });
-        }
-    useEffect(() => {
-        // Function to perform the GET request
-        const fetchData = async () => {
-          try {
-            const response = await axiosInstance.get(apiurl+'customer/customer-list');
-            setData(response.data); // Assuming the response contains the data you need
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
+    const [total_items, setTotalItems] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState("");
+    const itemsPerPage = per_page_item();
+
+    const DeleteCust = (id) => {
+        let data = {
+            'id': '' + id + '',
+            'type': '0'
         };
-    
-        fetchData(); // Call the function to fetch the data
-      }, []);
-        const indexNum = (cell, row, index) => {
-            return (<div>{index + 1}</div>)
+        axiosInstance.delete(apiurl + 'customer/delete-customer', { data })
+            .then((response) => {
+                // console.log(response);
+                if (response.status === 1) {
+                    swal("success", "Customer deleted successfully", "success");
+
+                }
+                else if (response.status === 2) {
+                    swal("Error", 'Error in data deletion', "error");
+                }
+            })
+            .catch((error) => {
+                //console.log('Error', error);
+                swal("Error", 'Error in data deletion', "error");
+            });
+    }
+
+    // Function to perform the GET request
+    const fetchData = async () => {
+        try {
+            const response = await axiosInstance.get(apiurl + 'customer/customer-list?page=' + currentPage + '&limit=' + itemsPerPage);
+            setData(response.data); // Assuming the response contains the data you need
+            setTotalItems(response.count);
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
-        const nameFormatter = (cell, row) => {
-            return `${row.firstName} ${row.lastName}`
-           }
-        const actionFormator = (cell, row) => {
-            return   (<div><a href={'customer-details/'+row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a> <span className="trash-item" onClick={() => DeleteCust(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>); 
-          }
+    };
+    useEffect(() => {
+        fetchData(); // Call the function to fetch the data
+    }, [currentPage]);
+    const indexNum = (cell, row, index) => {
+        return (<div>{index + 1}</div>)
+    }
+    const nameFormatter = (cell, row) => {
+        return `${row.firstName} ${row.lastName}`
+    }
+    const actionFormator = (cell, row) => {
+        return (<div><a href={'customer-details/' + row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a> <span className="trash-item" onClick={() => DeleteCust(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+    }
     const columns = [
         {
             dataField: 'SL No',
             text: 'S.N',
             formatter: indexNum
         },
-       
+
         {
             dataField: 'cs_name',
             text: 'CS Name',
@@ -92,28 +99,40 @@ const Customer = () => {
             formatter: actionFormator
         },
     ];
-    
-    const [currentPage, setCurrentPage] = useState(1);
-    const [searchText, setSearchText] = useState("");
-  
-  
-    const paginationOptions = {
-      sizePerPage: 10,
-      hideSizePerPage: true,
-      hidePageListOnlyOnePage: true,
-      onPageChange: (page, sizePerPage) => setCurrentPage(page),
-    };
-  
+
+
+
     const handleSearch = (event) => {
-      // console.log(event.target.value);
-       setSearchText(event.target.value);
-     };
-  
-     const filteredData = customers.filter((item) =>
-     Object.values(item).some((field) =>
-       String(field).toLowerCase().includes(searchText.toLowerCase())
-     )
-   );
+        // console.log(event.target.value);
+        setSearchText(event.target.value);
+    };
+
+    const filteredData = customers.filter((item) =>
+        Object.values(item).some((field) =>
+            String(field).toLowerCase().includes(searchText.toLowerCase())
+        )
+    );
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    const renderItems = () => {
+        return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
+            <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
+        ));
+    };
+
+    const PaginationHtml = () => {
+        if (Math.ceil(total_items / itemsPerPage) > 1) {
+            return <div className="custom-pagination">
+                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    <Icon icon="fa-arrow-left" />
+                </button>
+                {renderItems()}
+                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === Math.ceil(total_items / itemsPerPage)}><Icon icon="fa-arrow-right" />
+                </button>
+            </div>
+        }
+    };
     return (
         <>
             <section className="customer-panel">
@@ -121,8 +140,8 @@ const Customer = () => {
                     <div className="table-header">
                         <div className="table-search">
                             <form className="form-inline">
-                                <input className="form-control" type="text" placeholder="Search" aria-label="Search"  value={searchText}
-          onChange={handleSearch}/>
+                                <input className="form-control" type="text" placeholder="Search" aria-label="Search" value={searchText}
+                                    onChange={handleSearch} />
                                 <img src="../assets/images/search.png" alt="sort-img" />
                             </form>
                         </div>
@@ -131,9 +150,9 @@ const Customer = () => {
                         keyField='id'
                         data={filteredData}
                         columns={columns}
-                        pagination={paginationFactory(paginationOptions)}
                         wrapperClasses="table-responsive"
                     />
+                    {PaginationHtml()}
                 </div>
             </section>
         </>
