@@ -1,13 +1,39 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import Overlay from 'react-bootstrap/Overlay';
 import PaymentListModal from "../modal/PaymentListModal";
+import dateFormat from "dateformat";
+import apiurl from "@component/api/apiconfig";
+import { imagepath } from "@component/functions/commonfunction";
+import axiosInstance from "@component/api/axiosinstance";
+import Link from 'next/link';
+import { useRouter } from "next/router";
 
 const LaundryDetails = () => {
     const [show, setShow] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const handleClose = () => setModalShow(false);
     const target = useRef(null);
+    const [laundyDetails, setData] = useState([]);
+    const router=useRouter();
+    let imageLocation = imagepath();
+    const {id} = router.query;
 
+    useEffect(() => {
+        // Function to perform the GET request
+        const fetchData = async () => {
+          try {
+            const response = await axiosInstance.get(apiurl+'laundry-service/laundry-detail/'+id);
+            if(response.status===1){
+            setData(response.data); // Assuming the response contains the data you need
+            }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData(); // Call the function to fetch the data
+      }, []);
+      console.log(laundyDetails);
     return (
         <>
             <section className="db-details-panel">
@@ -17,12 +43,12 @@ const LaundryDetails = () => {
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="db-id">
-                                    <h2>LS12345</h2>
+                                    <h2>LS{laundyDetails.id}</h2>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="db-helper">
-                                    <img ref={target} onClick={() => setShow(!show)} src="../assets/images/menu-vertical.png" alt="menu-img" />
+                                    <img ref={target} onClick={() => setShow(!show)} src={imageLocation+'menu-vertical.png'}/>
                                     <Overlay target={target.current} show={show} placement="left">
                                         {({
                                             placement: _placement,
@@ -59,16 +85,15 @@ const LaundryDetails = () => {
                                     <div className="col-md-8">
                                         <div className="db-details-profile">
                                             <span className="profile-image">
-                                                <img src="../assets/images/dummy.png" alt="prof-img" />
+                                            <img src={ laundyDetails.new_profile_image_name ? laundyDetails.new_profile_image_name : imagepath()+'dummy.png'} alt="prof-img" />
                                             </span>
                                             <div className="right-prof-panel">
-                                                <h2>Jain Enterprises</h2>
-                                                <p>Owner: Mukesh Kedia</p>
+                                                <h2>{laundyDetails.firstName} {laundyDetails.lastName}</h2>
                                                 <span className="db-contact">
-                                                    Contact No: <span>8796231143, 9822631107</span>
+                                                    Contact No: <span>{laundyDetails.primary_phone_no}</span>
                                                 </span>
                                                 <span className="db-prof-address">
-                                                    Flat No 303, A Wing, Blosom Society, Ujwal Colony, Gajraj Chowk, Swargate, Pune 411041
+                                                {laundyDetails.address},{laundyDetails.cityName},{laundyDetails.pincode}
                                                 </span>
                                                 <div className="enroll-name">
                                                     Enrolled By: <span>DB-Arun Chaterjee</span>

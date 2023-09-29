@@ -57,7 +57,7 @@ const DeliveryBoy = () => {
   
 
   
-console.log(deliveryBoys);
+//console.log(deliveryBoys);
   const indexNum = (cell, row, index) => {
     return (<div>{index+1}</div>) 
 }

@@ -39,7 +39,7 @@ const Sidebar = (props) => {
                                 <span className="menu-name">Helpers</span>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/laundry" ? "nav-item active" : "nav-item"}>
+                        <li className={router.pathname == "/laundry" || router.pathname == "/laundry-details/[id]" ? "nav-item active" : "nav-item"}>
                             <Link href='/laundry' className="menu-link">
                                 <img src="/assets/images/washing-machine.png" alt="menu-img" />
                                 <span className="menu-name">Laundries</span>

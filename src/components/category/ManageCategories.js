@@ -162,7 +162,7 @@ const ManageCategories = () => {
                 <div className="common-table">
 
                     <div className="table-header">
-                        <button className="btn btn-secondry" onClick={() => OpenAddModel()}><Icon icon="fa-plus" size="1x" color="#3A67BB" /> Add New</button>
+                        <button className="btn btn-secondry btn-add-new" onClick={() => OpenAddModel()}>Add New</button>
                         <div className="table-search">
                             <form className="form-inline">
 
