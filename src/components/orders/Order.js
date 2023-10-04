@@ -1,235 +1,66 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import { DateRangePicker } from 'rsuite';
-
-const orders = [
-    {
-        order_id: 'OD54781',
-        cs_name: "Rahul Sethi",
-        db_name: 'Hozefa',
-        helper_name: 'Sunil K',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD5498',
-        cs_name: "Vinayak G",
-        db_name: 'Sarmila K',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56219',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56211',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56212',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56213',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56214',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56215',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56216',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-    {
-        order_id: 'OD56208',
-        cs_name: "Prateek K",
-        db_name: 'Hozefa',
-        helper_name: 'L Manchu',
-        pickup_request: '08 Dec. 2022 | 10:12 AM',
-        pickup_status: 'Yes',
-        cloth_count: 18,
-        self_serve: 10,
-        ls_serve: 8,
-        accept_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_name: "Swacth laundry Services",
-        ready_by_ls: '08 Dec. 2022 | 10:12 AM',
-        ls_raised_issue: "No Issue",
-        picked_from_ls: '08 Dec. 2022 | 10:12 AM',
-        proposed_delivery_date: '10 Dec. 2022 | 10:12 AM',
-        delivery_status: "Successfully",
-        bill_amount: 355.0,
-        payment_status: "Unpaid",
-        ratings_by_cs: '*****',
-        comments: "Lorel ipsum dolor sit amet, consectetor"
-    },
-];
+import { imagepath, per_page_item } from "@component/functions/commonfunction";
+import apiurl from "@component/api/apiconfig";
+import dateFormat from "dateformat";
+import axiosInstance from "@component/api/axiosinstance";
+import Icon from "../icon";
 
 const Order = () => {
-    const indexNum = (cell, row, index) => {
-        return (<div>{index+1}</div>) 
-    }
+    let imageLocation = imagepath();
+    const [orderData, setData] = useState([]);
+    const [total_items, setTotalItems] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState("");
+    const itemsPerPage = per_page_item();
+
+     // Function to perform the GET request
+     const fetchData = async () => {
+        try {
+          const response = await axiosInstance.get(apiurl + 'order/order-list?page=' + currentPage + '&limit=' + itemsPerPage);
+          setData(response.data); // Assuming the response contains the data you need
+          setTotalItems(response.count);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      useEffect(() => {
+      fetchData(); // Call the function to fetch the data
+    }, [currentPage]);
+
     
+    const indexNum = (cell, row, index) => {
+        return (<div>{index + 1}</div>);
+    }
+
+    const csNameFormator = (cell, row) => {
+        return `${row.customer.firstName} ${row.customer.lastName}`;
+       }
+
+       const dbNameFormator = (cell, row) => {
+        return `${row.delivery_boy.firstName} ${row.delivery_boy.lastName}`;
+       }
+
+       const hsNameFormator = (cell, row) => {
+        if(row.helper!=null){
+            return `${row.delivery_boy.firstName} ${row.delivery_boy.lastName}`;
+        }
+        else{
+            return '-';
+        }
+       
+       }
+
+       const pickup_requestFormator = (cell, row) => {
+        if(row.pickup_request_date!=null && row.pickup_request_time!=null){
+            return dateFormat(`${row.pickup_request_date}`, "d mmm yyyy")+'|'+row.pickup_request_time;
+          }
+          else{
+            return '';
+          }
+       }
+
     const columns = [
         {
             dataField: 'SL No',
@@ -237,24 +68,28 @@ const Order = () => {
             formatter: indexNum
         },
         {
-            dataField: 'order_id',
+            dataField: 'order_unique_id',
             text: 'Order ID'
         },
         {
             dataField: 'cs_name',
-            text: 'CS Name'
+            text: 'CS Name',
+            formatter: csNameFormator
         },
         {
             dataField: 'db_name',
-            text: 'DB Name'
+            text: 'DB Name',
+            formatter: dbNameFormator
         },
         {
             dataField: 'helper_name',
-            text: 'Helper Name'
+            text: 'Helper Name',
+            formatter: hsNameFormator
         },
         {
             dataField: 'pickup_request',
-            text: 'Pickup Request'
+            text: 'Pickup Request',
+            formatter: pickup_requestFormator
         },
         {
             dataField: 'pickup_status',
@@ -316,9 +151,43 @@ const Order = () => {
             dataField: 'comments',
             text: 'Comments'
         },
-    
+
     ];
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     
+    
+    const handleSearch = (event) => {
+        // console.log(event.target.value);
+        setSearchText(event.target.value);
+    };
+    
+    const filteredData = orderData.filter((item) =>
+        Object.values(item).some((field) =>
+            String(field).toLowerCase().includes(searchText.toLowerCase())
+        )
+    );
+    const renderItems = () => {
+        return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
+            <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
+        ));
+    };
+    
+    const PaginationHtml = () => {
+        if(Math.ceil(total_items / itemsPerPage)>1){
+        return<div className="custom-pagination"> 
+        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+        <Icon icon="fa-arrow-left"/>
+        </button>
+        {renderItems()}
+        <button onClick={() => handlePageChange(currentPage + 1)}disabled={currentPage === Math.ceil(total_items / itemsPerPage)}><Icon icon="fa-arrow-right"/>
+        </button>
+       </div>
+        }
+    };
+
     return (
         <>
             <section className="order-panel">
@@ -383,11 +252,12 @@ const Order = () => {
                         </div>
                     </div>
                     <BootstrapTable
-                        keyField='order_id'
-                        data={orders}
+                        keyField='id'
+                        data={filteredData}
                         columns={columns}
                         wrapperClasses="table-responsive"
                     />
+                    {PaginationHtml()}
                 </div>
             </section>
         </>

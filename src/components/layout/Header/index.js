@@ -16,8 +16,15 @@ const Header = (props) => {
         const fetchData = async () => {
           try {
             const response = await axiosInstance.get(apiurl+'auth/admin-details');
+          
             setData(response.data); // Assuming the response contains the data you need
+            
           } catch (error) {
+            if(error=='AxiosError: Request failed with status code 401'){
+                localStorage.removeItem('token');
+                router.push('/login');
+            }
+          
             console.error('Error fetching data:', error);
           }
         };
@@ -28,9 +35,15 @@ const Header = (props) => {
   
     const logoutHandler = () => {
         localStorage.removeItem('token');
-        router.push('/login')
+        router.push('/login');
     }
-    // console.log(data);
+    // if(data.length==0){
+    //     localStorage.removeItem('token');
+    //      router.push('/login');
+    // }
+
+    //console.log(data);
+    
     return (
         <>
             <nav className="main-header navbar navbar-expand">

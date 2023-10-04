@@ -41,6 +41,7 @@ const ManageProducts = () => {
     const fetchData = async () => {
         try {
             const response = await axiosInstance.get(apiurl + 'product/list?page=' + currentPage + '&limit=' + itemsPerPage);
+           // console.log(response);
             setData(response.data);
             setImagepath(response.image_path);
             setTotalItems(response.count);
@@ -90,6 +91,25 @@ const ManageProducts = () => {
         return (<div><span>{row.product_sub_category.sub_category_name}</span></div>);
     }
 
+    const StatusFormator = (cell, row) => {
+        if(typeof row.status!='undefined'){
+            if (row.status === 0) {
+                return 'Deleted';
+            }
+            else if (row.status === 1) {
+                return 'Active';
+            }
+            else {
+                return 'Active';
+            }
+        }
+        else{
+            return '-';
+        }
+       
+    }
+    
+
     const columns = [
         {
             dataField: 'id',
@@ -118,6 +138,13 @@ const ManageProducts = () => {
             dataField: 'sub_category_name',
             text: 'Sub Category',
             formatter: SubcatFormator
+
+        },
+
+        {
+            dataField: 'status',
+            text: 'Status',
+            formatter: StatusFormator
 
         },
 
