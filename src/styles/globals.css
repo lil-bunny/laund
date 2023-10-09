@@ -1621,7 +1621,7 @@ td {
   z-index: 10;
   background: rgba(92, 136, 218, 1);
 }
-.add-new-dboy{padding: 5px;}
+.add-new-dboy{padding: 3px 5px 3px 3px;}
 .add-new-dboy a{
   text-decoration: none;
     font-size: 12px;
