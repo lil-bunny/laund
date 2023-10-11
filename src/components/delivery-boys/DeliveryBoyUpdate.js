@@ -20,6 +20,7 @@ const DeliveryBoyUpdate = () => {
     let dataid = { 'id': '' + dbid + '' };
     const [cityList, setDataCity] = useState([]);
     const [DbDetails, setDbdetails] = useState([]);
+    const [previewfile, setFile] = useState();
     useEffect(() => {
         // Function to perform the GET request
         const fetchData = async () => {
@@ -59,7 +60,7 @@ const DeliveryBoyUpdate = () => {
 
     const submitHandler = (values) => {
 
-        axiosInstanceMultipart.put(apiurl + 'update-laundry-associate/' + dbid.id, values)
+        axiosInstanceMultipart.put(apiurl + 'delivery-boy/update-laundry-associate/' + dbid.id, values)
             .then((response) => {
                 if (response.status === 1) {
 
@@ -88,184 +89,189 @@ const DeliveryBoyUpdate = () => {
     };
     //console.log(DbDetails);      
 
+
     return (
         <>
             <section className="delivery-boy-panel">
                 <div className="container">
-                        
-                                <h4>Update Delivery Boy</h4>
-                                <Formik
-                                    enableReinitialize={true}
-                                    initialValues={Object.assign(initialValues, {
-                                        firstName: DbDetails.firstName ? DbDetails.firstName : "",
-                                        lastName: DbDetails.lastName ? DbDetails.lastName : "",
-                                        email: DbDetails.email ? DbDetails.email : "",
-                                        dob: DbDetails.dob ? DbDetails.dob : "",
-                                        primary_phone_no: DbDetails.primary_phone_no ? DbDetails.primary_phone_no : "",
-                                        address: DbDetails.address ? DbDetails.address : "",
-                                        city: DbDetails.cityId ? DbDetails.cityId : "",
-                                        pincode: DbDetails.pincode ? DbDetails.pincode : "",
-                                    })}
 
-                                    validationSchema={
-                                        yup.object().shape({
-                                            firstName: yup.string().required("First name is required"),
-                                            lastName: yup.string().required("First name is required"),
-                                            email: yup.string().required("Email is required"),
-                                            dob: yup.string().required("Date of birth is required"),
-                                            primary_phone_no: yup.string().required("Phone Number is required"),
-                                            address: yup.string().required("Address is required"),
-                                            city: yup.string().required("City is required"),
-                                            pincode: yup.string().required("Pincode is required"),
+                    <h4>Update Delivery Boy</h4>
+                    <Formik
+                        enableReinitialize={true}
+                        initialValues={Object.assign(initialValues, {
+                            firstName: DbDetails.firstName ? DbDetails.firstName : "",
+                            lastName: DbDetails.lastName ? DbDetails.lastName : "",
+                            email: DbDetails.email ? DbDetails.email : "",
+                            dob: DbDetails.dob ? DbDetails.dob : "",
+                            primary_phone_no: DbDetails.primary_phone_no ? DbDetails.primary_phone_no : "",
+                            address: DbDetails.address ? DbDetails.address : "",
+                            city: DbDetails.cityId ? DbDetails.cityId : "",
+                            pincode: DbDetails.pincode ? DbDetails.pincode : "",
+                        })}
 
-                                        })
-                                    }
+                        validationSchema={
+                            yup.object().shape({
+                                firstName: yup.string().required("First name is required"),
+                                lastName: yup.string().required("First name is required"),
+                                email: yup.string().required("Email is required"),
+                                dob: yup.string().required("Date of birth is required"),
+                                primary_phone_no: yup.string().required("Phone Number is required"),
+                                address: yup.string().required("Address is required"),
+                                city: yup.string().required("City is required"),
+                                pincode: yup.string().required("Pincode is required")
 
-                                    onSubmit={(values, { resetForm }) => {
-                                        //console.log(values);
-                                        submitHandler(values);
-                                        //resetForm({ values: '' });
-                                    }}
-                                >
-                                    {({ errors, touched, setFieldValue }) => (
+                            })
+                        }
 
-                                        <Form>
-                                            <div className="my-account-layout">
-                                            <div className="my-account-elm">
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <div className="user-img">
+                        onSubmit={(values, { resetForm }) => {
+                            //console.log(values);
+                            submitHandler(values);
+                            //resetForm({ values: '' });
+                        }}
+                    >
+                        {({ errors, touched, setFieldValue }) => (
 
-                                                            <span className="profile-picture text-center">
-                                                                <img className="p-detail-image" src={DbDetails.new_profile_image_name ? DbDetails.new_profile_image_name : imageLocation + 'dummy.png'} alt="doorbell" />
-                                                            </span>
+                            <Form>
+                                <div className="my-account-layout">
+                                    <div className="my-account-elm">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <div className="user-img">
 
-                                                            <div className="upload-btn-wrapper">
-                                                                <button className="upload-btn" type="button"><Icon icon="fas fa-camera"></Icon></button>
-                                                                <input
-                                                                    type="file"
-                                                                    id="file"
-                                                                    name="file"
-                                                                    onChange={(event) => {
-                                                                        setFieldValue('file', event.currentTarget.files[0]);
+                                                    <span className="profile-picture text-center">
+                                                        <img className="p-detail-image" src={previewfile ? previewfile : DbDetails.new_profile_image_name} alt="doorbell" />
+                                                    </span>
 
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </div>
+                                                    <div className="upload-btn-wrapper">
+                                                        <button className="upload-btn" type="button"><Icon icon="fas fa-camera"></Icon></button>
+                                                        <input
+                                                            type="file"
+                                                            id="file"
+                                                            name="file"
+                                                            onChange={(event) => {
+                                                                setFieldValue('file', event.currentTarget.files[0]);
+                                                                setFile(URL.createObjectURL(event.target.files[0]));
+
+
+                                                            }}
+                                                        />
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="my-account-elm mt-4 mt-lg-0">
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                    <div className="row">
-                                                        <div className="form-group">
-                                                            <Field
-                                                                type="text"
-                                                                name="firstName"
-                                                                className="form-control mb-2"
-                                                                id="firstName"
-                                                                placeholder="First Name"
+                                        </div>
+                                    </div>
 
-                                                            />
-                                                            {touched.firstName && errors.firstName && <div className="form-error">{errors.firstName}</div>}
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <Field
-                                                                type="text"
-                                                                name="lastName"
-                                                                className="form-control mb-2"
-                                                                id="lastName"
-                                                                placeholder="Last Name"
+                                    <div className="my-account-elm mt-4 mt-lg-0">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <div className="row">
+                                                    <div className="form-group">
+                                                        <Field
+                                                            type="text"
+                                                            name="firstName"
+                                                            className="form-control mb-2"
+                                                            id="firstName"
+                                                            placeholder="First Name"
 
-                                                            />
-                                                            {touched.lastName && errors.lastName && <div className="form-error">{errors.lastName}</div>}
-                                                        </div>
+                                                        />
+                                                        {touched.firstName && errors.firstName && <div className="form-error">{errors.firstName}</div>}
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <Field
+                                                            type="text"
+                                                            name="lastName"
+                                                            className="form-control mb-2"
+                                                            id="lastName"
+                                                            placeholder="Last Name"
 
-                                                        <div className="form-group">
-                                                            <Field
-                                                                type="email"
-                                                                name="email"
-                                                                className="form-control mb-2"
-                                                                id="email"
-                                                                placeholder="Email"
+                                                        />
+                                                        {touched.lastName && errors.lastName && <div className="form-error">{errors.lastName}</div>}
+                                                    </div>
 
-                                                            />
-                                                            {touched.email && errors.email && <div className="form-error">{errors.email}</div>}
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <Field
-                                                                type="date"
-                                                                name="dob"
-                                                                className="form-control mb-2"
-                                                                id="dob"
-                                                                placeholder="Date Of Birth"
+                                                    <div className="form-group">
+                                                        <Field
+                                                            type="email"
+                                                            name="email"
+                                                            className="form-control mb-2"
+                                                            id="email"
+                                                            placeholder="Email"
 
-                                                            />
-                                                            {touched.dob && errors.dob && <div className="form-error">{errors.dob}</div>}
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <Field
-                                                                type="number"
-                                                                name="primary_phone_no"
-                                                                className="form-control mb-2"
-                                                                id="primary_phone_no"
-                                                                placeholder="Phone Number"
+                                                        />
+                                                        {touched.email && errors.email && <div className="form-error">{errors.email}</div>}
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <Field
+                                                            type="date"
+                                                            name="dob"
+                                                            className="form-control mb-2"
+                                                            id="dob"
+                                                            placeholder="Date Of Birth"
 
-                                                            />
-                                                            {touched.primary_phone_no && errors.primary_phone_no && <div className="form-error">{errors.primary_phone_no}</div>}
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <Field
-                                                                type="text"
-                                                                name="address"
-                                                                className="form-control mb-2"
-                                                                id="address"
-                                                                placeholder="Address"
+                                                        />
+                                                        {touched.dob && errors.dob && <div className="form-error">{errors.dob}</div>}
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <Field
+                                                            type="number"
+                                                            name="primary_phone_no"
+                                                            className="form-control mb-2"
+                                                            id="primary_phone_no"
+                                                            placeholder="Phone Number"
 
-                                                            />
-                                                            {touched.address && errors.address && <div className="form-error">{errors.address}</div>}
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <Field as="select" name="city" id="city" className="form-control" >
-                                                                <option value="">Select City</option>
-                                                                {cityList.map((value, kayvalue) => {
-                                                                    return (
-                                                                        <option key={kayvalue} value={value.id}>
-                                                                            {value.name}
-                                                                        </option>
-                                                                    );
-                                                                })}
+                                                        />
+                                                        {touched.primary_phone_no && errors.primary_phone_no && <div className="form-error">{errors.primary_phone_no}</div>}
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <Field
+                                                            type="text"
+                                                            name="address"
+                                                            className="form-control mb-2"
+                                                            id="address"
+                                                            placeholder="Address"
 
-                                                            </Field>
-                                                            {touched.city && errors.city && <div className="form-error">{errors.city}</div>}
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <Field
-                                                                type="number"
-                                                                name="pincode"
-                                                                className="form-control mb-2"
-                                                                id="pincode"
-                                                                placeholder="Pincode"
+                                                        />
+                                                        {touched.address && errors.address && <div className="form-error">{errors.address}</div>}
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <Field as="select" name="city" id="city" className="form-control" >
+                                                            <option value="">Select City</option>
+                                                            {cityList.map((value, kayvalue) => {
+                                                                return (
+                                                                    <option key={kayvalue} value={value.id}>
+                                                                        {value.name}
+                                                                    </option>
+                                                                );
+                                                            })}
 
-                                                            />
-                                                            {touched.pincode && errors.pincode && <div className="form-error">{errors.pincode}</div>}
-                                                        </div>
+                                                        </Field>
+                                                        {touched.city && errors.city && <div className="form-error">{errors.city}</div>}
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <Field
+                                                            type="number"
+                                                            name="pincode"
+                                                            className="form-control mb-2"
+                                                            id="pincode"
+                                                            placeholder="Pincode"
+
+                                                        />
+                                                        {touched.pincode && errors.pincode && <div className="form-error">{errors.pincode}</div>}
+                                                    </div>
 
 
-                                                        <p className="form-submit text-right">
+                                                    <p className="form-submit text-right">
                                                         <button type="submit" className="btn btn-save">SAVE</button>
-                                                        </p>
-                                                    </div>
+                                                    </p>
                                                 </div>
                                             </div>
-                                            </div>
-                                            </div>
-                                        </Form>
-                                    )}
-                                </Formik>
-                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
             </section>
         </>
     );

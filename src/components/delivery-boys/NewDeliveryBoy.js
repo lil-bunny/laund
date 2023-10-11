@@ -13,6 +13,7 @@ import Icon from "../icon";
 let id = '1';
 const NewDeliveryBoy = () => {
     let imageLocation = imagepath();
+    const [previewfile, setFile] = useState();
     const [cityList, setDataCity] = useState([]);
     useEffect(() => {
         // Function to perform the GET request
@@ -81,11 +82,12 @@ const NewDeliveryBoy = () => {
                                     address: yup.string().required("Address is required"),
                                     city: yup.string().required("City is required"),
                                     pincode: yup.string().required("Pincode is required"),
+                                    file: yup.mixed().required("Please select a profile pics"),
 
                                 })
                             }
                             onSubmit={(values, { resetForm }) => {
-                                console.log(values);
+                                //console.log(values);
                                 submitHandler(values);
                                 resetForm({ values: '' });
                             }}
@@ -100,7 +102,7 @@ const NewDeliveryBoy = () => {
                                                     <div className="user-img">
 
                                                         <span className="profile-picture text-center">
-                                                            <img className="p-detail-image" src={imageLocation + 'dummy.png'} alt="doorbell" />
+                                                            <img className="p-detail-image" src={previewfile ? previewfile : imageLocation + 'dummy.png'} alt="doorbell" />
                                                         </span>
 
                                                         <div className="upload-btn-wrapper">
@@ -111,10 +113,13 @@ const NewDeliveryBoy = () => {
                                                                 name="file"
                                                                 onChange={(event) => {
                                                                     setFieldValue('file', event.currentTarget.files[0]);
+                                                                    setFile(URL.createObjectURL(event.target.files[0]));
                                                                 }}
                                                             />
                                                         </div>
+                                                       
                                                     </div>
+                                                    {touched.file && errors.file && <div className="form-error text-center">{errors.file}</div>}
                                                 </div>
                                             </div>
                                         </div>

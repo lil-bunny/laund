@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import apiurl from "@component/api/apiconfig";
-import { imagepath, per_page_item } from "@component/functions/commonfunction";
+import { imagepath, per_page_item ,NoDataText} from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import { getStaticProps, getStaticPaths } from 'next';
 import Icon from "../icon";
@@ -16,6 +16,9 @@ const Customer = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
     const itemsPerPage = per_page_item();
+    let ItemNotFound = NoDataText();
+    const [filterKey, setKeyFilter] = useState('');
+    const [emptyDataMessage, SetNodataText] = useState('');
 
     const DeleteCust = (id) => {
         let data = {
@@ -42,16 +45,19 @@ const Customer = () => {
     // Function to perform the GET request
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get(apiurl + 'customer/customer-list?page=' + currentPage + '&limit=' + itemsPerPage);
+            const response = await axiosInstance.get(apiurl + 'customer/customer-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey);
             setData(response.data); // Assuming the response contains the data you need
             setTotalItems(response.count);
+            if (response.count == 0) {
+                SetNodataText(ItemNotFound);
+              }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
     useEffect(() => {
         fetchData(); // Call the function to fetch the data
-    }, [currentPage]);
+    }, [currentPage,filterKey]);
     const indexNum = (cell, row, index) => {
         return (<div>{index + 1}</div>)
     }
@@ -99,19 +105,15 @@ const Customer = () => {
             formatter: actionFormator
         },
     ];
-
-
-
-    const handleSearch = (event) => {
-        // console.log(event.target.value);
-        setSearchText(event.target.value);
-    };
-
-    const filteredData = customers.filter((item) =>
-        Object.values(item).some((field) =>
-            String(field).toLowerCase().includes(searchText.toLowerCase())
-        )
-    );
+    const handlekeySearch = (event) => {
+        //set_Search_key(event.target.value);
+        if (event.target.value != '') {
+          setKeyFilter('&search_key=' + event.target.value.trim());
+        }
+        else {
+          setKeyFilter('');
+        }
+      };
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -140,16 +142,17 @@ const Customer = () => {
                     <div className="table-header">
                         <div className="table-search">
                             <form className="form-inline">
-                                <input className="form-control" type="text" placeholder="Search" aria-label="Search" value={searchText}
-                                    onChange={handleSearch} />
+                            <input className="form-control" type="text" name="search_key" placeholder="Search" aria-label="Search"
+                    onChange={handlekeySearch} />
                                 <img src="../assets/images/search.png" alt="sort-img" />
                             </form>
                         </div>
                     </div>
                     <BootstrapTable
                         keyField='id'
-                        data={filteredData}
+                        data={customers}
                         columns={columns}
+                        noDataIndication={emptyDataMessage}
                         wrapperClasses="table-responsive"
                     />
                     {PaginationHtml()}

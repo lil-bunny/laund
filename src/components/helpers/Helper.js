@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
-import { imagepath ,per_page_item} from "@component/functions/commonfunction";
+import { imagepath ,per_page_item,NoDataText} from "@component/functions/commonfunction";
 import swal from "sweetalert";
 import Icon from "../icon";
 
@@ -14,20 +14,29 @@ const Helper = () => {
     const [searchText, setSearchText] = useState("");
     const itemsPerPage = per_page_item();
     let imageLocation=imagepath();
+    let ItemNotFound=NoDataText();
+    const [filterKey, setKeyFilter] = useState('');
+    const [filterStatus, setStatusfilter] = useState('');
+    const[emptyDataMessage,SetNodataText]=useState('');
+
     
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.get(apiurl + 'helper/helper-list?page=' + currentPage + '&limit=' + itemsPerPage);
+            const response = await axiosInstance.get(apiurl + 'helper/helper-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey+filterStatus);
             setData(response.data); // Assuming the response contains the data you need
             setTotalItems(response.count);
+            if(response.count==0){
+                SetNodataText(ItemNotFound);
+              }
+
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         };
     useEffect(() => {
         fetchData(); // Call the function to fetch the data
-      }, [currentPage]);
+      }, [currentPage,filterKey,filterStatus]);
 
       console.log(total_items);
     const indexNum = (cell, row, index) => {
@@ -83,20 +92,24 @@ const Helper = () => {
         },
     ];
     
-
-   
+    const handlekeySearch = (event) => {
+        //set_Search_key(event.target.value);
+        if(event.target.value!=''){
+        setKeyFilter('&search_key='+event.target.value.trim());
+        }
+        else{
+          setKeyFilter('');
+        }
+      };
     
-    
-    const handleSearch = (event) => {
-        // console.log(event.target.value);
-        setSearchText(event.target.value);
-    };
-    
-    const filteredData = helpers.filter((item) =>
-        Object.values(item).some((field) =>
-            String(field).toLowerCase().includes(searchText.toLowerCase())
-        )
-    );
+      const handlekeySearch_staus = (event) => {
+        if(event.target.value!=''){
+          setStatusfilter('&status='+event.target.value.trim());
+        }
+        else{
+          setStatusfilter('');
+        }
+      };
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -126,27 +139,32 @@ const Helper = () => {
             <section className="helper-panel">
                 <div className="common-table">
                     <div className="table-header">
-                        <div className="table-search">
-                            <form className="form-inline">
-                                <input className="form-control" type="search" placeholder="Search" aria-label="Search"  value={searchText}
-          onChange={handleSearch} />
-                                <img src="./assets/images/search.png" alt="sort-img" />
-                            </form>
-                        </div>
-                        <div className="select-dropdown table-select">
-                            <img src="./assets/images/sort-down-small.png" alt="sort-img" />
-                            <select className="select">
-                                <option value="">Status</option>
-                                <option value="1">Status 1</option>
-                                <option value="2">Status 2</option>
-                                <option value="3">Status 3</option>
-                            </select>
-                        </div>
+                    <div className="table-search">
+              <form className="d-flex form-inline">
+                <div className="search_key">
+                <input className="form-control" type="text" name="search_key" placeholder="Search" aria-label="Search"
+                  onChange={handlekeySearch} />
+                <img src="./assets/images/search.png" alt="sort-img" />
+                </div>
+                <div className="select-dropdown table-select">
+                <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                <select className="select" name="status" onChange={handlekeySearch_staus}> 
+                  <option value="">Status</option>
+                  <option value="1">Active</option>
+                  <option value="2">Accepted</option>
+                  <option value="3">Rejected</option>
+                  <option value="4">Deleted</option>
+                </select>
+              </div>
+                </form>
+              </div>
+                        
                     </div>
                     <BootstrapTable
                         keyField='id'
-                        data={filteredData}
+                        data={helpers}
                         columns={columns}
+                         noDataIndication={emptyDataMessage} 
                         wrapperClasses="table-responsive"
                     />
                     {PaginationHtml()}

@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import dateFormat from "dateformat";
 import apiurl from "@component/api/apiconfig";
-import { imagepath, per_page_item } from "@component/functions/commonfunction";
+import { imagepath, per_page_item,NoDataText} from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import swal from "sweetalert";
 import Icon from "../icon";
@@ -20,21 +20,29 @@ const Laundry = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const itemsPerPage = per_page_item();
+  let ItemNotFound = NoDataText();
+    const [filterKey, setKeyFilter] = useState('');
+    const [filterStatus, setStatusfilter] = useState('');
+    const [emptyDataMessage, SetNodataText] = useState('');
+  
 
 
   // Function to perform the GET request
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.get(apiurl + 'laundry-service/laundry-list?page=' + currentPage + '&limit=' + itemsPerPage);
+      const response = await axiosInstance.get(apiurl + 'laundry-service/laundry-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey+filterStatus);
       setData(response.data); // Assuming the response contains the data you need
       setTotalItems(response.count);
+      if (response.count == 0) {
+        SetNodataText(ItemNotFound);
+    }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
   useEffect(() => {
     fetchData(); // Call the function to fetch the data
-  }, [currentPage]);
+  }, [currentPage,filterKey,filterStatus]);
 
   const indexNum = (cell, row, index) => {
     return (<div>{index + 1}</div>)
@@ -121,7 +129,24 @@ const Laundry = () => {
       formatter: actionFormator
     },
   ];
+  const handlekeySearch = (event) => {
+    //set_Search_key(event.target.value);
+    if (event.target.value != '') {
+        setKeyFilter('&search_key=' + event.target.value.trim());
+    }
+    else {
+        setKeyFilter('');
+    }
+};
 
+const handlekeySearch_staus = (event) => {
+    if (event.target.value != '') {
+        setStatusfilter('&status=' + event.target.value.trim());
+    }
+    else {
+        setStatusfilter('');
+    }
+};
 
 
   const handlePageChange = (pageNumber) => {
@@ -129,16 +154,6 @@ const Laundry = () => {
   };
 
 
-  const handleSearch = (event) => {
-    // console.log(event.target.value);
-    setSearchText(event.target.value);
-  };
-
-  const filteredData = laundryList.filter((item) =>
-    Object.values(item).some((field) =>
-      String(field).toLowerCase().includes(searchText.toLowerCase())
-    )
-  );
   const renderItems = () => {
     return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
       <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
@@ -164,27 +179,31 @@ const Laundry = () => {
         <h1>Laundry Service</h1>
         <div className="common-table order-panel-table">
           <div className="table-header">
-            <div className="table-search">
-              <form className="form-inline">
-                <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={searchText}
-                  onChange={handleSearch} />
-                <img src="./assets/images/search.png" alt="sort-img" />
-              </form>
-            </div>
-            <div className="select-dropdown table-select">
-              <img src="./assets/images/sort-down-small.png" alt="sort-img" />
-              <select className="select">
-                <option value="">Status</option>
-                <option value="1">Status 1</option>
-                <option value="2">Status 2</option>
-                <option value="3">Status 3</option>
-              </select>
-            </div>
+          <div className="table-search">
+                            <form className="d-flex form-inline">
+                                <div className="search_key">
+                                    <input className="form-control" type="text" name="search_key" placeholder="Search" aria-label="Search"
+                                        onChange={handlekeySearch} />
+                                    <img src="./assets/images/search.png" alt="sort-img" />
+                                </div>
+                                <div className="select-dropdown table-select">
+                                    <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                                    <select className="select" name="status" onChange={handlekeySearch_staus}>
+                                        <option value="">Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="2">Accepted</option>
+                                        <option value="3">Rejected</option>
+                                        <option value="4">Deleted</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
           </div>
           <BootstrapTable
             keyField='id'
-            data={filteredData}
+            data={laundryList}
             columns={columns}
+            noDataIndication={emptyDataMessage}
             wrapperClasses="table-responsive"
           />
 

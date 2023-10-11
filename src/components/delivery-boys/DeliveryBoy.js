@@ -4,7 +4,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import AddModal from "../modal/AddModal";
 import dateFormat from "dateformat";
 import apiurl from "@component/api/apiconfig";
-import { imagepath, per_page_item } from "@component/functions/commonfunction";
+import { imagepath, per_page_item ,NoDataText} from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import swal from "sweetalert";
 import Icon from "../icon";
@@ -16,6 +16,7 @@ const DeliveryBoy = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   let imageLocation = imagepath();
+  let ItemNotFound=NoDataText();
   const [deliveryBoys, setData] = useState([]);
   const [total_items, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +32,7 @@ const DeliveryBoy = () => {
       setData(response.data); // Assuming the response contains the data you need
       setTotalItems(response.count);
       if(response.count==0){
-        SetNodataText('No Result Found');
+        SetNodataText(ItemNotFound);
       }
     } catch (error) {
       console.error('Error fetching data:', error);
