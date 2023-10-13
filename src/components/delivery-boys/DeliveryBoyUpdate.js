@@ -114,7 +114,6 @@ const DeliveryBoyUpdate = () => {
                                 firstName: yup.string().required("First name is required"),
                                 lastName: yup.string().required("First name is required"),
                                 email: yup.string().required("Email is required"),
-                                dob: yup.string().required("Date of birth is required"),
                                 primary_phone_no: yup.string().required("Phone Number is required"),
                                 address: yup.string().required("Address is required"),
                                 city: yup.string().required("City is required"),
@@ -124,7 +123,7 @@ const DeliveryBoyUpdate = () => {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            //console.log(values);
+                            console.log(values);
                             submitHandler(values);
                             //resetForm({ values: '' });
                         }}
@@ -207,6 +206,7 @@ const DeliveryBoyUpdate = () => {
                                                             className="form-control mb-2"
                                                             id="dob"
                                                             placeholder="Date Of Birth"
+                                                            readonly=""
 
                                                         />
                                                         {touched.dob && errors.dob && <div className="form-error">{errors.dob}</div>}

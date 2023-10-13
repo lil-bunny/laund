@@ -26,6 +26,7 @@ const NewDeliveryBoy = () => {
                 }
 
             } catch (error) {
+
                 console.error('Error fetching data:', error);
             }
         };
@@ -37,17 +38,18 @@ const NewDeliveryBoy = () => {
 
         axiosInstanceMultipart.post(apiurl + 'delivery-boy/add-laundry-associate', values)
             .then((response) => {
+               
                 if (response.status === 1) {
 
                     swal("success", "Delivery Boy added successfully", "success");
                     // navigate('/');
                 }
-                else if (response.status === 2 && response.errors != '') {
-                    swal("Error", response.errors, "error");
+                else if (response.status === 2 && response.message != '') {
+                    swal("Error", "Delivery boy  already exist", "error");
                 }
             })
             .catch((error) => {
-                //console.log('Error', error);
+                console.log(error);
                 swal("Error", error, "error");
             });
     };
@@ -77,7 +79,7 @@ const NewDeliveryBoy = () => {
                                     firstName: yup.string().required("First name is required"),
                                     lastName: yup.string().required("First name is required"),
                                     email: yup.string().required("Email is required"),
-                                    dob: yup.string().required("Date of birth is required"),
+                                    dob: yup.date().max(new Date(Date.now() - 567648000000), "Age should be grater than or equal to 18 Years").required("Date of birth is required"),
                                     primary_phone_no: yup.string().required("Phone Number is required"),
                                     address: yup.string().required("Address is required"),
                                     city: yup.string().required("City is required"),
@@ -89,7 +91,8 @@ const NewDeliveryBoy = () => {
                             onSubmit={(values, { resetForm }) => {
                                 //console.log(values);
                                 submitHandler(values);
-                                resetForm({ values: '' });
+                               resetForm({ values: '' });
+                               setFile(imageLocation + 'dummy.png');
                             }}
                         >
                             {({ errors, touched, setFieldValue }) => (

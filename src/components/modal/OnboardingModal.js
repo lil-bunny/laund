@@ -66,10 +66,6 @@ const OnboardingModal = (props) => {
                         <h5>Helper/DB Name</h5>
                         <p>{props.onboardingdata.fullname}</p>
                     </div>
-                    <div className="form-group">
-                        <h5>LS Enrollment Fees (per month)</h5>
-                        <p>250.00</p>
-                    </div>
                 </form>
             </Modal.Body>
 

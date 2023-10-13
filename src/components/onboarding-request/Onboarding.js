@@ -6,14 +6,12 @@ import { DateRangePicker } from "rsuite";
 import OnboardingModal from "../modal/OnboardingModal";
 import dateFormat from "dateformat";
 import apiurl from "@component/api/apiconfig";
-import { imagepath,per_page_item} from "@component/functions/commonfunction";
+import { imagepath,per_page_item,NoDataText} from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import swal from "sweetalert";
 import Icon from "../icon";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-
 const Onboarding = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -21,18 +19,22 @@ const Onboarding = () => {
     const [onboarding_requests, setData] = useState([]);
     const [total_items, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchText, setSearchText] = useState("");
-
     let imageLocation = imagepath();
+    let ItemNotFound=NoDataText();
+    const [filterKey, setKeyFilter] = useState('');
+    const[emptyDataMessage,SetNodataText]=useState('');
 
     const itemsPerPage = per_page_item();
 
     // Function to perform the GET request
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get(apiurl + 'onboarding/onboarding-list?page=' + currentPage + '&limit=' + itemsPerPage);
+            const response = await axiosInstance.get(apiurl + 'onboarding/onboarding-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey);
             setData(response.data); // Assuming the response contains the data you need
             setTotalItems(response.count);
+            if(response.count==0){
+                SetNodataText(ItemNotFound);
+              }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -40,7 +42,7 @@ const Onboarding = () => {
     useEffect(() => {
         fetchData(); // Call the function to fetch the data
 
-    }, [currentPage]);
+    }, [currentPage,filterKey]);
 
     const indexNum = (cell, row, index) => {
         return (<div>{index + 1}</div>)
@@ -134,17 +136,16 @@ const Onboarding = () => {
         setCurrentPage(pageNumber);
     };
 
-
-    const handleSearch = (event) => {
-        // console.log(event.target.value);
-        setSearchText(event.target.value);
-    };
-
-    const filteredData = onboarding_requests.filter((item) =>
-        Object.values(item).some((field) =>
-            String(field).toLowerCase().includes(searchText.toLowerCase())
-        )
-    );
+    const handlekeySearch = (event) => {
+        //set_Search_key(event.target.value);
+        if(event.target.value!=''){
+        setKeyFilter('&search_key='+event.target.value.trim());
+        }
+        else{
+          setKeyFilter('');
+        }
+      };
+    
     const renderItems = () => {
         return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
             <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
@@ -173,8 +174,8 @@ const Onboarding = () => {
                     <div className="table-header">
                         <div className="table-search">
                             <form className="form-inline">
-                                <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={searchText}
-                                    onChange={handleSearch} />
+                            <input className="form-control" type="text" name="search_key" placeholder="Search" aria-label="Search"
+                  onChange={handlekeySearch} />
                                 <img src={imageLocation + 'search.png'} alt="sort-img" />
                             </form>
                         </div>
@@ -231,8 +232,9 @@ const Onboarding = () => {
                     </div>
                     <BootstrapTable
                         keyField='id'
-                        data={filteredData}
+                        data={onboarding_requests}
                         columns={columns}
+                        noDataIndication={emptyDataMessage} 
                         wrapperClasses="table-responsive"
                     />
 
