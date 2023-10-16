@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import AddModal from "../modal/AddModal";
 import dateFormat from "dateformat";
 import apiurl from "@component/api/apiconfig";
-import { imagepath } from "@component/functions/commonfunction";
+import { imagepath ,DateBeforeEighteen} from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import axiosInstanceMultipart from "@component/api/axiosinstancemultipart";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -15,6 +15,7 @@ const NewDeliveryBoy = () => {
     let imageLocation = imagepath();
     const [previewfile, setFile] = useState();
     const [cityList, setDataCity] = useState([]);
+    const eighteenYearsBefore=DateBeforeEighteen();
     useEffect(() => {
         // Function to perform the GET request
         const fetchData = async () => {
@@ -38,22 +39,27 @@ const NewDeliveryBoy = () => {
 
         axiosInstanceMultipart.post(apiurl + 'delivery-boy/add-laundry-associate', values)
             .then((response) => {
-               
+
                 if (response.status === 1) {
 
                     swal("success", "Delivery Boy added successfully", "success");
                     // navigate('/');
                 }
-                else if (response.status === 2 && response.message != '') {
-                    swal("Error", "Delivery boy  already exist", "error");
-                }
             })
             .catch((error) => {
-                console.log(error);
-                swal("Error", error, "error");
+                if (error.response.data.status === 2 && typeof error.response.data.message !== 'undefined') {
+
+                    swal("Error", error.response.data.message, "error");
+                }
+                else if (error.response.data.status === 2 && typeof error.response.data.errors.primary_phone_no
+                    !== 'undefined') {
+                    swal("Error", 'Phone number length must be less than or equal to 10 characters long', "error");
+                }
+                else {
+                    swal("Error", 'Error in delivery boy addition', "error");
+                }
             });
     };
-    //console.log(cityList[0].name);
     return (
         <>
             <section className="delivery-boy-panel">
@@ -80,7 +86,9 @@ const NewDeliveryBoy = () => {
                                     lastName: yup.string().required("First name is required"),
                                     email: yup.string().required("Email is required"),
                                     dob: yup.date().max(new Date(Date.now() - 567648000000), "Age should be grater than or equal to 18 Years").required("Date of birth is required"),
-                                    primary_phone_no: yup.string().required("Phone Number is required"),
+                                    primary_phone_no: yup.string().required("Phone Number is required").min(10, 'Phone number must be 10 digit')
+                                        .max(10, 'Phone number should not grater than 10 digit'),
+
                                     address: yup.string().required("Address is required"),
                                     city: yup.string().required("City is required"),
                                     pincode: yup.string().required("Pincode is required"),
@@ -91,8 +99,8 @@ const NewDeliveryBoy = () => {
                             onSubmit={(values, { resetForm }) => {
                                 //console.log(values);
                                 submitHandler(values);
-                               resetForm({ values: '' });
-                               setFile(imageLocation + 'dummy.png');
+                                resetForm({ values: '' });
+                                setFile(imageLocation + 'dummy.png');
                             }}
                         >
                             {({ errors, touched, setFieldValue }) => (
@@ -120,7 +128,7 @@ const NewDeliveryBoy = () => {
                                                                 }}
                                                             />
                                                         </div>
-                                                       
+
                                                     </div>
                                                     {touched.file && errors.file && <div className="form-error text-center">{errors.file}</div>}
                                                 </div>
@@ -169,6 +177,7 @@ const NewDeliveryBoy = () => {
                                                                 className="form-control mb-2"
                                                                 id="dob"
                                                                 placeholder="Date Of Birth"
+                                                                max={eighteenYearsBefore}
                                                             />
                                                             {touched.dob && errors.dob && <div className="form-error">{errors.dob}</div>}
                                                         </div>
@@ -219,7 +228,7 @@ const NewDeliveryBoy = () => {
 
 
                                                         <p className="form-submit text-right">
-                                                        <button type="submit" className="btn btn-save">SAVE</button>
+                                                            <button type="submit" className="btn btn-save">SAVE</button>
                                                         </p>
                                                     </div>
                                                 </div>

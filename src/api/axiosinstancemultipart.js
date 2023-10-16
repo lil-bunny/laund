@@ -33,6 +33,7 @@ const axiosInstanceMultipart = axios.create({
     function (error) {
       if (error.response.data.status === 401) {}
       // return error;
+      
       return Promise.reject(error)
     }
   )

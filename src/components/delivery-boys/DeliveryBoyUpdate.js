@@ -71,8 +71,17 @@ const DeliveryBoyUpdate = () => {
                 }
             })
             .catch((error) => {
-                //console.log('Error', error);
-                swal("Error", error, "error");
+                if (error.response.data.status === 2 && typeof error.response.data.message !== 'undefined') {
+
+                    swal("Error", error.response.data.message, "error");
+                }
+                else if (error.response.data.status === 2 && typeof error.response.data.errors.primary_phone_no
+                    !== 'undefined') {
+                    swal("Error", 'Phone number length must be less than or equal to 10 characters long', "error");
+                }
+                else {
+                    swal("Error", 'Error in delivery boy updation', "error");
+                }
             });
     };
 
@@ -114,7 +123,8 @@ const DeliveryBoyUpdate = () => {
                                 firstName: yup.string().required("First name is required"),
                                 lastName: yup.string().required("First name is required"),
                                 email: yup.string().required("Email is required"),
-                                primary_phone_no: yup.string().required("Phone Number is required"),
+                                primary_phone_no: yup.string().required("Phone Number is required").min(10, 'Phone number must be 10 digit')
+                                        .max(10, 'Phone number should not grater than 10 digit'),
                                 address: yup.string().required("Address is required"),
                                 city: yup.string().required("City is required"),
                                 pincode: yup.string().required("Pincode is required")
@@ -123,7 +133,7 @@ const DeliveryBoyUpdate = () => {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            console.log(values);
+                            //console.log(values);
                             submitHandler(values);
                             //resetForm({ values: '' });
                         }}
