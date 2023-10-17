@@ -1,129 +1,90 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from "react-bootstrap-table2-paginator";
 import { DateRangePicker } from 'rsuite';
+import dateFormat from "dateformat";
+import apiurl from "@component/api/apiconfig";
+import { imagepath, per_page_item, NoDataText } from "@component/functions/commonfunction";
+import axiosInstance from "@component/api/axiosinstance";
+import swal from "sweetalert";
+import Icon from "../icon";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+const Payment = () => {
 
-const payments = [
-    {
-        transaction_id: 'TID54710',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54711',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54712',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54713',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54714',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54715',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54716',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54717',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54718',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-    {
-        transaction_id: 'TID54719',
-        transaction_date: "17th Jan 1989",
-        amount: '230.00',
-        payment_from: 'CS Rahul Shetty',
-        payment_to: 'DB Sharmila K',
-        payment_mode: 'UPI/Google Pe',
-        payment_status: 'Settled',
-    },
-];
+    let imageLocation = imagepath();
+    let ItemNotFound = NoDataText();
+    const [paymentdada, setData] = useState([]);
+    const [total_items, setTotalItems] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = per_page_item();
+    const [filterKey, setKeyFilter] = useState('');
+    const [filterStatus, setStatusfilter] = useState('');
+    const [filterTYTo, setfilterTYTO] = useState('');
+    const [emptyDataMessage, SetNodataText] = useState('');
+    
 
-const Payment = () =>{
-    const indexNum = (cell, row, index) => {
-        return (<div>{index+1}</div>) 
-    }
+    const fetchData = async () => {
+        try {
+            const response = await axiosInstance.get(apiurl + 'payment/payment-list?page=' + currentPage + '&limit=' + itemsPerPage + filterKey + filterStatus+filterTYTo);
+            setData(response.data); // Assuming the response contains the data you need
+            setTotalItems(response.count);
+            if (response.count == 0) {
+                SetNodataText(ItemNotFound);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    useEffect(() => {
+        fetchData(); // Call the function to fetch the data
+    }, [currentPage, filterKey, filterStatus,filterTYTo]);
+
+    const transaction_date_formate = (cell, row) => {
+        if (row.transaction_date != null || typeof row.transaction_date !== 'undefined') {
+          return dateFormat(`${row.transaction_date}`, "mmmm dS, yyyy");
+        }
+        else {
+          return '-';
+        }
+      }
+
+
+      const payment_status_formate = (cell, row) => {
+        if (row.status != null || typeof row.status !== 'undefined') {
+            if(row.status===1){
+                return 'Paid';
+            }
+            else{
+                return 'Pending';
+            }
+          
+        }
+        else {
+          return '-';
+        }
+      }
     
     const columns = [
-        {
-            dataField: 'SL No',
-            text: '',
-            formatter: indexNum
-        },
         {
             dataField: 'transaction_id',
             text: 'Transaction ID'
         },
         {
             dataField: 'transaction_date',
-            text: 'Transaction Date'
+            text: 'Transaction Date',
+            formatter: transaction_date_formate,
         },
         {
             dataField: 'amount',
             text: 'Amount'
         },
         {
-            dataField: 'payment_from',
+            dataField: 'amount_paid_by',
             text: 'Payment From'
         },
         {
-            dataField: 'payment_to',
+            dataField: 'amount_received_by',
             text: 'Payment To'
         },
         {
@@ -131,51 +92,111 @@ const Payment = () =>{
             text: 'Payment Mode'
         },
         {
-            dataField: 'payment_status',
-            text: 'Payment Status'
+            dataField: 'status',
+            text: 'Payment Status',
+            formatter: payment_status_formate,
         },
     ];
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+      };
+      const handlekeySearch = (event) => {
+        //set_Search_key(event.target.value);
+        if(event.target.value!=''){
+        setKeyFilter('&search_key='+event.target.value.trim());
+        }
+        else{
+          setKeyFilter('');
+        }
+      };
     
-    return(
+      const handlekeySearch_staus = (event) => {
+        if(event.target.value!=''){
+          setStatusfilter('&status='+event.target.value.trim());
+        }
+        else{
+          setStatusfilter('');
+        }
+      };
+
+      const handleDayFilter = (event) => {
+        if(event.target.value!=''){
+            setfilterTYTO('&day='+event.target.value.trim());
+        }
+        else{
+            setfilterTYTO('');
+        }
+      };
+    
+      
+      const renderItems = () => {
+        return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
+          <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
+        ));
+      };
+    //console.log(filter_para);
+      
+    
+      const PaginationHtml = () => {
+        if (Math.ceil(total_items / itemsPerPage) > 1) {
+          return <div className="custom-pagination">
+            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+              <Icon icon="fa-arrow-left" />
+            </button>
+            {renderItems()}
+            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === Math.ceil(total_items / itemsPerPage)}><Icon icon="fa-arrow-right" />
+            </button>
+          </div>
+        }
+      };
+    return (
         <>
             <section className="payment-panel">
                 <div className="common-table">
                     <div className="table-header">
+                        
+
                         <div className="table-search">
-                            <form className="form-inline">
-                                <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
-                                <img src="./assets/images/search.png" alt="sort-img" />
-                            </form>
-                        </div>
-                        <div className="select-dropdown table-select">
+              <form className="d-flex form-inline">
+                <div className="search_key">
+                <input className="form-control" type="text" name="search_key" placeholder="Search" aria-label="Search"
+                  onChange={handlekeySearch} />
+                <img src="./assets/images/search.png" alt="sort-img" />
+                </div>
+                <div className="select-dropdown table-select">
                             <DateRangePicker
                                 format="dd/MM/yyyy"
                             />
                         </div>
-                        <div className="select-dropdown table-select">
+                        <div className="select-dropdown table-select" onChange={handleDayFilter} > 
                             <img src="./assets/images/sort-down-small.png" alt="sort-img" />
                             <select className="select">
-                                <option value="1">Todays</option>
-                                <option value="2">Yesterday</option>
-                                <option value="3">Tomorrow</option>
+                            <option value="">Filter By Day</option>
+                                <option value="today">Todays</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="tomorrow">Tomorrow</option>
                             </select>
                         </div>
-                        <div className="select-dropdown table-select">
-                            <img src="./assets/images/sort-down-small.png" alt="sort-img" />
-                            <select className="select">
-                                <option value="">Status</option>
-                                <option value="1">Status 1</option>
-                                <option value="2">Status 2</option>
-                                <option value="3">Status 3</option>
-                            </select>
-                        </div>
+
+                <div className="select-dropdown table-select">
+                <img src="./assets/images/sort-down-small.png" alt="sort-img" />
+                <select className="select" name="status" onChange={handlekeySearch_staus}> 
+                  <option value="">Status</option>
+                  <option value="1">Paid</option>
+                  <option value="2">Pending</option>
+                </select>
+              </div>
+                </form>
+              </div>
                     </div>
                     <BootstrapTable
                         keyField='transaction_id'
-                        data={payments}
+                        data={paymentdada}
                         columns={columns}
+                        noDataIndication={emptyDataMessage} 
                         wrapperClasses="table-responsive"
                     />
+                     {PaginationHtml()}
                 </div>
             </section>
         </>
