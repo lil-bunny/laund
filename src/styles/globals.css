@@ -1268,6 +1268,15 @@ td {
 .payment-panel:hover {
   color: #fff;
 }
+span.payment-setteled{
+  color: #1AA301;
+  font-weight: 600;
+}
+span.payment-pending{
+  color: #cb1414;
+  font-weight: 600;
+}
+
 
 /**************** END MODAL SECTION ****************************/
 

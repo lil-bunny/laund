@@ -10,6 +10,7 @@ import swal from "sweetalert";
 import Icon from "../icon";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
 const Payment = () => {
 
     let imageLocation = imagepath();
@@ -21,12 +22,22 @@ const Payment = () => {
     const [filterKey, setKeyFilter] = useState('');
     const [filterStatus, setStatusfilter] = useState('');
     const [filterTYTo, setfilterTYTO] = useState('');
+    const [FilterDateRange, setRangeFilter] = useState(null);
+
+    let dateRange='';
+     
     const [emptyDataMessage, SetNodataText] = useState('');
-    
+
+    if(FilterDateRange!==null){
+
+      dateRange='&date_range_start='+dateFormat(`${FilterDateRange[0]}`, "yyyy-mm-dd")+'&date_range_end='+dateFormat(`${FilterDateRange[1]}`, "yyyy-mm-dd");
+     }
+  
+    //console.log(FilterDateRange);
 
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get(apiurl + 'payment/payment-list?page=' + currentPage + '&limit=' + itemsPerPage + filterKey + filterStatus+filterTYTo);
+            const response = await axiosInstance.get(apiurl + 'payment/payment-list?page=' + currentPage + '&limit=' + itemsPerPage + filterKey + filterStatus+filterTYTo+dateRange);
             setData(response.data); // Assuming the response contains the data you need
             setTotalItems(response.count);
             if (response.count == 0) {
@@ -38,7 +49,7 @@ const Payment = () => {
     };
     useEffect(() => {
         fetchData(); // Call the function to fetch the data
-    }, [currentPage, filterKey, filterStatus,filterTYTo]);
+    }, [currentPage, filterKey, filterStatus,filterTYTo+dateRange]);
 
     const transaction_date_formate = (cell, row) => {
         if (row.transaction_date != null || typeof row.transaction_date !== 'undefined') {
@@ -53,10 +64,10 @@ const Payment = () => {
       const payment_status_formate = (cell, row) => {
         if (row.status != null || typeof row.status !== 'undefined') {
             if(row.status===1){
-                return 'Paid';
+                return (<span className="payment-setteled">Setteled</span>);
             }
             else{
-                return 'Pending';
+                return (<span className="payment-pending">Paid</span>);
             }
           
         }
@@ -127,16 +138,14 @@ const Payment = () => {
             setfilterTYTO('');
         }
       };
-    
-      
+
+
       const renderItems = () => {
         return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
           <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
         ));
       };
-    //console.log(filter_para);
-      
-    
+   
       const PaginationHtml = () => {
         if (Math.ceil(total_items / itemsPerPage) > 1) {
           return <div className="custom-pagination">
@@ -149,6 +158,8 @@ const Payment = () => {
           </div>
         }
       };
+
+      console.log(FilterDateRange);
     return (
         <>
             <section className="payment-panel">
@@ -166,6 +177,8 @@ const Payment = () => {
                 <div className="select-dropdown table-select">
                             <DateRangePicker
                                 format="dd/MM/yyyy"
+                                onChange={setRangeFilter} 
+                            
                             />
                         </div>
                         <div className="select-dropdown table-select" onChange={handleDayFilter} > 
