@@ -1,6 +1,7 @@
 import React, { useState,useEffect,useRef  } from "react";
 import Overlay from 'react-bootstrap/Overlay';
 import apiurl from "@component/api/apiconfig";
+import dateFormat from "dateformat";
 import { imagepath } from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import { useRouter } from "next/router";
@@ -63,7 +64,7 @@ const HelperDetails = () => {
                                                 }}
                                             >
 
-                                                Enrolled for 12 months
+                                                Enrolled On
                                                 <span>20 Dec 2022 - 20 Jun 2023</span>
                                             </div>
                                         )}

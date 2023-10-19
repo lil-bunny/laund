@@ -52,8 +52,8 @@ const Payment = () => {
     }, [currentPage, filterKey, filterStatus,filterTYTo+dateRange]);
 
     const transaction_date_formate = (cell, row) => {
-        if (row.transaction_date != null || typeof row.transaction_date !== 'undefined') {
-          return dateFormat(`${row.transaction_date}`, "mmmm dS, yyyy");
+        if (row.createdAt != null || typeof row.createdAt !== 'undefined') {
+          return dateFormat(`${row.createdAt}`, "mmmm dS, yyyy h:MM:ss TT ");
         }
         else {
           return '-';

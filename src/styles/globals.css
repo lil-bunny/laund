@@ -521,8 +521,6 @@
 .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(1),
 .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
   background: rgba(236, 241, 255, 1);
-  color: rgba(92, 136, 218, 1);
-  cursor: pointer;
 }
 
 .delivery-boy-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {

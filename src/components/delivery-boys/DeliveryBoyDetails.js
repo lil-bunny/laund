@@ -67,8 +67,8 @@ const DeliveryBoyDetails = () => {
                                                 }}
                                             >
 
-                                                Enrolled for 12 months
-                                                <span>20 Dec 2022 - 20 Jun 2023</span>
+                                                Enrolled On
+                                                <span>{dateFormat(`${data.enrollmentDate}`, "dS mmmm, yyyy")}</span>
                                             </div>
                                         )}
                                     </Overlay>
