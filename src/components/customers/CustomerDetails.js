@@ -183,6 +183,7 @@ const CustomerDetails = () => {
                                         <span className="profile-footer-border"></span>
                                     </div>
                                 </div>
+                                
                                 <h2>Order History</h2>
                                 <BootstrapTable
                                     keyField='order_id'
@@ -190,6 +191,7 @@ const CustomerDetails = () => {
                                     columns={columns}
                                     wrapperClasses="table-responsive"
                                 />
+                                
                                 <div className="footer-button">
                                     <button className="btn btn-sm" type="submit">CANCEL</button>
                                     <button className="btn btn-sm" type="submit">Save</button>

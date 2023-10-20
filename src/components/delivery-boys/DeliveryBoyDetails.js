@@ -5,16 +5,19 @@ import AddModal from "../modal/AddModal";
 import dateFormat from "dateformat";
 import { useRouter } from "next/router";
 import apiurl from "@component/api/apiconfig";
-import { imagepath } from "@component/functions/commonfunction";
+import { imagepath,NoDataText } from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
 import Icon from "../icon";
+
 const DeliveryBoyDetails = () => {
     const [show, setShow] = useState(false);
     const target = useRef(null);
     const router = useRouter();
     const {id} = router.query;
     const [data, setData] = useState([]);
-
+    const [rates, setRates] = useState([]);
+    const[emptyDataMessage,SetNodataText]=useState('');
+    let ItemNotFound=NoDataText();
        useEffect(() => {
         // Function to perform the GET request
         const fetchData = async () => {
@@ -22,6 +25,12 @@ const DeliveryBoyDetails = () => {
             const response = await axiosInstance.post(apiurl+'delivery-boy/laundry-associate-details',{id});
             if(response.status===1){
             setData(response.data); // Assuming the response contains the data you need
+            if(response.data.product_prices.count!=0){
+                setRates(response.data.product_prices);
+            }
+            else{
+                SetNodataText(ItemNotFound); 
+            }
             }
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -30,12 +39,50 @@ const DeliveryBoyDetails = () => {
     
         fetchData(); // Call the function to fetch the data
       }, []);
+      const idFormater = (cell, row) => {
+        return `${row.product.id}`
+      }
+      const product_nameFormate = (cell, row) => {
+        return `${row.product.product_name}`
+      }
+      const statusFormator = (cell, row) => {
+       if(row.status==1){
+        return 'Active';
 
-      //console.log(data);
+       }
+       else{
+        return 'In Active';
+       }
+      }
+
+      const columns = [
+       
+        {
+            dataField: 'id',
+            text: 'Product ID',
+            formatter: idFormater,
+        },
+        {
+            dataField: 'product_name',
+            text: 'Product Name',
+            formatter: product_nameFormate,
+        },
+        {
+            dataField: 'rate',
+            text: 'Rate'
+           
+        },
+        {
+            dataField: 'status',
+            text: 'Status',
+            formatter: statusFormator
+        },
+    ];
     return (
         <>
             <section className="db-details-panel">
                 <h1>Delivery Boy Details</h1>
+                <div className="customer-details">
                 <div className="db-details-content">
                     <div className="db-details-content-heading">
                         <div className="row">
@@ -141,6 +188,14 @@ const DeliveryBoyDetails = () => {
                                 </div>
                             </div>
                             
+                                
+                            <h2>Rates</h2>
+                                <BootstrapTable
+                                    keyField='id'
+                                    data={rates}
+                                    columns={columns}
+                                    wrapperClasses="table-responsive"
+                            />
                             <span className="profile-footer-border"></span>
                             <div className="footer-button">
                                 <a className="btn btn-primary btn-back" href={'/delivery-boy/'}>BACK</a>
@@ -148,6 +203,7 @@ const DeliveryBoyDetails = () => {
                         </div>
                     </div>
                 </div >
+                </div>
             </section >
         </>
     )

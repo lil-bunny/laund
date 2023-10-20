@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { imagepath } from "@component/functions/commonfunction";
+import apiurl from "@component/api/apiconfig";
+import axiosInstance from "@component/api/axiosinstance";
+import Link from 'next/link';
 import {
     Chart as ChartJS,
     BarElement,
@@ -24,6 +27,7 @@ ChartJS.register(
 
 const Dashboard = () => {
     let imageLocation=imagepath();
+    const [activeInactiveUserList, setData] = useState([]);
     const data = {
         barThickness: 6,
         barPercentage: 0.5,
@@ -65,6 +69,21 @@ const Dashboard = () => {
         },
     }
 
+
+    const fetchData = async () => {
+        try {
+          const response = await axiosInstance.get(apiurl + 'dashboard/active-blocked-users-count');
+          if(response.status==1){
+          setData(response.data); // Assuming the response contains the data you need
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      useEffect(() => {
+        fetchData(); // Call the function to fetch the data
+      }, []);
+      console.log(activeInactiveUserList);
     return (
         <>
             <div className="content-header">
@@ -169,8 +188,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>Delivery Boy's</h3>
                             <div className="footer-content">
-                                <span>83<p>Active</p></span>
-                                <span>03<p>Blocked</p></span>
+                                <span>{activeInactiveUserList.db.active}<p>Active</p></span>
+                                <span>{activeInactiveUserList.db.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>
@@ -178,8 +197,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>Helper's</h3>
                             <div className="footer-content">
-                                <span>103<p>Active</p></span>
-                                <span>17<p>Blocked</p></span>
+                                <span>{activeInactiveUserList.helper.active}<p>Active</p></span>
+                                <span>{activeInactiveUserList.helper.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>
@@ -187,8 +206,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>laundrie's</h3>
                             <div className="footer-content">
-                                <span>12<p>Active</p></span>
-                                <span>00<p>Blocked</p></span>
+                                <span>{activeInactiveUserList.ls.active}<p>Active</p></span>
+                                <span>{activeInactiveUserList.ls.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>
@@ -196,8 +215,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>Customer's</h3>
                             <div className="footer-content">
-                                <span>12<p>Active</p></span>
-                                <span>00<p>Blocked</p></span>
+                                <span>{activeInactiveUserList.cs.active}<p>Active</p></span>
+                                <span>{activeInactiveUserList.cs.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>

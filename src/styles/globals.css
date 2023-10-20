@@ -733,6 +733,7 @@ td {
   ;
 }
 
+
 /**************** RATINGS ****************************/
 
 .ratings-panel h3 {
@@ -1071,7 +1072,8 @@ td {
   padding: 6px 20px 6px 20px;
   margin: 0 14px 0 0;
 }
-
+.db-details-contents .footer-button .btn-back{color:#fff;text-decoration: none;}
+.db-details-contents .footer-button .btn-back:hover{background-color:#1C2941;text-decoration: none;}
 .db-details-contents .footer-button :nth-child(2) {
   color: #fff;
   background: #1C2941;
