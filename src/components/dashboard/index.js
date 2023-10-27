@@ -27,8 +27,11 @@ ChartJS.register(
 
 const Dashboard = () => {
     let imageLocation=imagepath();
-    const [activeInactiveUserList, setData] = useState([]);
-    const data = {
+    const [activeInactiveDb, setactiveInactiveDb] = useState([]);
+    const [activeInactiveCS, setactiveInactiveCS] = useState([]);
+    const [activeInactiveHelper, setactiveInactiveHelper] = useState([]);
+    const [activeInactiveLs, setactiveInactiveLs] = useState([]);
+    const bardata = {
         barThickness: 6,
         barPercentage: 0.5,
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -69,21 +72,27 @@ const Dashboard = () => {
         },
     }
 
-
+    useEffect(() => {
     const fetchData = async () => {
         try {
           const response = await axiosInstance.get(apiurl + 'dashboard/active-blocked-users-count');
           if(response.status==1){
-          setData(response.data); // Assuming the response contains the data you need
+            setactiveInactiveDb(response.data.db); // Assuming the response contains the data you need
+            setactiveInactiveCS(response.data.cs);
+            setactiveInactiveHelper(response.data.helper);
+            setactiveInactiveLs(response.data.ls);
+
           }
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       };
-      useEffect(() => {
+     
         fetchData(); // Call the function to fetch the data
       }, []);
-      //console.log(activeInactiveUserList);
+
+      
+      console.log(activeInactiveCS);
     return (
         <>
             <div className="content-header">
@@ -149,7 +158,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <Bar
-                                        data={data}
+                                        data={bardata}
                                         options={options}
                                     />
                                 </div>
@@ -188,8 +197,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>Delivery Boy's</h3>
                             <div className="footer-content">
-                                <span>83<p>Active</p></span>
-                                <span>03<p>Blocked</p></span>
+                                <span>{activeInactiveDb.active}<p>Active</p></span>
+                                <span>{activeInactiveDb.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>
@@ -197,8 +206,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>Helper's</h3>
                             <div className="footer-content">
-                                <span>103<p>Active</p></span>
-                                <span>17<p>Blocked</p></span>
+                                <span>{activeInactiveHelper.active}<p>Active</p></span>
+                                <span>{activeInactiveHelper.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>
@@ -206,8 +215,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>laundrie's</h3>
                             <div className="footer-content">
-                                <span>12<p>Active</p></span>
-                                <span>00<p>Blocked</p></span>
+                                <span>{activeInactiveLs.active}<p>Active</p></span>
+                                <span>{activeInactiveLs.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>
@@ -215,8 +224,8 @@ const Dashboard = () => {
                         <div className="footer-content-box">
                             <h3>Customer's</h3>
                             <div className="footer-content">
-                                <span>12<p>Active</p></span>
-                                <span>00<p>Blocked</p></span>
+                                <span>{activeInactiveCS.active}<p>Active</p></span>
+                                <span>{activeInactiveCS.blocked}<p>Blocked</p></span>
                             </div>
                         </div>
                     </div>

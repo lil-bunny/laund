@@ -25,11 +25,17 @@ const Onboarding = () => {
     const[emptyDataMessage,SetNodataText]=useState('');
 
     const itemsPerPage = per_page_item();
+    const [FilterDateRange, setRangeFilter] = useState(null);
+    const [filterByType, setfilterByType] = useState('');
+    let dateRange='';
+    if(FilterDateRange!==null){
 
+      dateRange='&date_range_start='+dateFormat(`${FilterDateRange[0]}`, "yyyy-mm-dd")+'&date_range_end='+dateFormat(`${FilterDateRange[1]}`, "yyyy-mm-dd");
+     }
     // Function to perform the GET request
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get(apiurl + 'onboarding/onboarding-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey);
+            const response = await axiosInstance.get(apiurl + 'onboarding/onboarding-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey+dateRange+filterByType);
             setData(response.data); // Assuming the response contains the data you need
             setTotalItems(response.count);
             if(response.count==0){
@@ -42,7 +48,7 @@ const Onboarding = () => {
     useEffect(() => {
         fetchData(); // Call the function to fetch the data
 
-    }, [currentPage,filterKey]);
+    }, [currentPage,filterKey,dateRange,filterByType]);
 
     const indexNum = (cell, row, index) => {
         return (<div>{index + 1}</div>)
@@ -145,6 +151,16 @@ const Onboarding = () => {
           setKeyFilter('');
         }
       };
+
+
+      const handleTypeFilter = (event) => {
+        if(event.target.value!=''){
+            setfilterByType('&user_type='+event.target.value.trim());
+        }
+        else{
+            setfilterByType('');
+        }
+      };
     
     const renderItems = () => {
         return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
@@ -173,61 +189,29 @@ const Onboarding = () => {
                 <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">
-                            <form className="form-inline">
+                        <form className="d-flex form-inline">
                             <input className="form-control" type="text" name="search_key" placeholder="Search" aria-label="Search"
                   onChange={handlekeySearch} />
                                 <img src={imageLocation + 'search.png'} alt="sort-img" />
-                            </form>
-                        </div>
+                            
+                        
                         <div className="select-dropdown table-select">
                             <img src={imageLocation + 'sort-down-small.png'} alt="sort-img" />
-                            <select className="select">
+                            <select className="select" name="type" onChange={handleTypeFilter}>
                                 <option value="">By Type</option>
-                                <option value="1">Type 1</option>
-                                <option value="2">Type 2</option>
-                                <option value="3">Type 3</option>
-                            </select>
-                        </div>
-                        <div className="select-dropdown table-select">
-                            <img src={imageLocation + 'sort-down-small.png'} alt="sort-img" />
-                            <select className="select">
-                                <option value="">Select DB</option>
-                                <option value="1">DB 1</option>
-                                <option value="2">DB 2</option>
-                                <option value="3">DB 3</option>
-                            </select>
-                        </div>
-                        <div className="select-dropdown table-select">
-                            <img src={imageLocation + 'sort-down-small.png'} alt="sort-img" />
-                            <select className="select">
-                                <option value="">Select Helper</option>
-                                <option value="1">Helper 1</option>
-                                <option value="2">Helper 2</option>
-                                <option value="3">helper 3</option>
-                            </select>
-                        </div>
-                        <div className="select-dropdown table-select">
-                            <img src={imageLocation + 'sort-down-small.png'} alt="sort-img" />
-                            <select className="select">
-                                <option value="">Delivery Status</option>
-                                <option value="1">Status 1</option>
-                                <option value="2">Status 2</option>
-                                <option value="3">Status 3</option>
-                            </select>
-                        </div>
-                        <div className="select-dropdown table-select">
-                            <img src={imageLocation + 'sort-down-small.png'} alt="sort-img" />
-                            <select className="select">
-                                <option value="">Payment Status</option>
-                                <option value="1">Status 1</option>
-                                <option value="2">Status 2</option>
-                                <option value="3">Status 3</option>
+                                <option value="delivery_boy">Delivery Boy</option>
+                                <option value="customer">Customer</option>
+                                <option value="helper">Helper</option>
+                                <option value="laundry">Laundry Services</option>
                             </select>
                         </div>
                         <div className="select-dropdown table-select">
                             <DateRangePicker
                                 format="dd/MM/yyyy"
+                                onChange={setRangeFilter} 
                             />
+                        </div>
+                        </form>
                         </div>
                     </div>
                     <BootstrapTable
