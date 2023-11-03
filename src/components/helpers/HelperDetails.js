@@ -43,7 +43,7 @@ const HelperDetails = () => {
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                <div className="db-helper">
+                                <div className="db-helper d-none">
                                     <img ref={target} onClick={() => setShow(!show)} src={imageLocation+'menu-vertical.png'} alt="menu-img" />
                                     <Overlay target={target.current} show={show} placement="left">
                                         {({
@@ -65,7 +65,7 @@ const HelperDetails = () => {
                                             >
 
                                                 Enrolled On
-                                                <span>20 Dec 2022 - 20 Jun 2023</span>
+                                                <span>{dateFormat(`${data.enrollmentDate}`, "dS mmmm, yyyy")}</span>
                                             </div>
                                         )}
                                     </Overlay>
@@ -99,29 +99,7 @@ const HelperDetails = () => {
                                 <span className="profile-footer-border"></span>
                             </div>
                         </div>
-                        <div className="row content-row">
-                            <div className="col-md-6">
-                                <div className="document-contents">
-                                    <h4>Documents</h4>
-                                    <p>Aadhar Number</p>
-                                    <h5>1234-4567-7891-0987</h5>
-                                    {/* <div className="row">
-                                        <div className="col-md-5">
-                                            <div className="aadhar-front">
-                                                <img src={imageLocation+'aadhar-front.png'} alt="menu-img" />
-                                                <p>Front</p>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-7">
-                                            <div className="aadhar-back">
-                                                <img src={imageLocation+'aadhar-back.png'} alt="menu-img" />
-                                                <p>Back</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                </div>
-                            </div>
-                        </div>
+                    
                     </div>
                 </div >
             </section >

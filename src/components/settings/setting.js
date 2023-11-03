@@ -1,7 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import BootstrapTable from 'react-bootstrap-table-next';
-import AddModal from "../modal/AddModal";
-import dateFormat from "dateformat";
 import apiurl from "@component/api/apiconfig";
 import { imagepath } from "@component/functions/commonfunction";
 import axiosInstance from "@component/api/axiosinstance";
@@ -11,41 +8,19 @@ import { useRouter } from "next/router";
 import swal from "sweetalert";
 import * as yup from "yup";
 import Icon from "../icon";
-let id = '1';
 
-const DeliveryBoyUpdate = () => {
+const Settings = () => {
     const router = useRouter();
     let imageLocation = imagepath();
-    const dbid = router.query;
-    let dataid = { 'id': '' + dbid + '' };
-    const [cityList, setDataCity] = useState([]);
-    const [DbDetails, setDbdetails] = useState([]);
     const [previewfile, setFile] = useState();
-    useEffect(() => {
-        // Function to perform the GET request
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.post('https://emerge2.indusnettechnologies.com/api/v1/delivery-boy/auth/city-list', { id });
-
-                if (response.status === 1) {
-                    setDataCity(response.data);
-                }
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData(); // Call the function to fetch the data
-    }, []);
-
+    const [adminDetails, setAdminDetails] = useState([]);
     useEffect(() => {
 
-        axiosInstance.post(apiurl + 'delivery-boy/laundry-associate-details', dbid)
+        axiosInstance.get(apiurl + 'auth/admin-details')
             .then((response) => {
 
                 if (response.status === 1) {
-                    setDbdetails(response.data);
+                    setAdminDetails(response.data);
                 }
 
             })
@@ -55,16 +30,16 @@ const DeliveryBoyUpdate = () => {
             });
     }, [])
 
-
+console.log(adminDetails);
 
 
     const submitHandler = (values) => {
 
-        axiosInstanceMultipart.put(apiurl + 'delivery-boy/update-laundry-associate/' + dbid.id, values)
+        axiosInstanceMultipart.post(apiurl + 'auth/update-profile', values)
             .then((response) => {
                 if (response.status === 1) {
 
-                    swal("success", "Delivery Boy updated successfully", "success");
+                    swal("success", "Profile updated successfully", "success");
                 }
                 else if (response.status === 2 && response.errors != '') {
                     swal("Error", response.errors, "error");
@@ -80,7 +55,7 @@ const DeliveryBoyUpdate = () => {
                     swal("Error", 'Phone number length must be less than or equal to 10 characters long', "error");
                 }
                 else {
-                    swal("Error", 'Error in delivery boy updation', "error");
+                    swal("Error", 'Error in profile updation', "error");
                 }
             });
     };
@@ -88,12 +63,6 @@ const DeliveryBoyUpdate = () => {
     let initialValues = {
         firstName: '',
         lastName: '',
-        email: '',
-        dob: '',
-        primary_phone_no: '',
-        address: '',
-        city: '',
-        pincode: '',
         file: null,
     };
     //console.log(DbDetails);      
@@ -104,36 +73,24 @@ const DeliveryBoyUpdate = () => {
             <section className="delivery-boy-panel">
                 <div className="container">
 
-                    <h4>Update Delivery Boy</h4>
+                    <h4>Update Profile</h4>
                     <Formik
                         enableReinitialize={true}
                         initialValues={Object.assign(initialValues, {
-                            firstName: DbDetails.firstName ? DbDetails.firstName : "",
-                            lastName: DbDetails.lastName ? DbDetails.lastName : "",
-                            email: DbDetails.email ? DbDetails.email : "",
-                            dob: DbDetails.dob ? DbDetails.dob : "",
-                            primary_phone_no: DbDetails.primary_phone_no ? DbDetails.primary_phone_no : "",
-                            address: DbDetails.address ? DbDetails.address : "",
-                            city: DbDetails.cityId ? DbDetails.cityId : "",
-                            pincode: DbDetails.pincode ? DbDetails.pincode : "",
+                            firstName: adminDetails.firstName ? adminDetails.firstName : "",
+                            lastName: adminDetails.lastName ? adminDetails.lastName : "",
                         })}
 
                         validationSchema={
                             yup.object().shape({
                                 firstName: yup.string().required("First name is required"),
-                                lastName: yup.string().required("Last name is required"),
-                                email: yup.string().required("Email is required"),
-                                primary_phone_no: yup.string().required("Phone Number is required").min(10, 'Phone number must be 10 digit')
-                                        .max(10, 'Phone number should not grater than 10 digit'),
-                                address: yup.string().required("Address is required"),
-                                city: yup.string().required("City is required"),
-                                pincode: yup.string().required("Pincode is required")
+                                lastName: yup.string().required("First name is required"),
 
                             })
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            //console.log(values);
+                          //  console.log(values);
                             submitHandler(values);
                             //resetForm({ values: '' });
                         }}
@@ -148,7 +105,7 @@ const DeliveryBoyUpdate = () => {
                                                 <div className="user-img">
 
                                                     <span className="profile-picture text-center">
-                                                        <img className="p-detail-image" src={previewfile ? previewfile : DbDetails.new_profile_image_name} alt="doorbell" />
+                                                        <img className="p-detail-image" src={previewfile ? previewfile : adminDetails.new_profile_image_name} alt="doorbell" />
                                                     </span>
 
                                                     <div className="upload-btn-wrapper">
@@ -182,6 +139,7 @@ const DeliveryBoyUpdate = () => {
                                                             className="form-control mb-2"
                                                             id="firstName"
                                                             placeholder="First Name"
+                                                           
 
                                                         />
                                                         {touched.firstName && errors.firstName && <div className="form-error">{errors.firstName}</div>}
@@ -205,9 +163,11 @@ const DeliveryBoyUpdate = () => {
                                                             className="form-control mb-2"
                                                             id="email"
                                                             placeholder="Email"
+                                                            readonly=""
+                                                            value={adminDetails.email}
 
                                                         />
-                                                        {touched.email && errors.email && <div className="form-error">{errors.email}</div>}
+                                                       
                                                     </div>
                                                     <div className="form-group">
                                                         <Field
@@ -217,9 +177,10 @@ const DeliveryBoyUpdate = () => {
                                                             id="dob"
                                                             placeholder="Date Of Birth"
                                                             readonly=""
+                                                            value={adminDetails.dob}
 
                                                         />
-                                                        {touched.dob && errors.dob && <div className="form-error">{errors.dob}</div>}
+                                                       
                                                     </div>
                                                     <div className="form-group">
                                                         <Field
@@ -228,9 +189,11 @@ const DeliveryBoyUpdate = () => {
                                                             className="form-control mb-2"
                                                             id="primary_phone_no"
                                                             placeholder="Phone Number"
+                                                            readonly=""
+                                                            value={adminDetails.primary_phone_no}
 
                                                         />
-                                                        {touched.primary_phone_no && errors.primary_phone_no && <div className="form-error">{errors.primary_phone_no}</div>}
+                                                       
                                                     </div>
                                                     <div className="form-group">
                                                         <Field
@@ -239,24 +202,13 @@ const DeliveryBoyUpdate = () => {
                                                             className="form-control mb-2"
                                                             id="address"
                                                             placeholder="Address"
+                                                            readonly=""
+                                                            value={adminDetails.address}
 
                                                         />
-                                                        {touched.address && errors.address && <div className="form-error">{errors.address}</div>}
+                                                
                                                     </div>
-                                                    <div className="form-group">
-                                                        <Field as="select" name="city" id="city" className="form-control" >
-                                                            <option value="">Select City</option>
-                                                            {cityList.map((value, kayvalue) => {
-                                                                return (
-                                                                    <option key={kayvalue} value={value.id}>
-                                                                        {value.name}
-                                                                    </option>
-                                                                );
-                                                            })}
-
-                                                        </Field>
-                                                        {touched.city && errors.city && <div className="form-error">{errors.city}</div>}
-                                                    </div>
+                                               
                                                     <div className="form-group">
                                                         <Field
                                                             type="number"
@@ -264,9 +216,10 @@ const DeliveryBoyUpdate = () => {
                                                             className="form-control mb-2"
                                                             id="pincode"
                                                             placeholder="Pincode"
+                                                            readonly=""
+                                                            value={adminDetails.pincode}
 
                                                         />
-                                                        {touched.pincode && errors.pincode && <div className="form-error">{errors.pincode}</div>}
                                                     </div>
 
 
@@ -287,4 +240,4 @@ const DeliveryBoyUpdate = () => {
     );
 }
 
-export default DeliveryBoyUpdate;
+export default Settings;

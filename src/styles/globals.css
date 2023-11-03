@@ -85,7 +85,8 @@
   background: #1C2941;
   min-height: 48px;
 }
-
+a.setting-menu{text-decoration: none;cursor: pointer;}
+a.setting-menu:hover{text-decoration: none;}
 .main-sidebar {
   z-index: 1100;
   height: 100vh;
@@ -1080,6 +1081,7 @@ td {
   border-radius: 6px;
   padding: 6px 30px 6px 30px;
 }
+a.order-details-id{text-decoration: none;cursor: pointer;}
 
 /**************** MODAL SECTION ****************************/
 
@@ -1460,7 +1462,7 @@ span.payment-pending{
 
 .customer-panel .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
   background: #fff !important;
-  color: rgba(92, 136, 218, 1);
+  /* color: rgba(92, 136, 218, 1); */
 }
 
 .customer-panel .react-bootstrap-table table>tbody>tr>td {
@@ -1872,6 +1874,48 @@ button.btn-save:hover {
   
     background: #3A67BB;
     color:#fff;
+}
+td.ls-raised-issue{vertical-align: middle;}
+td.ls-raised-issue span{font-size: 14px; font-weight: 600;color: rgba(203, 20, 20, 1);cursor: pointer;}
+.order-issue{cursor: pointer;}
+/* ls-issue-rased Popup */
+.model-issue .modal-body, .model-issue .modal-header{
+  margin: 0!important;
+}
+.ls-issue-rased .slick-dots{
+  bottom: -44px;
+}
+.silder-content h6{
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+.silder-content .issue-image{
+  margin: 5px 0 0 0;
+  width: auto;
+  height: 250px;
+}
+.silder-content .issue-image img{
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.silder-sing{
+  margin: 0 0 10px 0;
+}
+.ls-issue-rased .slick-dots li button{
+  padding: 0;
+}
+.ls-issue-rased .slick-dots li button:before {
+  font-size: 10px;
+}
+.custome-order-details a{cursor: pointer;text-decoration: none;}
+.ls-issue-rased .slick-dots li button:before {
+  opacity: 1;
+  color: #fff;
+}
+.ls-issue-rased .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #00a1ff;
 }
 /**************** RESPONSIVE ****************************/
 

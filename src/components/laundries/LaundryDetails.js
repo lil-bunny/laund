@@ -34,6 +34,10 @@ const LaundryDetails = () => {
         fetchData(); // Call the function to fetch the data
       }, []);
       console.log(laundyDetails);
+      const backHandler = () => {
+        //  localStorage.removeItem('token');
+          router.push('/laundry');
+      }
     return (
         <>
             <section className="db-details-panel">
@@ -47,7 +51,7 @@ const LaundryDetails = () => {
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                <div className="db-helper">
+                                <div className="db-helper d-none">
                                     <img ref={target} onClick={() => setShow(!show)} src={imageLocation+'menu-vertical.png'}/>
                                     <Overlay target={target.current} show={show} placement="left">
                                         {({
@@ -113,23 +117,23 @@ const LaundryDetails = () => {
                                             Enter per day order acceptance limit
                                         </div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-12">
                                         <div className="db-input">
                                             <input type="text" defaultValue={30} />
                                         </div>
                                     </div>
-                                    <span className="content-footer-border"></span>
+                                    
                                 </div>
-                                <div className="payment-button">
+                                {/* <div className="payment-button">
                                     <button type="button" 
                                         className="btn"
                                         onClick={() => setModalShow(true)}>Rs. <span>3150</span> Payment Due
                                     </button>
-                                </div>
+                                </div> */}
 
-                                <div className="content-right-border"></div>
+                               
                             </div>
-                            <div className="col-md-6">
+                            {/* <div className="col-md-6">
                                 <div className="document-contents">
                                     <h4>Documents</h4>
                                     <p>Aadhar Number</p>
@@ -161,10 +165,10 @@ const LaundryDetails = () => {
                                         <h5>1234-4567-7891-0987</h5>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <span className="profile-footer-border"></span>
                             <div className="footer-button">
-                                <button className="btn btn-sm" type="submit">CANCEL</button>
+                                <button className="btn btn-sm" type="button" onClick={backHandler}>CANCEL</button>
                                 <button className="btn btn-sm" type="submit">Save</button>
                             </div>
                         </div>

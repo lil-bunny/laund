@@ -37,6 +37,10 @@ const Header = (props) => {
         localStorage.removeItem('token');
         router.push('/login');
     }
+    const SettingHandler = () => {
+      //  localStorage.removeItem('token');
+        router.push('/settings');
+    }
     // if(data.length==0){
     //     localStorage.removeItem('token');
     //      router.push('/login');
@@ -55,7 +59,7 @@ const Header = (props) => {
                                 <span className="badge badge-danger navbar-badge">{data.firstName}</span>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item>Content</Dropdown.Item>
+                                <Dropdown.Item><a href="/settings" onClick={SettingHandler} className="setting-menu">Settings</a></Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </li>

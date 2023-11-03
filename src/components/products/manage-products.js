@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import UpdateProductModal from "../modal/UpdateProductModal";
 import AddProductModal from "../modal/AddProductModal";
-import { imagepath, per_page_item } from "@component/functions/commonfunction";
+import { imagepath, per_page_item,NoDataText } from "@component/functions/commonfunction";
 import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 import Icon from "../icon";
@@ -17,14 +17,16 @@ const ManageProducts = () => {
     const handleCloseAdd = () => setAddShow(false);
     const [ProductDetail, setProductDetails] = useState([]);
 
-
+    const [CurrentIndex, setcurrentIndex] = useState(0);
+    let ItemNotFound=NoDataText();
+    const[emptyDataMessage,SetNodataText]=useState('');
     const imageLocation = imagepath();
     const [image_path, setImagepath] = useState([]);
 
     const [productList, setData] = useState([]);
     const [total_items, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchText, setSearchText] = useState("");
+    const [filterKey, setKeyFilter] = useState('');
     const itemsPerPage = per_page_item();
 
     const ProductDetails = (id, product_name, product_image, product_category, product_sub_category) => {
@@ -36,22 +38,25 @@ const ManageProducts = () => {
     }
 
 
-
+   //console.log(CurrentIndex);
 
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get(apiurl + 'product/list?page=' + currentPage + '&limit=' + itemsPerPage);
+            const response = await axiosInstance.get(apiurl + 'product/list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey);
            // console.log(response);
             setData(response.data);
             setImagepath(response.image_path);
             setTotalItems(response.count);
+            if(response.count==0){
+                SetNodataText(ItemNotFound);
+              }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
     useEffect(() => {
         fetchData(); // Call the function to fetch the data
-    }, [currentPage]);
+    }, [currentPage,filterKey]);
 
     const DeleteProduct = (id) => {
         axiosInstance.delete(apiurl + 'product/delete/' + id)
@@ -71,7 +76,9 @@ const ManageProducts = () => {
                 swal("Error", 'Error in data deletion', "error");
             });
     }
-
+    const indexNum = (cell, row, index) => {
+        return (<div>{index+1+CurrentIndex}</div>);
+    }
     const actionFormator = (cell, row) => {
         return (<div><span className="update-item" onClick={() => ProductDetails(row.id, row.product_name, image_path + row.new_product_image_name, row.product_category.id, row.product_sub_category.id)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteProduct(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
     }
@@ -113,11 +120,12 @@ const ManageProducts = () => {
     const columns = [
         {
             dataField: 'id',
-            text: 'Product ID'
+            text: 'S.N',
+            formatter: indexNum
         },
         {
             dataField: 'new_product_image_name',
-            text: 'Image',
+            text: 'Product Image',
             formatter: ImageFormator
 
         },
@@ -161,19 +169,30 @@ const ManageProducts = () => {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+        if(pageNumber==1){
+            setcurrentIndex(0);
+
+        }
+        else{
+            setcurrentIndex(parseInt(pageNumber-1)*parseInt(itemsPerPage));
+        }
     };
 
 
-    const handleSearch = (event) => {
-        // console.log(event.target.value);
-        setSearchText(event.target.value);
-    };
+    const handlekeySearch = (event) => {
+        //set_Search_key(event.target.value);
+        if(event.target.value!=''){
+        setKeyFilter('&search_key='+event.target.value.trim());
+        setCurrentPage(1);
+        setcurrentIndex(0);
+        }
+        else{
+          setKeyFilter('');
+          setCurrentPage(1);
+          setcurrentIndex(0);
+        }
+      };
 
-    const filteredData = productList.filter((item) =>
-        Object.values(item).some((field) =>
-            String(field).toLowerCase().includes(searchText.toLowerCase())
-        )
-    );
     const renderItems = () => {
         return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
             <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
@@ -204,16 +223,17 @@ const ManageProducts = () => {
                         <div className="table-search">
                             <form className="form-inline">
 
-                                <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={searchText} onChange={handleSearch} />
+                                <input className="form-control" type="search" placeholder="Search" aria-label="Search" onChange={handlekeySearch} />
                                 <img src={imageLocation + 'search.png'} alt="sort-img" />
                             </form>
                         </div>
                     </div>
                     <BootstrapTable
                         keyField='id'
-                        data={filteredData}
+                        data={productList}
                         columns={columns}
                         wrapperClasses="table-responsive"
+                        noDataIndication={emptyDataMessage} 
                     />
                     {PaginationHtml()}
                 </div>

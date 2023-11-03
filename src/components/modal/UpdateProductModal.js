@@ -9,7 +9,7 @@ import axiosInstance from "@component/api/axiosinstance";
 import swal from "sweetalert";
 const UpdateProductModal = (props) => {
     const [categoryList, setcategoryList] = useState([]);
-
+    const [previewfile, setFile] = useState();
     const [SubcategoryList, setSubcategoryList] = useState([]);
 
     useEffect(() => {
@@ -104,7 +104,7 @@ const UpdateProductModal = (props) => {
                     {({ errors, touched, setFieldValue }) => (
                         <Form>
                             <div className="form-group product-file cat-image">
-                                <div className="cat-image-holder"><img src={props.ProductDetail.product_image ? props.ProductDetail.product_image : imagepath() + 'dummy.png'} alt="category-img" /></div>
+                                <div className="cat-image-holder"><img src={previewfile ? previewfile : props.ProductDetail.product_image} alt="product-img" /></div>
                                 <input
                                     type="file"
                                     id="file"
@@ -112,6 +112,7 @@ const UpdateProductModal = (props) => {
                                     accept="image/*"
                                     onChange={(event) => {
                                         setFieldValue("file", event.currentTarget.files[0]);
+                                        setFile(URL.createObjectURL(event.target.files[0]));
                                     }}
                                 />
                             </div>

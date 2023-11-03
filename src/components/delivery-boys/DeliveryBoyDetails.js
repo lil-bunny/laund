@@ -92,7 +92,7 @@ const DeliveryBoyDetails = () => {
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                <div className="db-helper">
+                                <div className="db-helper d-none">
 
                                     <img ref={target} onClick={() => setShow(!show)} src={imagepath()+'menu-vertical.png'} alt="menu-img" />
                                     <Overlay target={target.current} show={show} placement="left">

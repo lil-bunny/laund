@@ -12,12 +12,16 @@ const Order = () => {
     const [orderData, setData] = useState([]);
     const [total_items, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+
+    const [CurrentIndex, setcurrentIndex] = useState(0);
     const itemsPerPage = per_page_item();
     let ItemNotFound=NoDataText();
     const[emptyDataMessage,SetNodataText]=useState('');
     const [filterKey, setKeyFilter] = useState('');
+    
     const [FilterDateRange, setRangeFilter] = useState(null);
     const [FilterByPaymentStatus, setPaymentStatus] = useState('');
+    const [FilterByDeliveryStatus, setDeliveryStatus] = useState('');
     let dateRange='';
     if(FilterDateRange!==null){
 
@@ -26,7 +30,7 @@ const Order = () => {
      // Function to perform the GET request
      const fetchData = async () => {
         try {
-          const response = await axiosInstance.get(apiurl + 'order/order-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey+FilterByPaymentStatus+dateRange);
+          const response = await axiosInstance.get(apiurl + 'order/order-list?page=' + currentPage + '&limit=' + itemsPerPage+filterKey+FilterByPaymentStatus+FilterByDeliveryStatus+dateRange);
           setData(response.data); // Assuming the response contains the data you need
           setTotalItems(response.count);
           if(response.count==0){
@@ -38,17 +42,19 @@ const Order = () => {
       };
       useEffect(() => {
       fetchData(); // Call the function to fetch the data
-    }, [currentPage,filterKey,FilterByPaymentStatus,dateRange]);
+    }, [currentPage,filterKey,FilterByPaymentStatus,FilterByDeliveryStatus,dateRange]);
 
     
     const indexNum = (cell, row, index) => {
-        return (<div>{index + 1}</div>);
+        return (<div>{CurrentIndex+1+index}</div>);
     }
 
     const csNameFormator = (cell, row) => {
         return `${row.customer.firstName} ${row.customer.lastName}`;
        }
-
+       const OrderNumberFormator = (cell, row) => {
+        return (<a href={'/order-details/'+row.id} className="order-details-id">{row.order_unique_id}</a>);
+       }
        const dbNameFormator = (cell, row) => {
         return `${row.delivery_boy.firstName} ${row.delivery_boy.lastName}`;
        }
@@ -80,7 +86,8 @@ const Order = () => {
         },
         {
             dataField: 'order_unique_id',
-            text: 'Order ID'
+            text: 'Order ID',
+            formatter: OrderNumberFormator
         },
         {
             dataField: 'cs_name',
@@ -167,6 +174,13 @@ const Order = () => {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+        if(pageNumber==1){
+            setcurrentIndex(0);
+
+        }
+        else{
+            setcurrentIndex(parseInt(pageNumber-1)*CurrentIndex);
+        }
     };
     
     
@@ -174,9 +188,13 @@ const Order = () => {
         //set_Search_key(event.target.value);
         if(event.target.value!=''){
         setKeyFilter('&search_key='+event.target.value.trim());
+        setCurrentPage(1);
+        setcurrentIndex(0);
         }
         else{
           setKeyFilter('');
+          setCurrentPage(1);
+          setcurrentIndex(0);
         }
       };
 
@@ -184,14 +202,35 @@ const Order = () => {
         //set_Search_key(event.target.value);
         if(event.target.value!=''){
             setPaymentStatus('&payment_status='+event.target.value.trim());
+            setCurrentPage(1);
+            setcurrentIndex(0);
         }
         else{
             setPaymentStatus('');
+            
+            setCurrentPage(1);
+            setcurrentIndex(0);
+        }
+      };
+
+      const handleDeliveryStatus = (event) => {
+        //set_Search_key(event.target.value);
+        if(event.target.value!=''){
+            setDeliveryStatus('&order_status_id='+event.target.value.trim());
+            setCurrentPage(1);
+            setcurrentIndex(0);
+        }
+        else{
+            setDeliveryStatus('');
+            
+            setCurrentPage(1);
+            setcurrentIndex(0);
         }
       };
     
     const renderItems = () => {
         return Array.from({ length: Math.ceil(total_items / itemsPerPage) }, (_, index) => (
+            
             <button key={index} onClick={() => handlePageChange(index + 1)} className={currentPage === index + 1 ? "active" : ""}>{index + 1}</button>
         ));
     };
@@ -250,11 +289,22 @@ const Order = () => {
                         </div>
                         <div className="select-dropdown table-select">
                             <img src="./assets/images/sort-down-small.png" alt="sort-img" />
-                            <select className="select">
+                            <select className="select" name="order_status_id" onChange={handleDeliveryStatus}>
                                 <option value="">Delivery Status</option>
-                                <option value="1">Status 1</option>
-                                <option value="2">Status 2</option>
-                                <option value="3">Status 3</option>
+                                <option value="1">Pickup Request</option>
+                                <option value="2">DB Pickup Request Accepted</option>
+                                <option value="3">DB Pickup Request Rejected</option>
+                                <option value="4">Helper Request Accepted</option>
+                                <option value="5">Helper Request Rejected</option>
+                                <option value="6">Issue Raised By DB</option>
+                                <option value="7">Picked Up</option>
+                                <option value="8">Issue Rejected By Customer</option>
+                                <option value="9">Partially Handover to Laundry</option>
+                                <option value="10">Complete Order Handover To Laundry</option>
+                                <option value="11">Complete Order Collected From Laundry</option>
+                                <option value="12">Handover Done To Customer</option>
+                                <option value="13">Customer Confirms Cloths Received</option>
+                                <option value="14">Order Completed(Payment Done)</option>
                             </select>
                         </div>
                         <div className="select-dropdown table-select">

@@ -21,7 +21,7 @@ const Sidebar = (props) => {
                                 <span className="menu-name">Dashboard</span>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/order" ? "nav-item active" : "nav-item"}>
+                        <li className={router.pathname == "/order" || router.pathname == "/order-details/[id]"? "nav-item active" : "nav-item"}>
                             <Link href='/order' className="menu-link">
                                 <img src="/assets/images/purchase-order.png" alt="menu-img" />
                                 <span className="menu-name">Orders</span>

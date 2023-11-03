@@ -84,6 +84,7 @@ const AddProductModal = (props) => {
                         category_id: yup.string().required("Select a category"),
                         sub_category_id: yup.string().required("Select a sub category"),
                         product_name: yup.string().required("Product name is required"),
+                        file: yup.mixed().required("Please select a product image"),
                     })}
                     onSubmit={(values, { resetForm }) => {
                         submitHandler(values);
@@ -102,6 +103,7 @@ const AddProductModal = (props) => {
                                         setFieldValue("file", event.currentTarget.files[0]);
                                     }}
                                 />
+                                {touched.file && errors.file && <div className="form-error text-center">{errors.file}</div>}
                             </div>
                             <div className="form-group">
                                 <Field as="select" name="category_id" id="category_id" className="form-control">
