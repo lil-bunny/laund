@@ -75,6 +75,11 @@ const Payment = () => {
           return '-';
         }
       }
+
+      const orderAmountFormate = (cell, row) => {
+        return (<span className="order-total-amount">{row.amount.toFixed(2)}</span>)
+      }
+      
     
     const columns = [
         {
@@ -88,7 +93,8 @@ const Payment = () => {
         },
         {
             dataField: 'amount',
-            text: 'Amount'
+            text: 'Amount',
+            formatter: orderAmountFormate,
         },
         {
             dataField: 'amount_paid_by',
@@ -159,7 +165,7 @@ const Payment = () => {
         }
       };
 
-      console.log(FilterDateRange);
+      //console.log(FilterDateRange);
     return (
         <>
             <section className="payment-panel">

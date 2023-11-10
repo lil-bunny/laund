@@ -3,6 +3,7 @@ import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 
 import Badge from 'react-bootstrap/Badge';
+import {dbNotificationText,lsNotificationText,custNotificationText} from "@component/functions/commonfunction";
 
 const Notification = () => {
     const [db_notification, DbNotificationData] = useState([]);
@@ -15,11 +16,11 @@ const Notification = () => {
         // Function to perform the GET request
         const fetchData = async () => {
           try {
-            const response = await axiosInstance.get(apiurl+'notification/notification-list');
+            const response = await axiosInstance.get(apiurl+'notification/notification-count-list');
             if(response.status===1){
-                DbNotificationData(response.db_notification);
-                CsNotificationData(response.cs_notification);
-                LsNotificationData(response.ls_notification); // Assuming the response contains the data you need
+                DbNotificationData(response.db_and_helper_notifications);
+                CsNotificationData(response.customer_notifications);
+                LsNotificationData(response.laundry_notifications); // Assuming the response contains the data you need
             }
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -29,7 +30,7 @@ const Notification = () => {
         fetchData(); // Call the function to fetch the data
       }, []);
 
-      console.log(db_notification);
+      //console.log(db_notification);
 
     return (
         <>
@@ -46,7 +47,7 @@ const Notification = () => {
                                 {db_notification.map((value, key) => {
                                         return (
                                         <div className="content-box" key={key}>
-                                            <h5 className="1">{value.text}</h5>
+                                            <h5 className="1">{dbNotificationText(value.type)}</h5>
                                             <Badge className="2" bg="danger">{value.count}</Badge>
                                         </div>
                                         );
@@ -93,7 +94,7 @@ const Notification = () => {
                                 {cs_notification.map((value, key) => {
                                         return (
                                         <div className="content-box" key={key}>
-                                            <h5 className="1">{value.text}</h5>
+                                            <h5 className="1">{lsNotificationText(value.type)}</h5>
                                             <Badge className="2" bg="danger">{value.count}</Badge>
                                         </div>
                                         );
@@ -136,7 +137,7 @@ const Notification = () => {
                                 {ls_notification.map((value, key) => {
                                         return (
                                         <div className="content-box" key={key}>
-                                            <h5 className="1">{value.text}</h5>
+                                            <h5 className="1">{custNotificationText(value.type)}</h5>
                                             <Badge className="2" bg="danger">{value.count}</Badge>
                                         </div>
                                         );

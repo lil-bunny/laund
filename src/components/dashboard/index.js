@@ -31,6 +31,8 @@ const Dashboard = () => {
     const [activeInactiveCS, setactiveInactiveCS] = useState([]);
     const [activeInactiveHelper, setactiveInactiveHelper] = useState([]);
     const [activeInactiveLs, setactiveInactiveLs] = useState([]);
+    const [orderCountDetails, setorderCount] = useState([]);
+    const [currentDay, setDay] = useState('today');
     const bardata = {
         barThickness: 6,
         barPercentage: 0.5,
@@ -38,7 +40,7 @@ const Dashboard = () => {
         datasets: [
             {
                 // label: 'New',
-                data: [3, 6, 9, 5, 8, 2, 6],
+                data: [3, 6, 25, 5, 8, 2, 6],
                 backgroundColor: '#5C88DA',
                 borderColor: 'black',
                 borderWidth: 1
@@ -71,11 +73,17 @@ const Dashboard = () => {
             }
         },
     }
-
-    useEffect(() => {
+    const handledDayChange = (event) => {
+        //set_Search_key(event.target.value);
+        if (event.target.value != '') {
+            setDay(event.target.value);
+        }
+    };
+   
     const fetchData = async () => {
         try {
-          const response = await axiosInstance.get(apiurl + 'dashboard/active-blocked-users-count');
+            const response = await axiosInstance.get(apiurl + 'dashboard/active-blocked-users-count');
+         
           if(response.status==1){
             setactiveInactiveDb(response.data.db); // Assuming the response contains the data you need
             setactiveInactiveCS(response.data.cs);
@@ -87,12 +95,25 @@ const Dashboard = () => {
           console.error('Error fetching data:', error);
         }
       };
-     
+      useEffect(() => {
         fetchData(); // Call the function to fetch the data
       }, []);
 
-      
-      console.log(activeInactiveCS);
+      const fetchOrderData = async () => {
+        try {
+            const response = await axiosInstance.get(apiurl + 'dashboard/order-count?day='+currentDay);
+          if(response.status==1){
+            setorderCount(response.data);
+
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      useEffect(() => {
+        fetchOrderData(); // Call the function to fetch the data
+      }, [currentDay]);
+      console.log(orderCountDetails);
     return (
         <>
             <div className="content-header">
@@ -100,10 +121,10 @@ const Dashboard = () => {
                     <div className="content-header-dropdown pull-right">
                         <div className="select-dropdown dashboard-header-dropdown">
                             <img src={imageLocation+'sort-down.png'} alt="sort-img" />
-                            <select className="select">
-                                <option value="1">Todays</option>
-                                <option value="2">Yesterday</option>
-                                <option value="3">Tomorrow</option>
+                            <select className="select" onChange={handledDayChange}>
+                                <option value="today">Todays</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="tomorrow">Tomorrow</option>
                             </select>
                         </div>
                     </div>
@@ -113,28 +134,36 @@ const Dashboard = () => {
             <section className="content">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-3 col-md-6">
+                        <div className="col-lg-6 col-md-6">
                             <div className="top-content-box">
                                 <h3>Today's New Orders</h3>
-                                <p>360</p>
+                                <p>{orderCountDetails.new_orders_count !== null && typeof orderCountDetails.new_orders_count!== 'undefined' && orderCountDetails.new_orders_count}</p>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6">
+                        <div className="col-lg-6 col-md-6">
                             <div className="top-content-box">
                                 <h3>Today's Delivered/Pending Orders</h3>
-                                <p>125/32</p>
+                                <p>{orderCountDetails.delivered_orders !== null && typeof orderCountDetails.delivered_orders!== 'undefined' && orderCountDetails.delivered_orders}/{orderCountDetails.pending_orders !== null && typeof orderCountDetails.pending_orders!== 'undefined' && orderCountDetails.pending_orders}</p>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6">
+                        </div>
+                        <div className="row">
+                        <div className="col-lg-4 col-md-6">
                             <div className="top-content-box">
                                 <h3>Today's Earnings (in Rs.)</h3>
                                 <p>76,503</p>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6">
+                        <div className="col-lg-4 col-md-6">
                             <div className="top-content-box">
-                                <h3>Pending Bill's (in Rs.)</h3>
-                                <p>17,700</p>
+                                <h3>Customer Pending Bill's (in Rs.) </h3>
+                                <p>{orderCountDetails.customer_pending_bill !== null && typeof orderCountDetails.customer_pending_bill!== 'undefined' && orderCountDetails.customer_pending_bill.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="top-content-box">
+                                <h3>Laundry Pending Bill's (in Rs.) </h3>
+                                <p>{orderCountDetails.laundry_pending_bill !== null && typeof orderCountDetails.laundry_pending_bill!== 'undefined' && orderCountDetails.laundry_pending_bill.toFixed(2)}</p>
                             </div>
                         </div>
                     </div>

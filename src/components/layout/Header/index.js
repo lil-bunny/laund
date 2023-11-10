@@ -1,16 +1,17 @@
 import React, { useContext,useState,useEffect} from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
 import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
-import { imagepath } from "@component/functions/commonfunction";
-
+import { imagepath,backButtonClass} from "@component/functions/commonfunction";
+import { useRoutePath } from 'next/router';
 const Header = (props) => {
     let initialToken;
     const router = useRouter();
     const [data, setData] = useState([]);
     let imageLocation=imagepath();
+    let backButtonclass=backButtonClass(router.pathname);
     useEffect(() => {
         // Function to perform the GET request
         const fetchData = async () => {
@@ -41,21 +42,28 @@ const Header = (props) => {
       //  localStorage.removeItem('token');
         router.push('/settings');
     }
+    const notoficationHandler = () => {
+        //  localStorage.removeItem('token');
+          router.push('/notification');
+      }
     // if(data.length==0){
     //     localStorage.removeItem('token');
     //      router.push('/login');
     // }
 
-    //console.log(data);
+    console.log(router.pathname);
+    
+
     
     return (
         <>
             <nav className="main-header navbar navbar-expand">
+                <a className={backButtonclass+' back-button align-items-center mx-2'} href="javascript:void(0)" onClick={() => router.back()}><img src={imageLocation+'backarrow.png'}/><span>Back</span></a>
                 <ul className="navbar-nav ml-auto ms-auto">
                     <li className="nav-item">
                         <Dropdown>
                             <Dropdown.Toggle className="nav-link">
-                                <img src={imageLocation+'doorbell.png'} alt="doorbell" />
+                                <img src={imageLocation+'doorbell.png'} alt="doorbell" onClick={notoficationHandler} />
                                 <span className="badge badge-danger navbar-badge">{data.firstName}</span>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>

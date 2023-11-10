@@ -118,16 +118,12 @@ const Onboarding = () => {
             formatter: enrollmentDate_formate
         },
         {
-            dataField: 'enrollment_fee',
-            text: 'Enrollment Fee'
+            dataField: 'primary_phone_no',
+            text: 'Phone Number'
         },
         {
-            dataField: 'fee_status',
-            text: 'Fee Status'
-        },
-        {
-            dataField: 'admin_review',
-            text: 'Admin Review'
+            dataField: 'pincode',
+            text: 'Pincode'
         },
         {
             dataField: 'status',

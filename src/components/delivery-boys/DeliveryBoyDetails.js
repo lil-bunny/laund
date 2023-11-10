@@ -17,6 +17,8 @@ const DeliveryBoyDetails = () => {
     const [data, setData] = useState([]);
     const [rates, setRates] = useState([]);
     const[emptyDataMessage,SetNodataText]=useState('');
+    const [rating, setRating] = useState([]);
+    const [hover, setHover] = useState(0);
     let ItemNotFound=NoDataText();
        useEffect(() => {
         // Function to perform the GET request
@@ -25,6 +27,7 @@ const DeliveryBoyDetails = () => {
             const response = await axiosInstance.post(apiurl+'delivery-boy/laundry-associate-details',{id});
             if(response.status===1){
             setData(response.data); // Assuming the response contains the data you need
+            setRating(response.data.user_rating);
             if(response.data.product_prices.count!=0){
                 setRates(response.data.product_prices);
             }
@@ -142,6 +145,23 @@ const DeliveryBoyDetails = () => {
                                                 <span className="db-prof-address">
                                                 {data.address}, {data.cityName} {data.pincode}
                                                 </span>
+                                                
+                                                <div className="star-rating">
+                                                        {[...Array(5)].map((star, index) => {
+                                                            index += 1;
+                                                            return (
+                                                                <button
+                                                                    type="button"
+                                                                    key={index}
+                                                                    className={index <= (hover || rating.rating) ? "on" : "off"}
+                                                                    onMouseEnter={() => setHover(index)}
+                                                                    onMouseLeave={() => setHover(rating.rating)}
+                                                                >
+                                                                    <span className="star">&#9733;</span>
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>

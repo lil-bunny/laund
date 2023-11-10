@@ -17,7 +17,9 @@ const OrderDetails = () => {
     const [orderItemDetailsDetails, setOrderItemData] = useState([]);
     const [orderDBDetails, setOrderDBData] = useState([]);
     const [lsIssueRaised, setLsIssueData] = useState([]);
+    const [orderDetailDate, setLOrderDetailsDate] = useState([]);
     const [orderissues, setOrderIssueData] = useState([]);
+    const [orderDateData, setOrderDateData] = useState([]);
     const [issueImageUrl, setissueImage] = useState('');
     const [orderUniqueID, setorderID] = useState('');
     const imageLocation = imagepath();
@@ -40,6 +42,7 @@ const OrderDetails = () => {
             setLsIssueData(response.data.order_details.laundry_order_issues);
             setOrderIssueData(response.data.order_issues);
             setorderID(response.data.order_unique_id)
+            setOrderDateData(response.data.order_date)
 
 
         } catch (error) {
@@ -56,10 +59,17 @@ const OrderDetails = () => {
 
 
     };
+
+    const handleOrderDates = (orderDates) => {
+        setLOrderDetailsDate(orderDates);
+       // setShow(true);
+
+
+    };
     const handleOrderIssue = () => {
         setShow(true);
     };
-    console.log(orderissues);
+    console.log(orderDetailDate);
 
     return (
         <>
@@ -95,7 +105,7 @@ const OrderDetails = () => {
                                                 <span className="order-prof-address">
                                                     {orderCustomerDetails.address}
                                                 </span>
-                                                <span className="order-address-footer order-issue" onClick={() => handleOrderIssue()} >
+                                                <span className="order-address-footer order-issue" onClick={() => handleOrderIssue()} title="Click to view order issues">
                                                     Order Issues ({orderissues.length})
                                                 </span>
                                             </div>
@@ -127,17 +137,20 @@ const OrderDetails = () => {
                                                                             <th>Rate</th>
                                                                             <th>Amount</th>
                                                                             <th>Ls Issue</th>
+                                                                            <th>Order Journey</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        {value.order_products.map((value_product, kayvalue_product) => {
+                                                                        {value.order_products?.map((value_product, kayvalue_product) => {
                                                                             return (
                                                                                 <tr key={kayvalue_product}>
                                                                                     <td>{value_product.product.product_name}</td>
                                                                                     <td>{value_product.product_quantity}</td>
-                                                                                    <td>{value_product.product_price}</td>
-                                                                                    <td>{value_product.total_price}</td>
-                                                                                    {kayvalue_product == 0 && <td className="ls-raised-issue" rowSpan={value.order_products.length}><span onClick={() => handlelsIssue(value.laundry_order_issues)}>LS Raised Issue ({value.laundry_order_issues.length})</span></td>}
+                                                                                    <td>{value_product.product_price !== null && typeof value_product.product_price !== 'undefined' && value_product.product_price.toFixed(2)}</td>
+                                                                                    <td>{value_product.total_price !== null && typeof value_product.total_price !== 'undefined' && value_product.total_price.toFixed(2)}</td>
+                                                                                    {kayvalue_product == 0 && <td className="ls-raised-issue" rowSpan={value.order_products.length}><span onClick={() => handlelsIssue(value.laundry_order_issues)} title="Click to view LS Raised Issue">LS Raised Issue ({value.laundry_order_issues.length})</span></td>}
+
+                                                                                    {kayvalue_product == 0 && <td className="order-journey" rowSpan={value.order_products.length}><span onClick={() => handleOrderDates(value.order_details_date)}  title="Click to view order journey">Order Jurney </span></td>}
                                                                                 </tr>
 
                                                                             );
@@ -152,7 +165,7 @@ const OrderDetails = () => {
                                             <div className="accordion-footer">
                                                 <div className="row">
                                                     <div className="col-md-12">
-                                                        <h4>Total Amount: <span>{orderDetailsData.customer_total_amount}</span></h4>
+                                                        <h4>Total Amount: <span>{orderDetailsData.customer_total_amount !== null && typeof orderDetailsData.customer_total_amount!== 'undefined' && orderDetailsData.customer_total_amount.toFixed(2)}</span></h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,59 +208,68 @@ const OrderDetails = () => {
 
                             </div>
                             <div className="col-md-3">
-                                <div className="order-journey-panel d-none">
+                                <div className="order-journey-panel picked-up-panel">
                                     <h3>Order Journey</h3>
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
                                         <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <span>{orderDateData.pickup_request_date !== null && typeof orderDateData.pickup_request_date !== 'undefined' && dateFormat(orderDateData.pickup_request_date, "dd mmm, yyyy | h:MM TT")} </span>
+                                    </div>
+
+                                    <div className="order-journey-content">
+                                        <span className="left-bar"></span>
+                                        <p>Pickup Request Accepted</p>
+                                        <span>{orderDateData.pickup_request_accept_date !== null && typeof orderDateData.pickup_request_accept_date !== 'undefined' && dateFormat(orderDateData.pickup_request_accept_date, "dd mmm, yyyy | h:MM TT")} </span>
                                     </div>
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <p>Pickup From Customer</p>
+                                        <span>{orderDateData.picked_up_from_customer_date !== null && typeof orderDateData.picked_up_from_customer_date !== 'undefined' && dateFormat(orderDateData.picked_up_from_customer_date, "dd mmm, yyyy | h:MM TT")} </span>
                                     </div>
-                                    <div className="order-journey-content">
-                                        <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
-                                    </div>
-                                    <div className="order-journey-content">
-                                        <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
-                                    </div>
+                                </div>
+                    
                                     <span className="order-journey-footer-border"></span>
+                                    <div className="order-journey-panel ls-panel">
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <p>Assign to LS/Self</p>
+                                        <span>{orderDetailDate!==null && orderDetailDate.assign_to_ls_or_self_date !== null && typeof orderDetailDate.assign_to_ls_or_self_date !== 'undefined' && dateFormat(orderDetailDate.assign_to_ls_or_self_date, "dd mmm, yyyy | h:MM TT")} </span>
                                     </div>
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <p>Accepted by LS</p>
+                                        <span>{orderDetailDate!==null && orderDetailDate.accepted_by_ls_date !== null && typeof orderDetailDate.accepted_by_ls_date !== 'undefined' && dateFormat(orderDetailDate.accepted_by_ls_date, "dd mmm, yyyy | h:MM TT")} </span>
                                     </div>
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <p>Order ready by LS </p>
+                                        <span>{orderDetailDate!==null && orderDetailDate.order_ready_by_ls_or_self_date !== null && typeof orderDetailDate.order_ready_by_ls_or_self_date !== 'undefined' && dateFormat(orderDetailDate.order_ready_by_ls_or_self_date, "dd mmm, yyyy | h:MM TT")} </span>
                                     </div>
+
+                                    <div className="order-journey-content">
+                                        <span className="left-bar"></span>
+                                        <p>Picked up from LS </p>
+                                        <span>{orderDetailDate!==null && orderDetailDate.picked_up_from_ls_date !== null && typeof orderDetailDate.picked_up_from_ls_date !== 'undefined' && dateFormat(orderDetailDate.picked_up_from_ls_date, "dd mmm, yyyy | h:MM TT")} </span>
+                                    </div>
+                                    
+                                    </div>
+                                    
                                     <span className="order-journey-footer-border"></span>
+                                    <div className="order-journey-panel delivery-panel">
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <p>Pickup For Delivery</p>
+                                        <span>{orderDateData.picked_up_to_deliver_customer_date !== null && typeof orderDateData.picked_up_to_deliver_customer_date !== 'undefined' && dateFormat(orderDateData.picked_up_to_deliver_customer_date, "dd mmm, yyyy | h:MM TT")} </span>
                                     </div>
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <p>To Be Deliver </p>
+                                        <span>{dateFormat(orderDetailsData.customer_delivery_date, "dS mmm, yyyy")} | {orderDetailsData.customer_delivery_time}</span>
                                     </div>
                                     <div className="order-journey-content">
                                         <span className="left-bar"></span>
-                                        <p>Pickup Request</p>
-                                        <span>05 Dec. 2022 | 12:00PM - 02:00PM</span>
+                                        <p>Order Delivered</p>
+                                        <span>{orderDateData.order_delivered_to_customer_date !== null && typeof orderDateData.order_delivered_to_customer_date !== 'undefined' && dateFormat(orderDateData.order_delivered_to_customer_date, "dd mmm, yyyy | h:MM TT")} </span>
                                     </div>
                                 </div>
                             </div>

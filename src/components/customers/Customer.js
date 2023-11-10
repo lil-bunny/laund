@@ -7,6 +7,7 @@ import axiosInstance from "@component/api/axiosinstance";
 import { getStaticProps, getStaticPaths } from 'next';
 import Icon from "../icon";
 import swal from "sweetalert";
+import dateFormat from "dateformat";
 
 const Customer = () => {
     let imageLocation = imagepath();
@@ -67,6 +68,18 @@ const Customer = () => {
     const actionFormator = (cell, row) => {
         return (<div><a href={'customer-details/' + row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a> <span className="trash-item" onClick={() => DeleteCust(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
     }
+    const lastOrderDateFormate = (cell, row) => {
+        if(row.last_order_date!=null){
+            return dateFormat(`${row.last_order_date}`, "d mmm yyyy");
+          }
+          else{
+            return '-';
+          }
+    }
+
+    const PendingAmounFormator = (cell, row) => {
+        return (<span className="order-total-amount">{row.total_pending_amount !== null && typeof row.total_pending_amount !== 'undefined' && row.total_pending_amount.toFixed(2)}</span>)
+    }
     const columns = [
         {
             dataField: 'SL No',
@@ -85,14 +98,17 @@ const Customer = () => {
         },
         {
             dataField: 'last_order',
-            text: 'Last Order'
+            text: 'Last Order',
+            formatter: lastOrderDateFormate
         },
         {
             dataField: 'unpaid_amount',
-            text: 'Unpaid Amount'
+            text: 'Unpaid Amount',
+            formatter: PendingAmounFormator
+            
         },
         {
-            dataField: 'active_orders',
+            dataField: 'active_order_count',
             text: 'Active Orders'
         },
         {

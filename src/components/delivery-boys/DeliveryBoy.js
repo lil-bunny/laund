@@ -80,12 +80,13 @@ const DeliveryBoy = () => {
 
   const dob_formate = (cell, row) => {
     if (row.dob != null) {
-      return dateFormat(`${row.dob}`, "mmmm dS, yyyy");
+      return dateFormat(`${row.dob}`, "dd mmm, yyyy");
     }
     else {
       return '';
     }
   }
+  
   const status_formator = (cell, row) => {
     if (row.status === 0) {
       return 'Deleted';
@@ -111,12 +112,7 @@ const DeliveryBoy = () => {
     {
       dataField: 'id',
       text: 'DB ID',
-      formatter: indexNum,
-      events: {
-        onClick: (e, column, columnIndex, row, rowIndex) => {
-          setShow(true);
-        }
-      }
+      formatter: indexNum
     },
     {
       dataField: 'db_name',

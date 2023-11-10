@@ -793,6 +793,15 @@ td {
   left: -9px;
 }
 
+.ls-panel .order-journey-content .left-bar {
+  position: absolute;
+  border-left: 3px solid #ec4700;
+  height: 31px;
+  display: block;
+  top: 4px;
+  left: -9px;
+}
+
 .order-journey-content p {
   font-size: 12px;
   font-weight: 400;
@@ -1475,6 +1484,12 @@ span.payment-pending{
   padding: 11px 24px 11px 24px;
   margin: 14px 0 0;
 }
+.customer-details .right-prof-panel .star-rating button {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
 
 .customer-details .right-prof-panel button span {
   font-weight: 600;
@@ -1585,6 +1600,9 @@ span.payment-pending{
 
 .onboarding-panel .common-table .react-bootstrap-table table>tbody>tr>td:nth-child(2) {
   background: #fff;
+    color: #3a67bb;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .form-error {
@@ -1876,6 +1894,8 @@ button.btn-save:hover {
     color:#fff;
 }
 td.ls-raised-issue{vertical-align: middle;}
+td.order-journey{vertical-align: middle;}
+td.order-journey span{font-size: 14px; font-weight: 600;color:#1c2941;cursor: pointer;}
 td.ls-raised-issue span{font-size: 14px; font-weight: 600;color: rgba(203, 20, 20, 1);cursor: pointer;}
 .order-issue{cursor: pointer;}
 /* ls-issue-rased Popup */
@@ -1917,8 +1937,14 @@ td.ls-raised-issue span{font-size: 14px; font-weight: 600;color: rgba(203, 20, 2
   opacity: 1;
   color: #00a1ff;
 }
+/* order status color */
+.delivered,.collected,.paid{color: #1aa301;font-weight: 600;}
+.order-cancel,.payment-pending,.issue-rejected-by-cs,.rejected-by-db,.not-paid{color: #cb1414;font-weight: 600;}
+.partial-order-pickup{color: #ec4700;font-weight: 600;}
+/* back button */
 /**************** RESPONSIVE ****************************/
-
+a.back-button{text-decoration: none;}
+a.back-button span {color: #fff;display: block;margin-left: 7px;}
 @media (max-width: 992px) {
 
   .content-wrapper,
