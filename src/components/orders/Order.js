@@ -217,7 +217,7 @@ const Order = () => {
 
         }
         else {
-            setcurrentIndex(parseInt(pageNumber - 1) * CurrentIndex);
+            setcurrentIndex(parseInt(pageNumber - 1) * itemsPerPage);
         }
     };
 
