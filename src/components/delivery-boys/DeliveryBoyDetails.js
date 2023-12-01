@@ -81,6 +81,31 @@ const DeliveryBoyDetails = () => {
             formatter: statusFormator
         },
     ];
+
+    const RatingFormator = () => {
+        if (rating !== null && typeof rating.rating !== 'undefined') {
+            return (<div className="star-rating">
+                {[...Array(5)].map((star, index) => {
+                    index += 1;
+                    return (
+                        <button
+                            type="button"
+                            key={index}
+                            className={index <= (hover || rating.rating) ? "on" : "off"}
+                            onMouseEnter={() => setHover(index)}
+                            onMouseLeave={() => setHover(rating.rating)}
+                        >
+                            <span className="star">&#9733;</span>
+                        </button>
+                    );
+                })}
+            </div>)
+        }
+        else {
+            return '';
+        }
+
+    }
     return (
         <>
             <section className="db-details-panel">
@@ -147,21 +172,8 @@ const DeliveryBoyDetails = () => {
                                                 </span>
                                                 
                                                 <div className="star-rating">
-                                                        {[...Array(5)].map((star, index) => {
-                                                            index += 1;
-                                                            return (
-                                                                <button
-                                                                    type="button"
-                                                                    key={index}
-                                                                    className={index <= (hover || rating.rating) ? "on" : "off"}
-                                                                    onMouseEnter={() => setHover(index)}
-                                                                    onMouseLeave={() => setHover(rating.rating)}
-                                                                >
-                                                                    <span className="star">&#9733;</span>
-                                                                </button>
-                                                            );
-                                                        })}
-                                                    </div>
+                                                {RatingFormator() }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

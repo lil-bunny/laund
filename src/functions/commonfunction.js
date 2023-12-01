@@ -271,3 +271,14 @@ export function imagepath() {
    }
     return notoficationJson[notification_parameter];
   }
+
+  export function paiichartBackroundColor(paichartslug){
+    let paichartslugJson={
+      "wash-iron":"#E5E62B",
+      "dry-clean":"#21D4C9",
+      "steam-iron":"#EB5427",
+      "iron-and-wash":"#791F06"
+   }
+    return paichartslugJson[paichartslug];
+  }
+

@@ -30,15 +30,18 @@ const Customer = () => {
             .then((response) => {
                 // console.log(response);
                 if (response.status === 1) {
+                    fetchData();
                     swal("success", "Customer deleted successfully", "success");
-
+                    
                 }
                 else if (response.status === 2) {
+                    fetchData();
                     swal("Error", 'Error in data deletion', "error");
                 }
             })
             .catch((error) => {
                 //console.log('Error', error);
+                fetchData();
                 swal("Error", 'Error in data deletion', "error");
             });
     }
@@ -151,6 +154,8 @@ const Customer = () => {
             </div>
         }
     };
+
+   // console.log(customers);
     return (
         <>
             <section className="customer-panel">

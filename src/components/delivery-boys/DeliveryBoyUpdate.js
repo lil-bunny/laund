@@ -122,7 +122,6 @@ const DeliveryBoyUpdate = () => {
                             yup.object().shape({
                                 firstName: yup.string().required("First name is required"),
                                 lastName: yup.string().required("Last name is required"),
-                                email: yup.string().required("Email is required"),
                                 primary_phone_no: yup.string().required("Phone Number is required").min(10, 'Phone number must be 10 digit')
                                         .max(10, 'Phone number should not grater than 10 digit'),
                                 address: yup.string().required("Address is required"),

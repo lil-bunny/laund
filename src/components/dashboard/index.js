@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { imagepath } from "@component/functions/commonfunction";
+import { imagepath ,paiichartBackroundColor} from "@component/functions/commonfunction";
 import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 import Link from 'next/link';
@@ -33,6 +33,11 @@ const Dashboard = () => {
     const [activeInactiveLs, setactiveInactiveLs] = useState([]);
     const [orderCountDetails, setorderCount] = useState([]);
     const [currentDay, setDay] = useState('today');
+    const [paichartData, setPieChartData] = useState([]);
+    const [paichartTime, setPaiChartTime] = useState('year');
+    let paichartLabel=[];
+    let paichatDataset=[];
+    let paichatBackground=[];
     const bardata = {
         barThickness: 6,
         barPercentage: 0.5,
@@ -56,11 +61,11 @@ const Dashboard = () => {
     };
 
     const pieData = {
-        labels: ['One', 'Two', 'Three'],
+        labels: paichartLabel,
         datasets: [
             {
-                data: [3, 6, 9, 5, 7],
-                backgroundColor: ['#791F06', '#EB5427', '#21D4C9', '#651080', '#E5E62B'],
+                data: paichatDataset,
+                backgroundColor: paichatBackground,
                 borderWidth: 0,
             }
         ]
@@ -113,7 +118,24 @@ const Dashboard = () => {
       useEffect(() => {
         fetchOrderData(); // Call the function to fetch the data
       }, [currentDay]);
-      console.log(orderCountDetails);
+
+      const fetchpaiChartData = async () => {
+        try {
+            const response = await axiosInstance.get(apiurl + 'dashboard/pai-chart-data?time='+paichartTime);
+          if(response.status==1){
+            setPieChartData(response.data);
+
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      useEffect(() => {
+        fetchpaiChartData(); // Call the function to fetch the data
+      }, [paichartTime]);
+
+
+      console.log(paichartLabel);
     return (
         <>
             <div className="content-header">
@@ -148,19 +170,19 @@ const Dashboard = () => {
                         </div>
                         </div>
                         <div className="row">
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-6 col-md-6 d-none">
                             <div className="top-content-box">
                                 <h3>Today's Earnings (in Rs.)</h3>
                                 <p>76,503</p>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-6 col-md-6">
                             <div className="top-content-box">
                                 <h3>Customer Pending Bill's (in Rs.) </h3>
                                 <p>{orderCountDetails.customer_pending_bill !== null && typeof orderCountDetails.customer_pending_bill!== 'undefined' && orderCountDetails.customer_pending_bill.toFixed(2)}</p>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-6 col-md-6">
                             <div className="top-content-box">
                                 <h3>Laundry Pending Bill's (in Rs.) </h3>
                                 <p>{orderCountDetails.laundry_pending_bill !== null && typeof orderCountDetails.laundry_pending_bill!== 'undefined' && orderCountDetails.laundry_pending_bill.toFixed(2)}</p>
@@ -211,11 +233,17 @@ const Dashboard = () => {
                                     />
                                 </div>
                                 <div className="pie-footer">
-                                    <span style={{background: '#EB5427'}} className="square-box"></span><label>Steam Iron</label>
-                                    <span style={{background: '#791F06'}} className="square-box"></span><label>Washing & Pressing</label>
-                                    <span style={{background: '#21D4C9'}} className="square-box"></span><label>Dry Cleaning</label>
-                                    <span style={{background: '#651080'}} className="square-box"></span><label>Other</label>
-                                    <span style={{background: '#E5E62B'}} className="square-box"></span><label>Washing</label>
+                                {paichartData?.map((value_chart, keychart) => {
+                                    paichartLabel.push(value_chart.category_name);
+                                    paichatDataset.push(value_chart.count);
+                                    paichatBackground.push(paiichartBackroundColor(value_chart.category_slug));
+                                    return (
+                                        <div key={keychart} className="pai-element">
+                                        <span className={'square-box '+ value_chart.category_slug}></span><label>{value_chart.category_name}</label>
+                                        </div>
+                                    );
+                                })}
+                                    
                                 </div>
                             </div>
                         </div>

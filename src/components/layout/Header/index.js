@@ -58,7 +58,7 @@ const Header = (props) => {
     return (
         <>
             <nav className="main-header navbar navbar-expand">
-                <a className={backButtonclass+' back-button align-items-center mx-2'} href="javascript:void(0)" onClick={() => router.back()}><img src={imageLocation+'backarrow.png'}/><span>Back</span></a>
+                <a className={backButtonclass+' back-button align-items-center mx-2'} href="#" onClick={() => router.back()}><img src={imageLocation+'backarrow.png'}/><span>Back</span></a>
                 <ul className="navbar-nav ml-auto ms-auto">
                     <li className="nav-item">
                         <Dropdown>

@@ -1,14 +1,14 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import apiurl from "@component/api/apiconfig";
 import swal from "sweetalert";
 import axiosInstance from "@component/api/axiosinstance";
-
-
+import { useRoutePath } from 'next/router';
+import { useRouter } from 'next/router'
 const OnboardingModal = (props) => {
     const [modalShow, setModalShow] = useState(false);
-    
+    const router = useRouter();
     const OnboardingVarify = (id,bording_status) =>{
         let data = { 
                    'id':''+id+'',
@@ -21,10 +21,14 @@ const OnboardingModal = (props) => {
                         if(bording_status==1){
                             props.onHide(true);
                       swal("success", "Varified Successfully", "success");
+                      router.push('/onboarding-request');
+                      
+
                         }
                         else{
                             props.onHide(true);
                             swal("success", "Rejected Successfully", "success"); 
+                            router.push('/onboarding-request');
                         }
                      //props.onHide
                       //setShow(false);
@@ -33,6 +37,7 @@ const OnboardingModal = (props) => {
                     else if(response.status === 2){
                         props.onHide(true);
                         swal("Error", 'Something went wrong. Please try again later', "error");
+                        router.push('/onboarding-request');
                     }
                 })
                 .catch((error) => {

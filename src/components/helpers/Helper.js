@@ -38,7 +38,7 @@ const Helper = () => {
         fetchData(); // Call the function to fetch the data
     }, [currentPage, filterKey, filterStatus]);
 
-    console.log(total_items);
+   // console.log(helpers);
     const indexNum = (cell, row, index) => {
         return (<div>{index + 1}</div>)
     }
@@ -61,8 +61,8 @@ const Helper = () => {
     }
 
     const enrollmentdateformator = (cell, row) => {
-        if (row.dob != null) {
-          return dateFormat(`${row.dob}`, "dd mmm, yyyy");
+        if (row.enrollmentDate != null) {
+          return dateFormat(`${row.enrollmentDate}`, "dd mmm, yyyy");
         }
         else {
           return '';
@@ -183,7 +183,7 @@ const Helper = () => {
                                 <div className="search_key">
                                     <input className="form-control" type="text" name="search_key" placeholder="Search" aria-label="Search"
                                         onChange={handlekeySearch} />
-                                    <img src="./assets/images/search.png" alt="sort-img" />
+                                    <img src={imageLocation+'assets/images/search.png'} alt="sort-img" />
                                 </div>
                                 <div className="select-dropdown table-select">
                                     <img src="./assets/images/sort-down-small.png" alt="sort-img" />

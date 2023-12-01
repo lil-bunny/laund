@@ -84,7 +84,6 @@ const NewDeliveryBoy = () => {
                                 yup.object().shape({
                                     firstName: yup.string().required("First name is required"),
                                     lastName: yup.string().required("Last name is required"),
-                                    email: yup.string().required("Email is required"),
                                     dob: yup.date().max(new Date(Date.now() - 567648000000), "Age should be grater than or equal to 18 Years").required("Date of birth is required"),
                                     primary_phone_no: yup.string().required("Phone Number is required").min(10, 'Phone number must be 10 digit')
                                         .max(10, 'Phone number should not grater than 10 digit'),

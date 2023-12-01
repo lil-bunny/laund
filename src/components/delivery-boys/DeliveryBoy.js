@@ -67,7 +67,12 @@ const DeliveryBoy = () => {
   }
 
   const actionFormator = (cell, row) => {
+    if (row.status === 0 || row.status === 4 || row.status === 3) {
+      return (<div><a href={'delivery-boy-details/' + row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a></div>);
+    }
+    else{
     return (<div><a className="update-db" href={'update-delivery-boy/' + row.id}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></a><a href={'delivery-boy-details/' + row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a> <span className="trash-item" onClick={() => DeleteDboy(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+    }
   }
 
   const idFormator = (cell, row) => {

@@ -63,15 +63,18 @@ const ManageProducts = () => {
             .then((response) => {
                 console.log(response);
                 if (response.status === 1) {
+                    fetchData();
                     swal("success", response.message, "success");
                     //fetchData();
 
                 }
                 else if (response.status === 2) {
+                    fetchData();
                     swal("Error", 'Error in data deletion', "error");
                 }
             })
             .catch((error) => {
+                fetchData();
                 //console.log('Error', error);
                 swal("Error", 'Error in data deletion', "error");
             });

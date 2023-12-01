@@ -90,9 +90,11 @@ a.setting-menu:hover{text-decoration: none;}
 .main-sidebar {
   z-index: 1100;
   height: 100vh;
-  overflow-y: hidden;
+  overflow-y: scroll;
   background: #5C88DA;
 }
+
+
 
 .main-sidebar,
 .main-sidebar:before {
@@ -380,7 +382,7 @@ a.setting-menu:hover{text-decoration: none;}
 .mid-content-box .pie-footer .square-box {
   width: 16px;
   height: 16px;
-  background-color: #000;
+  /* background-color: #000; */
   display: inline-block;
   margin: 0 4px 0 16px;
 }
@@ -388,11 +390,17 @@ a.setting-menu:hover{text-decoration: none;}
 .mid-content-box label {
   font-size: 12px;
 }
+.pai-element{display: flex;float: left;}
 
 .mid-content-box .pie-chart-container .select-dropdown {
   float: right;
   margin: 0 32px 0 0;
 }
+/* chart color */
+.wash-iron{background-color: #E5E62B;}
+.dry-clean{background-color: #21D4C9;}
+.steam-iron{background-color: #EB5427;}
+.iron-and-wash{background-color: #791F06;}
 
 .top-content-box h3 {
   font-size: 12px;

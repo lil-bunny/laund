@@ -85,7 +85,7 @@ const HelperDetails = () => {
                                             </span>
                                             <div className="right-prof-panel">
                                                 <h2>{data.firstName} {data.lastName}</h2>
-                                                <p>Customer</p>
+                                                <p>Helper</p>
                                                 <span className="db-contact">
                                                     Contact No: <span>{data.primary_phone_no}, {data.alternate_phone_no}</span>
                                                 </span>
