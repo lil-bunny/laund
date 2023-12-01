@@ -6,7 +6,7 @@ import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 import { useRouter } from "next/router";
 import dateFormat from "dateformat";
-
+import Icon from "../icon";
 const CustomerDetails = () => {
     let imageLocation = imagepath();
     const [data, setData] = useState([]);
