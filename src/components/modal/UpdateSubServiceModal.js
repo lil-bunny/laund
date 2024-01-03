@@ -7,13 +7,13 @@ import apiurl from "@component/api/apiconfig";
 import swal from "sweetalert";
 import * as yup from "yup";
 import { imagepath } from "@component/functions/commonfunction";
-
+import { useRouter } from 'next/router'
 const UpdateSubServideModal = (props) => {
   let initialValues = {
     sub_category_id: '',
     sub_category_name: ""
   };
-
+  const router = useRouter();
   const submitHandler = (values) => {
    
     axiosInstance.post(apiurl+'sub-category/update', values)
@@ -21,10 +21,12 @@ const UpdateSubServideModal = (props) => {
             if (response.status === 1) {
                 props.onHide(true);   
              swal("success", "Sub Category updated successfully", "success");
+             router.push('/manage-sub-categories');
             }
             else if(response.status === 2 && response.errors!=''){
                 props.onHide(true);
                 swal("Error", 'Error in category addition',"error");
+                router.push('/manage-manage-sub-categories');
             }
         })
         .catch((error) => {
@@ -33,7 +35,7 @@ const UpdateSubServideModal = (props) => {
     });
 };
 
-console.log(props.SubCategoryDetails);
+//console.log(props.SubCategoryDetails);
 
   return (
     <Modal show={props.show} onHide={props.onHide}>

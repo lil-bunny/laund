@@ -7,11 +7,12 @@ import apiurl from "@component/api/apiconfig";
 import axiosInstanceMultipart from "@component/api/axiosinstancemultipart";
 import axiosInstance from "@component/api/axiosinstance";
 import swal from "sweetalert";
+import { useRouter } from 'next/router';
 const UpdateProductModal = (props) => {
     const [categoryList, setcategoryList] = useState([]);
     const [previewfile, setFile] = useState();
     const [SubcategoryList, setSubcategoryList] = useState([]);
-
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -38,7 +39,7 @@ const UpdateProductModal = (props) => {
 
         fetchData(); // fetching sub cat
     }, []);
-
+//console.log(apiurl);
     const submitHandler = (values) => {
 
         axiosInstanceMultipart.post(apiurl + 'product/update', values)
@@ -46,11 +47,12 @@ const UpdateProductModal = (props) => {
                 if (response.status === 1) {
                     props.onHide(true);
                     swal("success", "Product updated successfully", "success");
-                    // navigate('/');
+                    router.push('/manage-products');
                 }
                 else if (response.status === 2 && response.errors != '') {
                     props.onHide(true);
                     swal("Error", 'Error in product updation', "error");
+                    router.push('/manage-products');
                 }
             })
             .catch((error) => {
@@ -65,6 +67,7 @@ const UpdateProductModal = (props) => {
         product_name: '',
         category_id: '',
         sub_category_id: '',
+        // status: '',
         file: null
     };
 
@@ -72,7 +75,7 @@ const UpdateProductModal = (props) => {
         <Modal show={props.show} onHide={props.onHide}>
             <Modal.Header>
                 <Modal.Title>
-                    Add New Product
+                   Edit Product
                 </Modal.Title>
                 <button type="button" className="close" onClick={props.onHide}>
                     <span aria-hidden="true">&times;</span>
@@ -87,16 +90,19 @@ const UpdateProductModal = (props) => {
                         product_name: props.ProductDetail.product_name ? props.ProductDetail.product_name : "",
                         category_id: props.ProductDetail.product_category ? props.ProductDetail.product_category : "",
                         sub_category_id: props.ProductDetail.product_sub_category ? props.ProductDetail.product_sub_category : "",
+                        // status: props.ProductDetail.status ? props.ProductDetail.status : "",
 
                     })}
                     validationSchema={yup.object().shape({
                         category_id: yup.string().required("Select a category"),
                         sub_category_id: yup.string().required("Select a sub category"),
                         product_name: yup.string().required("Product name is required"),
+                        // status: yup.string().required("Status is required"),
 
                     })}
 
                     onSubmit={(values, { resetForm }) => {
+                        //console.log(values);
                         submitHandler(values);
                         resetForm({ values: '' });
                     }}
@@ -163,6 +169,14 @@ const UpdateProductModal = (props) => {
                                 {touched.product_name && errors.product_name && (
                                     <div className="form-error">{errors.product_name}</div>
                                 )}
+                            </div>
+                            <div className="form-group d-none">
+                                    <Field as="select" name="status" id="status" className="form-control">
+                                        <option value="1">Active</option>
+                                        <option value="0">Deleted</option>
+
+                                    </Field>
+                                {touched.name && errors.status && <div className="form-error">{errors.status}</div>}
                             </div>
 
                             <Modal.Footer>

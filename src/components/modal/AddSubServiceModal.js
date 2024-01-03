@@ -8,8 +8,9 @@ import apiurl from "@component/api/apiconfig";
 import axiosInstance from "@component/api/axiosinstance";
 import { imagepath,per_page_item } from "@component/functions/commonfunction";
 import swal from "sweetalert";
+import { useRouter } from 'next/router';
 const AddSubServiceModal = (props) => {
-  
+  const router = useRouter();
     const submitHandler = (values) => {
    
       axiosInstance.post(apiurl+'sub-category/create', values)
@@ -17,11 +18,12 @@ const AddSubServiceModal = (props) => {
                 if (response.status === 1) {
                     props.onHide(true);   
                  swal("success", "Sub Category added successfully", "success");
-                     // navigate('/');
+                 router.push('/manage-manage-sub-categories');
                 }
                 else if(response.status === 2 && response.errors!=''){
                     props.onHide(true);
                     swal("Error", 'Error in sub category addition',"error");
+                    router.push('/manage-manage-sub-categories');
                 }
             })
             .catch((error) => {

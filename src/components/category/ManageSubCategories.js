@@ -58,11 +58,12 @@ const ManageSubCategories = () => {
             .then((response) => {
                 if (response.status === 1) {
                     swal("success", response.message, "success");
-                    //fetchData();
+                    fetchData();
 
                 }
                 else if (response.status === 2) {
                     swal("Error", 'Error in data deletion', "error");
+                    fetchData();
                 }
             })
             .catch((error) => {
@@ -73,17 +74,37 @@ const ManageSubCategories = () => {
     // console.log(image_path);
 
     const actionFormator = (cell, row) => {
-        return (<div><span className="update-item" onClick={() => GetSubCategoryDetails(row.id, row.sub_category_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteSubCategory(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+        if(row.status==0){
+        return (<div><span className="update-item" onClick={() => GetSubCategoryDetails(row.id, row.sub_category_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span></div>);
+        }
+        else{
+            return (<div><span className="update-item" onClick={() => GetSubCategoryDetails(row.id, row.sub_category_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteSubCategory(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+        } 
+        }
+    
+    const statusFormator = (cell, row) => {
+       if(row.status==0){
+        return 'Deleted';
+       }
+       else{
+        return 'Active';
+       }
     }
     const columns = [
         {
             dataField: 'id',
-            text: 'Service Id'
+            text: 'Sub Category Id'
         },
 
         {
             dataField: 'sub_category_name',
             text: 'Name',
+
+        },
+        {
+            dataField: 'status',
+            text: 'Staus',
+            formatter: statusFormator
 
         },
 

@@ -176,6 +176,7 @@ const Helper = () => {
     return (
         <>
             <section className="helper-panel">
+            <h1 className="title">Helpers</h1>
                 <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">

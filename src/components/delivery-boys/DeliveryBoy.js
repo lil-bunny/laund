@@ -61,14 +61,39 @@ const DeliveryBoy = () => {
         });
     }
   }
+
+  const ActivateDB = (id) => {
+    let data = { 'user_id': '' + id + '' ,'status':'2'};
+    console.log(data);
+    if (window.confirm('Are you sure you wish to activate this delivery boy?')) {
+      axiosInstance.post(apiurl + 'auth/block-or-active-user', data)
+        .then((response) => {
+          if (response.status === 1) {
+            swal("success", "Delivery Boy Activated successfully", "success");
+            fetchData();
+
+          }
+          else if (response.status === 2) {
+            swal("Error", 'Error in Delivery Boy Activation', "error");
+          }
+        })
+        .catch((error) => {
+          //console.log('Error', error);
+          swal("Error", 'Error in Activation', "error");
+        });
+    }
+  }
   //console.log(deliveryBoys);
   const indexNum = (cell, row, index) => {
     return (<div>DB{row.id}</div>)
   }
 
   const actionFormator = (cell, row) => {
-    if (row.status === 0 || row.status === 4 || row.status === 3) {
+    if (row.status === 0 || row.status === 4) {
       return (<div><a href={'delivery-boy-details/' + row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a></div>);
+    }
+    else if(row.status === 3) {
+      return (<div><a href={'delivery-boy-details/' + row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a><span title="Active Delivery Boy" className="trash-item fa-check" onClick={() => ActivateDB(row.id)}><Icon icon="fa-check" size="1x" color="#3A67BB"/></span></div>);
     }
     else{
     return (<div><a className="update-db" href={'update-delivery-boy/' + row.id}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></a><a href={'delivery-boy-details/' + row.id}><Icon icon="fa-eye" size="1x" color="#3A67BB" /></a> <span className="trash-item" onClick={() => DeleteDboy(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
@@ -209,7 +234,9 @@ const DeliveryBoy = () => {
   return (
     <>
       <section className="delivery-boy-panel">
+      <h1 className="title">Delivery Boys</h1>
         <div className="common-table order-panel-table">
+     
           <div className="table-header">
             <div className="add-new-dboy">
               <a href="/new-delivery-boy">Add New</a>

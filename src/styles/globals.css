@@ -56,6 +56,14 @@
   font-size: 12px;
   margin: 5px 0 0;
 }
+.dashboard-content h1.page-title{font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 0 12px;
+}
+.dashboard-content{display: flex;}
+.dashboard-content .dash-content{
+  padding: 17px 0 0 0;
+}
 
 .login-box .btn {
   margin-left: auto !important;
@@ -186,7 +194,7 @@ a.setting-menu:hover{text-decoration: none;}
 
 .main-header .navbar-nav .dropdown a.dropdown-item {
   justify-content: right;
-  display: flex;
+  /* display: flex; */
   text-decoration: none;
 }
 
@@ -1945,10 +1953,27 @@ td.ls-raised-issue span{font-size: 14px; font-weight: 600;color: rgba(203, 20, 2
   opacity: 1;
   color: #00a1ff;
 }
+.content-wrapper .dash-content{
+  padding: 17px 0 0 0;
+}
 /* order status color */
 .delivered,.collected,.paid{color: #1aa301;font-weight: 600;}
 .order-cancel,.payment-pending,.issue-rejected-by-cs,.rejected-by-db,.not-paid{color: #cb1414;font-weight: 600;}
 .partial-order-pickup{color: #ec4700;font-weight: 600;}
+.delivery-boy-panel h1.title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 18px 12px;
+}
+.customer-panel h1.title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 18px 12px;
+}
+.fa-check{color: #3a67bb;
+  font-size: 13px;
+  font-weight: 600;}
+
 /* back button */
 /**************** RESPONSIVE ****************************/
 a.back-button{text-decoration: none;}

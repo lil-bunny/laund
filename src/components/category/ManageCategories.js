@@ -58,11 +58,12 @@ const ManageCategories = () => {
             .then((response) => {
                 if (response.status === 1) {
                     swal("success", response.message, "success");
-                    //fetchData();
+                    fetchData();
 
                 }
                 else if (response.status === 2) {
                     swal("Error", 'Error in data deletion', "error");
+                    fetchData();
                 }
             })
             .catch((error) => {
@@ -73,7 +74,12 @@ const ManageCategories = () => {
 
 
     const actionFormator = (cell, row) => {
-        return (<div><span className="update-item" onClick={() => GetCategoryDetails(row.id, row.category_name, image_path + row.new_category_image_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteCategory(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+        if(row.status==0){
+        return (<div><span className="update-item" onClick={() => GetCategoryDetails(row.id, row.category_name, image_path + row.new_category_image_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span></div>);
+        }
+        else{
+            return (<div><span className="update-item" onClick={() => GetCategoryDetails(row.id, row.category_name, image_path + row.new_category_image_name)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteCategory(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+        }
     }
     const ImageFormator = (cell, row) => {
         return (<div className="category-image"><img src={image_path + row.new_category_image_name} alt="sort-img" /></div>);
@@ -92,7 +98,7 @@ const ManageCategories = () => {
     const columns = [
         {
             dataField: 'id',
-            text: 'Service Id'
+            text: 'Category Id'
         },
         {
             dataField: 'category_image',
