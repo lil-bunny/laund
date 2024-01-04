@@ -57,7 +57,7 @@ const Laundry = () => {
   }
 
   const nameFormatter = (cell, row) => {
-    return `${row.firstName} ${row.lastName}`
+    return `${row.laundry_name}`
   }
 
   const dob_formate = (cell, row) => {
@@ -90,8 +90,8 @@ const Laundry = () => {
       formatter: indexNum,
     },
     {
-      dataField: 'db_name',
-      text: 'Full Name',
+      dataField: 'laundry_name',
+      text: 'Laundry Name',
       formatter: nameFormatter,
     },
     {
@@ -172,7 +172,8 @@ const Laundry = () => {
       </div>
     }
   };
-
+  
+  console.log(laundryList);
   return (
     <>
       <section className="delivery-boy-panel db-details-panel">

@@ -20,7 +20,7 @@ const OnboardingModal = (props) => {
                     if (response.status === 1) {
                         if(bording_status==1){
                             props.onHide(true);
-                      swal("success", "Varified Successfully", "success");
+                      swal("success", "Verified Successfully", "success");
                       router.push('/onboarding-request');
                       
 

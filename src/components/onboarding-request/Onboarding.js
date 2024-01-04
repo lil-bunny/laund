@@ -181,7 +181,7 @@ const Onboarding = () => {
     return (
         <>
             <section className="onboarding-panel">
-                <h1>Onboarding</h1>
+                <h1>Onboarding Request</h1>
                 <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">

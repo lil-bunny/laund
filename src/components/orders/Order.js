@@ -86,7 +86,25 @@ const Order = () => {
     }
 
     const paymentStatusFormator = (cell, row) => {
-        return (<span className={paymentStatusCLass(row.order_status)}>{paymentStatus(row.order_status)}</span>)
+        if (row.cs_payment_paid_or_skipped !== null && typeof row.cs_payment_paid_or_skipped !== 'undefined') {
+            if(row.cs_payment_paid_or_skipped==1){
+                return (<span className="paid">Paid</span>)
+            }
+            else  if(row.cs_payment_paid_or_skipped==2){
+                return (<span className="not-paid">Partially Paid</span>)
+            }
+            else  if(row.cs_payment_paid_or_skipped==3){
+                return (<span className="not-paid">Skipped</span>)
+            }
+            else  if(row.cs_payment_paid_or_skipped==4){
+                return (<span className="not-paid">Unpaid</span>)
+            }
+
+        }
+        else{
+            return (<span className="not-paid">Not Paid</span>)
+        }
+       
     }
 
     const deliveryDateFormator = (cell, row) => {
@@ -289,7 +307,7 @@ const Order = () => {
     return (
         <>
             <section className="order-panel">
-                <h1>Order</h1>
+                <h1>Orders</h1>
                 <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">

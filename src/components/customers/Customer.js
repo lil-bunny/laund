@@ -159,6 +159,7 @@ const Customer = () => {
     return (
         <>
             <section className="customer-panel">
+            <h1 className="title">Customers</h1>
                 <div className="common-table">
                     <div className="table-header">
                         <div className="table-search">

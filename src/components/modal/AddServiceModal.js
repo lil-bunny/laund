@@ -6,8 +6,9 @@ import * as yup from "yup";
 import apiurl from "@component/api/apiconfig";
 import axiosInstanceMultipart from "@component/api/axiosinstancemultipart";
 import swal from "sweetalert";
+import { useRouter } from 'next/router';
 const AddServiceModal = (props) => {
-
+  const router = useRouter();
     const submitHandler = (values) => {
    
         axiosInstanceMultipart.post(apiurl+'category/create', values)
@@ -15,11 +16,12 @@ const AddServiceModal = (props) => {
                 if (response.status === 1) {
                     props.onHide(true);   
                  swal("success", "Category added successfully", "success");
-                     // navigate('/');
+                 router.push('/manage-categories');
                 }
                 else if(response.status === 2 && response.errors!=''){
                     props.onHide(true);
                     swal("Error", 'Error in category addition',"error");
+                    router.push('/manage-categories');
                 }
             })
             .catch((error) => {

@@ -29,8 +29,8 @@ const ManageProducts = () => {
     const [filterKey, setKeyFilter] = useState('');
     const itemsPerPage = per_page_item();
 
-    const ProductDetails = (id, product_name, product_image, product_category, product_sub_category) => {
-        setProductDetails({ 'id': id, 'product_name': product_name, 'product_image': product_image, 'product_category': product_category, 'product_sub_category': product_sub_category});
+    const ProductDetails = (id, product_name, product_image, product_category, product_sub_category,status) => {
+        setProductDetails({ 'id': id, 'product_name': product_name, 'product_image': product_image, 'product_category': product_category, 'product_sub_category': product_sub_category,'status': status});
         setShow(true);
     }
     const OpenAddModel = () => {
@@ -38,7 +38,7 @@ const ManageProducts = () => {
     }
 
 
-   //console.log(CurrentIndex);
+   console.log(productList);
 
     const fetchData = async () => {
         try {
@@ -83,7 +83,13 @@ const ManageProducts = () => {
         return (<div>{index+1+CurrentIndex}</div>);
     }
     const actionFormator = (cell, row) => {
-        return (<div><span className="update-item" onClick={() => ProductDetails(row.id, row.product_name, image_path + row.new_product_image_name, row.product_category.id, row.product_sub_category.id)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteProduct(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+        if(row.status==0){
+            return (<div><span className="update-item" onClick={() => ProductDetails(row.id, row.product_name, image_path + row.new_product_image_name, row.product_category.id, row.product_sub_category.id,row.status)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span></div>);
+       } 
+        
+        else{
+        return (<div><span className="update-item" onClick={() => ProductDetails(row.id, row.product_name, image_path + row.new_product_image_name, row.product_category.id, row.product_sub_category.id,row.status)}><Icon icon="fa-pencil" size="1x" color="#3A67BB" /></span> <span className="trash-item" onClick={() => DeleteProduct(row.id)}><Icon icon="fa-trash" size="1x" color="#3A67BB" /></span></div>);
+        }
     }
     const ImageFormator = (cell, row) => {
         if(row.new_product_image_name!=null){

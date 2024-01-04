@@ -7,30 +7,34 @@ import apiurl from "@component/api/apiconfig";
 import swal from "sweetalert";
 import * as yup from "yup";
 import { imagepath } from "@component/functions/commonfunction";
-
+import { useRouter } from 'next/router'
 const UpdateServideModal = (props) => {
   let initialValues = {
     category_id: '',
     category_name: "",
     file: null,
   };
-
+  const router = useRouter();
   const submitHandler = (values) => {
-   
+
     axiosInstanceMultipart.post(apiurl+'category/update', values)
         .then((response) => {
             if (response.status === 1) {
                 props.onHide(true);   
              swal("success", "Category updated successfully", "success");
+             router.push('/manage-categories');
             }
             else if(response.status === 2 && response.errors!=''){
                 props.onHide(true);
+
                 swal("Error", 'Error in category addition',"error");
+                router.push('/manage-categories');
             }
         })
         .catch((error) => {
             swal("Error", 'Error in category addition', "error");
             props.onHide(true);
+            router.push('/manage-categories');
     });
 };
 

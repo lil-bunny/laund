@@ -7,9 +7,10 @@ import apiurl from "@component/api/apiconfig";
 import axiosInstanceMultipart from "@component/api/axiosinstancemultipart";
 import axiosInstance from "@component/api/axiosinstance";
 import swal from "sweetalert";
+import { useRouter } from 'next/router';
 const AddProductModal = (props) => {
     const [categoryList, setcategoryList] = useState([]);
-
+    const router = useRouter();
     const [SubcategoryList, setSubcategoryList] = useState([]);
 
     useEffect(() => {
@@ -46,17 +47,19 @@ const AddProductModal = (props) => {
                 if (response.status === 1) {
                     props.onHide(true);
                     swal("success", "Product added successfully", "success");
-                    // navigate('/');
+                    router.push('/manage-products');
                 }
                 else if (response.status === 2 && response.errors != '') {
                     props.onHide(true);
                     swal("Error", 'Error in product addition', "error");
+                    router.push('/manage-products');
                 }
             })
             .catch((error) => {
                 props.onHide(true);
                 //console.log('Error', error);
                 swal("Error", 'Error in product addition', "error");
+                router.push('/manage-products');
 
             });
     };
