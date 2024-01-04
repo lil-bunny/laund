@@ -22,20 +22,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/delivery-boy": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/delivery-boy.js"
+    ],
     "/helper": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/helper.js"
-    ],
-    "/laundry": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/laundry.js"
-    ],
-    "/location": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/location.js"
     ]
   },
   "ampFirstPages": []
