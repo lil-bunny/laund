@@ -1688,6 +1688,7 @@ button.btn-add-new:hover{
   color: #fff;
 }
 .trash-item{cursor: pointer;padding: 5px;}
+.notification-item{cursor: pointer;padding: 5px;}
 .update-db{cursor: pointer;padding: 5px;}
 .profile_image{max-width: 20%;}
 .profile_image img{width: 100%;}
