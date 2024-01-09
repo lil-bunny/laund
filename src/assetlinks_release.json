@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.fodxpert",
+    "sha256_cert_fingerprints":
+    ["F7:B1:D9:25:91:D3:3A:38:E2:F9:DA:37:E4:A3:48:CB:B6:42:4C:A4:6E:BE:1B:F7:8D:6A:C7:CE:F7:24:0A:CD"]
+  }
+}]

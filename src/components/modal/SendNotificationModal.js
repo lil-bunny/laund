@@ -46,10 +46,19 @@ const SendNotificationModal = (props) => {
 			<Modal.Body>
 				<Formik
 					initialValues={{
-						message: "",
+						UPI: "",
+						amount: "",
 					}}
 					validationSchema={yup.object().shape({
-						message: yup.string().required("Message is required"),
+						UPI: yup.string().required("UPI is required"),
+						amount: yup
+							.number()
+							.required("Amount is required")
+							.test(
+								"Is positive?",
+								"Amount must be greater than 0!",
+								(value) => value > 0
+							),
 					})}
 					onSubmit={(values, { resetForm }) => {
 						submitHandler(values);
@@ -60,27 +69,27 @@ const SendNotificationModal = (props) => {
 						<Form>
 							<div className="form-group">
 								<Field
-									name="message"
-									render={({
-										field /* { name, value, onChange, onBlur } */,
-									}) => (
-										<textarea
-											{...field}
-											rows="7"
-											className="form-control mb-2"
-											placeholder={`Please ${props.NotificationDetail.name} pay service charge {100} to B-Tecno E Com Ventures. Pay at btecnoecomventures.ibz@icici`}
-										></textarea>
-									)}
-								/>
-								{/* <Field
-									type="textarea"
-									name="message"
+									type="text"
+									name="UPI"
 									className="form-control mb-2"
-									id="message"
-									placeholder={`Please ${props.NotificationDetail.name}  pay service charge {100} to B-Tecno E Com Ventures. Pay at btecnoecomventures.ibz@icici`}
-								/> */}
-								{touched.message && errors.message && (
-									<div className="form-error">{errors.message}</div>
+									id="UPI"
+									placeholder={`Please enter UPI ID`}
+								/>
+								{touched.UPI && errors.UPI && (
+									<div className="form-error">{errors.UPI}</div>
+								)}
+							</div>
+
+							<div className="form-group">
+								<Field
+									type="number"
+									name="amount"
+									className="form-control mb-2"
+									id="amount"
+									placeholder={`Please enter amount`}
+								/>
+								{touched.amount && errors.amount && (
+									<div className="form-error">{errors.amount}</div>
 								)}
 							</div>
 							<Modal.Footer>

@@ -26,11 +26,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/delivery-boy.js"
-    ],
-    "/helper": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/helper.js"
     ]
   },
   "ampFirstPages": []

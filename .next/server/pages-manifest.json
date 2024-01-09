@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/helper": "pages/helper.js",
-  "/laundry": "pages/laundry.js",
+  "/dashboard": "pages/dashboard.js",
   "/delivery-boy": "pages/delivery-boy.js"
 }
